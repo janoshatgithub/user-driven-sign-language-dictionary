@@ -4,7 +4,7 @@
  * Created on 9. oktober 2011, 16:07
  */
  
-package dk.jsh.itdiplom.userdrivensignlanguagedictionary;           
+package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;           
 
 import org.apache.wicket.markup.html.WebPage;
 

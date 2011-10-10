@@ -18,8 +18,8 @@ public abstract class BasePage extends WebPage {
 
     public BasePage() { 
         super(); 
-        add(new HeaderPanel("headerpanel", "Welcome To Wicket")); 
-        add(new FooterPanel("footerpanel", "Powered by Wicket and the NetBeans Wicket Plugin"));
+        add(new HeaderPanel("headerpanel", "Tegn til tiden")); 
+        add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen"));
     } 
 
 }

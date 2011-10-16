@@ -1,6 +1,5 @@
 body {
 	background-color: white;
-	background-image: url('wicket-logo.png');
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: 96% 96%;
@@ -41,8 +40,9 @@ h1,h2,h3,h4,h5,h6,h7,h8 {
 
 #titleblock {
 	background: #DEDEDE;
-	color: white;
+	color: black;
 	font-weight: bold;
+        border-top: solid #E9601A;
 	border-bottom: solid #E9601A;
 	border-width: thin;
 	padding: 2px 2px 2px 6px;
@@ -90,6 +90,20 @@ tr.none {
 a.none {
 	background: transparent;
 	padding-right: 0px;
+}
+
+a {
+	color: #E9601A;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+em {
+    font-weight: bold
 }
 
 #inputForm {

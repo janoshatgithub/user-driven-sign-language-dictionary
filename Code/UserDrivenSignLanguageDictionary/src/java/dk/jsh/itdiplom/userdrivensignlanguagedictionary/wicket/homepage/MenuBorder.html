@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:border> 
+<p>
+<table height = "100%">
+    <tr>
+        <td style="height: 100%;" valign = "top" >
+            <div wicket:id = "navigationBorder">
+              <div style="width: 100px">
+              <h2>Menu</h2>
+              <p>
+                <wicket:link>
+                  <a href = "../homepage/HomePage.html">S&oslash;g</a><br/>
+                  <a href = "../request/Request.html">Forsp&oslash;rgelse</a><br/>
+                  <a href = "../createuser/CreateUser.html">Opret bruger</a>
+                </wicket:link>
+              </p>
+              </div>
+            </div>
+        </td>
+        <td valign = "top">
+            <span wicket:id = "bodyBorder">
+                <wicket:body/>
+            </span>
+        </td>
+    </tr>
+</table>
+</p>
+</wicket:border>
+</body>
+</html>

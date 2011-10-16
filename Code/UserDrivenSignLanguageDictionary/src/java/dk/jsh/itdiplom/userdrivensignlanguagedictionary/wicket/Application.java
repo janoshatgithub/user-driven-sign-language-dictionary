@@ -4,7 +4,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.HomePage
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
- * Wicket application.
+ * User driven sign language dictionary wicket application.
  * 
  * @author Jan S. Hansen
  */

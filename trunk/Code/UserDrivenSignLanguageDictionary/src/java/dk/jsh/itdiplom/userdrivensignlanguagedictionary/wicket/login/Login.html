@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:extend> 
+<span wicket:id = "mainNavigation">
+    <div style="width: 250px">
+        <h2>Login</h2>
+        <form action="#" wicket:id="form">
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td style="width:120px">Login:</td>
+                        <td>
+                            <input wicket:id="userlogin" type="text"
+                                   name="" value="" size="20" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:120px">Password:</td>
+                        <td>
+                            <input wicket:id="password" type="password"
+                                   name="" value="" size="20" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div style="float:right">
+                                <input wicket:id="barilogin" type="submit"
+                                       value="Login" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <div id="error">
+              <span wicket:id="error">Error message goes here</span>
+        </div>
+    </div>    
+</span>
+</wicket:extend> 
+</body>
+</html>

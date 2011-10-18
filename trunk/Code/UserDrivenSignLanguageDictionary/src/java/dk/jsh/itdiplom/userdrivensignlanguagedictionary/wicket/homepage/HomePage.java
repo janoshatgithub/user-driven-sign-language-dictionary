@@ -1,8 +1,6 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.border.BoxBorder;
 
 /**
  * Home/search page.

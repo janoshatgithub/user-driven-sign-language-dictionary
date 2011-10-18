@@ -8,7 +8,7 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div style="width: 250px">
+    <div style="width: 300px">
         <h2>Login</h2>
         <form action="#" wicket:id="form">
             <table border="0">
@@ -30,7 +30,7 @@
                     <tr>
                         <td colspan="2">
                             <div style="float:right">
-                                <input wicket:id="barilogin" type="submit"
+                                <input wicket:id="login" type="submit"
                                        value="Login" />
                             </div>
                         </td>
@@ -39,7 +39,12 @@
             </table>
         </form>
         <div id="error">
-              <span wicket:id="error">Error message goes here</span>
+            <table>
+                <tr>
+                    <td><img wicket:id="erroricon"/></td>
+                    <td><span wicket:id="error">Error message goes here</span></td>
+                </tr>
+            </table>
         </div>
     </div>    
 </span>

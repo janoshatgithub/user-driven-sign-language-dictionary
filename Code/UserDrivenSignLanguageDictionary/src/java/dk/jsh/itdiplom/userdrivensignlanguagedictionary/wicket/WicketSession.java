@@ -2,6 +2,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import org.apache.wicket.Request;
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 
 /**
@@ -17,7 +18,7 @@ public class WicketSession extends WebSession {
     }
 
     public static WicketSession get() {
-        return (WicketSession) WicketSession.get();
+        return (WicketSession) Session.get();
     }
 
     public boolean isAuthenticated() {

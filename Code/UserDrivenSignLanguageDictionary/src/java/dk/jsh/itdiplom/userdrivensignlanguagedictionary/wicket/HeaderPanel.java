@@ -18,6 +18,6 @@ public class HeaderPanel extends Panel {
     public HeaderPanel(String componentName, String exampleTitle)
     {
         super(componentName);
-        add(new Label("exampleTitle", exampleTitle));
+             add(new Label("exampleTitle", exampleTitle));
     }
 }

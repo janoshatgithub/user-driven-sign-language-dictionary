@@ -1,6 +1,10 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants.UserRole;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.HomePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +111,11 @@ public final class Login extends BasePage {
         form.add(new Button("login") {
             @Override
             public void onSubmit() {
-                setErrorMessage("Fejl i login eller password.");
+                ApplicationUser user = new ApplicationUser("x", "x", "x", "x",
+                        UserRole.NORMAL);
+                WicketSession.get().setApplicationUser(user);
+                setResponsePage(HomePage.class);
+                
                 /*
                 ApplicationUser bariUser =
                         BariUserBusiness.isValidUser(userLogin.getModelObject(),

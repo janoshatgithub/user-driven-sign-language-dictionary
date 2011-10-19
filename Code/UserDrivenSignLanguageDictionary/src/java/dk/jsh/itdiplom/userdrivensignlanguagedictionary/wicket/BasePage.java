@@ -11,7 +11,12 @@ public abstract class BasePage extends WebPage {
 
     public BasePage() { 
         super(); 
-        add(new HeaderPanel("headerpanel", "")); 
+        WicketSession session = WicketSession.get();
+        String userName = "";
+        if (session.isAuthenticated()) {
+            userName = session.getApplicationUser().getFullname();
+        }
+        add(new HeaderPanel("headerpanel", userName)); 
         add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen"));
     } 
 }

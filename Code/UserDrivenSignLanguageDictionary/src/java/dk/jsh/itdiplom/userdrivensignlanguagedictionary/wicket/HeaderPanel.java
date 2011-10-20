@@ -15,9 +15,16 @@ public class HeaderPanel extends Panel {
      * @param componentName name of the component
      * @param exampleTitle title of the example
      */
-    public HeaderPanel(String componentName, String exampleTitle)
+    public HeaderPanel(String componentName, String userName)
     {
         super(componentName);
-             add(new Label("exampleTitle", exampleTitle));
+        String text = "Bruger: ";
+        if (userName != null) {
+            text += userName;
+        }
+        else {
+            text += "Ikke logget på";
+        }
+        add(new Label("userName", text));
     }
 }

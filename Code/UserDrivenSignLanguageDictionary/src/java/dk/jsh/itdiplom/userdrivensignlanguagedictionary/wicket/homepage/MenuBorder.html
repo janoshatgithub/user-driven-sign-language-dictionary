@@ -6,27 +6,25 @@
 </head>
 <body>
 <wicket:border> 
-<p>
 <table height = "100%">
     <tr>
         <td style="height: 100%;" valign = "top" >
             <div wicket:id = "navigationBorder">
-              <div style="width: 100px">
-              <h2>Menu</h2>
-              <p>
-                <wicket:link>
-                  <a href = "../homepage/HomePage.html">S&oslash;g</a><br/>
-                  <a href = "../request/Request.html">Forsp&oslash;rgelse</a><br/>
-                  <a href = "../createuser/CreateUser.html">Opret bruger</a>
-                  <a href = "../login/Login.html">Login</a>
-                </wicket:link>
-                  <br/>
-                  <a href="#" wicket:id="search">S&oslash;g</a><br/>
-                  <a href="#" wicket:id="request">Forsp&oslash;rgelse</a><br/>
-                  <a href="#" wicket:id="createuser">Opret bruger</a>
-                  <a href="#" wicket:id="login">Login</a>                  
-              </p>
-              </div>
+                <h2>Menu</h2>
+                <ul>
+                    <li wicket:id="menuItems">
+                        <a href="#" wicket:id="menuItemLink">
+                            <span wicket:id="menuItemText">Menu text</span>
+                        </a>&nbsp;&nbsp;    
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="#" wicket:id="loginLogOffMenuItemLink">
+                            <span wicket:id="loginLogoffText">Menu text</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </td>
         <td valign = "top">
@@ -36,7 +34,6 @@
         </td>
     </tr>
 </table>
-</p>
 </wicket:border>
 </body>
 </html>

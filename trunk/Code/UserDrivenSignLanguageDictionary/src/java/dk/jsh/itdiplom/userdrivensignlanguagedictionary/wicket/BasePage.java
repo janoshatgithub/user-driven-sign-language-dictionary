@@ -12,7 +12,7 @@ public abstract class BasePage extends WebPage {
     public BasePage() { 
         super(); 
         WicketSession session = WicketSession.get();
-        String userName = "";
+        String userName = null;
         if (session.isAuthenticated()) {
             userName = session.getApplicationUser().getFullname();
         }

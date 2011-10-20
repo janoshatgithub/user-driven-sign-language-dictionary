@@ -41,7 +41,6 @@ h1,h2,h3,h4,h5,h6,h7,h8 {
 #titleblock {
 	background: #DEDEDE;
 	color: black;
-	font-weight: bold;
         border-top: solid #E9601A;
 	border-bottom: solid #E9601A;
 	border-width: thin;
@@ -100,6 +99,10 @@ a {
 
 a:hover {
 	text-decoration: underline;
+}
+
+li {
+    color: #E9601A;
 }
 
 em {

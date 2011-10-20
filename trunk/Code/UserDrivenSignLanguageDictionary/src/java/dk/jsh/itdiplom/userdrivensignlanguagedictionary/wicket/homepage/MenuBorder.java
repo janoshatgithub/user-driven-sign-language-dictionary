@@ -4,9 +4,14 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser.CreateUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.border.BoxBorder;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.ExternalLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.RepeatingView;
 
 /**
  * Border component.
@@ -24,27 +29,56 @@ public class MenuBorder extends Border
     public MenuBorder(final String id)
     {
         super(id);
-        WicketSession session = WicketSession.get();
+        final WicketSession session = WicketSession.get();
         
         BoxBorder navigationBorder = new BoxBorder("navigationBorder");
-        BookmarkablePageLink loginLink = new BookmarkablePageLink("login", 
-                Login.class); 
+        
+        RepeatingView repeatingView = new RepeatingView("menuItems");
+        navigationBorder.add(repeatingView);
+        
+        addMenuLink(repeatingView, HomePage.class, "Søg");
         if (session.isAuthenticated()) {
-            loginLink.setVisible(false);
+            addMenuLink(repeatingView, Request.class, "Forespørgelse");
+            addLogoffMenuLink(navigationBorder, session);
         }
         else {
-            loginLink.setVisible(true);
+            addMenuLink(repeatingView, CreateUser.class, "Ny bruger");
+            addLoginMenuLink(navigationBorder);
         }
         
-        
-        navigationBorder.add(new BookmarkablePageLink("search", 
-                HomePage.class));
-        navigationBorder.add(new BookmarkablePageLink("request",
-                Request.class));
-        navigationBorder.add(new BookmarkablePageLink("createuser", 
-                CreateUser.class));
-        navigationBorder.add(loginLink);
         add(navigationBorder);
         add(new BoxBorder("bodyBorder"));
+    }
+
+    private void addMenuLink(RepeatingView repeatingView, Class pageClass,
+            String text) {
+        WebMarkupContainer parent =
+                new WebMarkupContainer(repeatingView.newChildId());
+        repeatingView.add(parent);
+        BookmarkablePageLink link = new BookmarkablePageLink("menuItemLink", 
+                pageClass); 
+        parent.add(link);
+        link.add(new Label("menuItemText", text));
+    }
+    
+    private void addLoginMenuLink(BoxBorder navigationBorder) {
+        BookmarkablePageLink loginLink = 
+                new BookmarkablePageLink("loginLogOffMenuItemLink", 
+                        Login.class); 
+        navigationBorder.add(loginLink);
+        loginLink.add(new Label("loginLogoffText", "Log på"));
+    }
+
+    private void addLogoffMenuLink(BoxBorder navigationBorder,
+            final WicketSession session) {
+        Link logoffLink = new Link("loginLogOffMenuItemLink") {
+            @Override
+            public void onClick() {
+                session.setApplicationUser(null);
+                setResponsePage(HomePage.class);
+            }
+        };
+        navigationBorder.add(logoffLink);
+        logoffLink.add(new Label("loginLogoffText", "Log af"));
     }
 }

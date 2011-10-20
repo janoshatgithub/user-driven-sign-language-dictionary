@@ -30,7 +30,7 @@ public final class Login extends BasePage {
     private TextField<String> userLogin;
     private TextField<String> password;
     private Image errorIconImage = new Image("erroricon", 
-            new ResourceReference(BasePage.class, "icons/error.png"));
+            new ResourceReference(BasePage.class, "icons/attention.png"));
     
     /**
      * Constructor.
@@ -111,7 +111,7 @@ public final class Login extends BasePage {
         form.add(new Button("login") {
             @Override
             public void onSubmit() {
-                ApplicationUser user = new ApplicationUser("x", "x", "x", "x",
+                ApplicationUser user = new ApplicationUser("x", "x", "Tanja Kikkenborg", "x",
                         UserRole.NORMAL);
                 WicketSession.get().setApplicationUser(user);
                 setResponsePage(HomePage.class);

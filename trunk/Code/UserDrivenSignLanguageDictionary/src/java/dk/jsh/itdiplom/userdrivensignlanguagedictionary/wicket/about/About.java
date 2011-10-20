@@ -1,16 +1,16 @@
-package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request;
+package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 
 /**
- * Request page.
- * 
+ * About page.
+ *
  * @author Jan S. Hansen
  */
-public final class Request extends BasePage {
+public final class About extends BasePage {
 
-    public Request() {
+    public About() {
         add(new MenuBorder("mainNavigation"));
     }
 }

@@ -1,6 +1,7 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about.About;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser.CreateUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
@@ -37,6 +38,7 @@ public class MenuBorder extends Border
         navigationBorder.add(repeatingView);
         
         addMenuLink(repeatingView, HomePage.class, "Søg");
+        addMenuLink(repeatingView, About.class, "Om denne side");
         if (session.isAuthenticated()) {
             addMenuLink(repeatingView, Request.class, "Forespørgelse");
             addLogoffMenuLink(navigationBorder, session);

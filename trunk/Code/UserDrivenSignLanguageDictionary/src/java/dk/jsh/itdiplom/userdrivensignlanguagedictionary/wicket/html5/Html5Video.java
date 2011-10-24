@@ -1,6 +1,7 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.html5;
 
 import java.util.List;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -24,6 +25,7 @@ public class Html5Video extends WebMarkupContainer {
             this.sources = wrap(model);
     }
 
+    
     @Override
     protected void onComponentTag(ComponentTag tag) {
         checkComponentTag(tag, "video");
@@ -44,7 +46,8 @@ public class Html5Video extends WebMarkupContainer {
             for (VideoSource videoSource : videoSources) {
                 buffer.append("\n<source ");
                 buffer.append("src='");
-                buffer.append(videoSource.getSource());
+                ResourceReference resourceReference = videoSource.getSource();
+                buffer.append(urlFor(resourceReference));
                 buffer.append("'");
                 String videoType = videoSource.getType().getVideoType(); 
                 if (videoType != null) {

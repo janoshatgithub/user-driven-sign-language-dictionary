@@ -24,10 +24,8 @@ public final class About extends BasePage {
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
         
-        
-        
         final List<VideoSource> videoSources = new ArrayList<VideoSource>();
-        videoSources.add(new VideoSource("movie.ogg", 
+        videoSources.add(new VideoSource(new ResourceReference(About.class, "movie.ogg"), 
                  VideoSource.VideoType.OGG));
         
         IModel<List<VideoSource>> videoSourceList = 

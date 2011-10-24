@@ -1,5 +1,7 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.html5;
 
+import org.apache.wicket.ResourceReference;
+
 /**
  * Video source.
  * 
@@ -21,19 +23,19 @@ public class VideoSource {
         }
     };
     
-    private String source;
+    private ResourceReference source;
     private VideoType type;
 
-    public VideoSource(String source, VideoType type) {
+    public VideoSource(ResourceReference source, VideoType type) {
         this.source = source;
         this.type = type;
     }
     
-    public String getSource() {
+    public ResourceReference getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(ResourceReference source) {
         this.source = source;
     }
 

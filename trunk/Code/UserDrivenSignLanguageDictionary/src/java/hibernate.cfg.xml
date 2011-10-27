@@ -7,5 +7,20 @@
     <property name="hibernate.connection.url">jdbc:derby://localhost:1527/sample</property>
     <property name="hibernate.connection.username">app</property>
     <property name="hibernate.connection.password">app</property>
+    
+    
+    <property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
+    <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
+    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/UDSLD</property>
+    <property name="hibernate.connection.username">app</property>
+    <property name="hibernate.connection.password">app</property>
+
+    <!-- Show and print nice SQL on stdout -->
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+
+    <!-- List of annotated classes -->
+    <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser" />
+    
   </session-factory>
 </hibernate-configuration>

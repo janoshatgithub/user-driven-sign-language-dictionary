@@ -68,4 +68,30 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target name="schemaexport">
+        
+        <path id="project.classpath">
+            <fileset dir="build/web/WEB-INF/lib">
+                <include name="**/*.jar"/>
+                <include name="**/*.zip"/>
+            </fileset>
+        </path>
+        
+        <taskdef name="hibernatetool"
+             classname="org.hibernate.tool.ant.HibernateToolTask"
+             classpathref="project.classpath"/>
+
+        <hibernatetool destdir=".">
+            <classpath path="build/web/WEB-INF/classes" />
+            <annotationconfiguration configurationfile="src/java/hibernate.cfg.xml" />
+            <hbm2ddl
+               drop="true"
+               create="true"
+               export="true"
+               outputfilename="ddl.sql"
+               delimiter=";"
+               format="true" />
+        </hibernatetool>
+    </target>
 </project>

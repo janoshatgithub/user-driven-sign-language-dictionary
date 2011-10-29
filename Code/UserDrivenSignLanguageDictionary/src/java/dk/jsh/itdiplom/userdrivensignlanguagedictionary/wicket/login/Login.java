@@ -48,9 +48,9 @@ public final class Login extends BasePage {
             //Handles required fields error.
             @Override
             protected void onError() {
-                List<String> emptyFields = new ArrayList<String>();
+                boolean emptyFields = false;
                 if (!userLogin.checkRequired()) {
-                    emptyFields.add("Login");
+                    emptyFields = true;
                     userLogin.add(new AttributeModifier("style", true,
                             new Model("border-color:red;")));
                 }
@@ -59,7 +59,7 @@ public final class Login extends BasePage {
                             new Model("border-color:default;")));
                 }
                 if (!password.checkRequired()) {
-                    emptyFields.add("Password");
+                    emptyFields = true;
                     password.add(new AttributeModifier("style", true,
                             new Model("border-color:red;")));
                 }
@@ -67,30 +67,9 @@ public final class Login extends BasePage {
                     password.add(new AttributeModifier("style", true,
                             new Model("border-color:default;")));
                 }
-                StringBuilder errorMessage = new StringBuilder();
-                if (emptyFields.size() > 0) {
-                    if (emptyFields.size() == 1) {
-                        errorMessage.append("Feltet ");
-                        errorMessage.append("'").append(emptyFields.get(0))
-                                .append("'");
-                    }
-                    else {
-                        errorMessage.append("Felterne ");
-                        int fieldCounter = 1;
-                        for (String field : emptyFields) {
-                            errorMessage.append("'").append(field).append("'");
-                            if (fieldCounter < emptyFields.size() -1) {
-                                errorMessage.append(", ");
-                            }
-                            if (fieldCounter == emptyFields.size() -1) {
-                                errorMessage.append(" og ");
-                            }
-                            fieldCounter++;
-                        }
-                    }
-                    errorMessage.append(" skal udfyldes.");
+                if (emptyFields) {
+                    setErrorMessage("Begge felter skal udfyldes.");
                 }
-                setErrorMessage(errorMessage.toString());
             }
          };
         borderBodyContainer.add(form);
@@ -124,13 +103,6 @@ public final class Login extends BasePage {
             }
       });
     }
-
-    /**
-     * Returns an error message
-     */
-//    public String getErrorMessage() {
-//        return errorMessage;
-//    }
 
     /**
      * Set error message.

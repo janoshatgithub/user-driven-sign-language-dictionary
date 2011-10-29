@@ -18,6 +18,7 @@ public abstract class BasePage extends WebPage {
             appUser =session.getApplicationUser(); 
         }
         add(new HeaderPanel("headerpanel", appUser)); 
-        add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen"));
+        add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen - "
+                + "Efteråret 2011"));
     } 
 }

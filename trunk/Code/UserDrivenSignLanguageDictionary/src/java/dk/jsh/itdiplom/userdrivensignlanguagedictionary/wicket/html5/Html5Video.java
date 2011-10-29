@@ -30,8 +30,8 @@ public class Html5Video extends WebMarkupContainer {
     protected void onComponentTag(ComponentTag tag) {
         checkComponentTag(tag, "video");
         tag.put("autobuffer", true);
-        tag.put("autoplay", true);
-        tag.put("loop", false);
+        //tag.put("autoplay", false);
+        //tag.put("loop", false);
         tag.put("controls", true);
         super.onComponentTag(tag);
     }

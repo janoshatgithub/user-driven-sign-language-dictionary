@@ -29,7 +29,7 @@ public class ApplicationUser implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length=50, nullable = false)
     protected String email;
-    @Column( nullable = true)
+    @Column(nullable = true)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date emailVerificationSent;
     @Column(nullable = true)

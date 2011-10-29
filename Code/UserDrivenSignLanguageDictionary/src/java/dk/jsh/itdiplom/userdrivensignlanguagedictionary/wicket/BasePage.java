@@ -1,5 +1,6 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;           
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import org.apache.wicket.markup.html.WebPage;
 
 /** 
@@ -12,11 +13,11 @@ public abstract class BasePage extends WebPage {
     public BasePage() { 
         super(); 
         WicketSession session = WicketSession.get();
-        String userName = null;
+        ApplicationUser appUser = null;
         if (session.isAuthenticated()) {
-            userName = session.getApplicationUser().getFullname();
+            appUser =session.getApplicationUser(); 
         }
-        add(new HeaderPanel("headerpanel", userName)); 
+        add(new HeaderPanel("headerpanel", appUser)); 
         add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen"));
     } 
 }

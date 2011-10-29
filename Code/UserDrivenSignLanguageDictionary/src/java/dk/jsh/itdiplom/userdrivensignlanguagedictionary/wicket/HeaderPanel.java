@@ -1,5 +1,6 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;           
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -12,19 +13,21 @@ public class HeaderPanel extends Panel {
 
     /**
      * Construct.
-     * @param componentName name of the component
+     * @param appUser Application user
      * @param exampleTitle title of the example
      */
-    public HeaderPanel(String componentName, String userName)
+    public HeaderPanel(String componentName, ApplicationUser appUser)
     {
         super(componentName);
-        String text = "Bruger: ";
-        if (userName != null) {
-            text += userName;
+        StringBuilder text = new StringBuilder("Bruger: ");
+        if (appUser != null) {
+            text.append(appUser.getFullname());
+            text.append(" - ");
+            text.append(appUser.getEmail());
         }
         else {
-            text += "Ikke logget på";
+            text.append("Ikke logget på");
         }
-        add(new Label("userName", text));
+        add(new Label("userName", text.toString()));
     }
 }

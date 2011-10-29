@@ -1,7 +1,7 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUserBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
-import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants.UserRole;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.HomePage;
@@ -111,25 +111,16 @@ public final class Login extends BasePage {
         form.add(new Button("login") {
             @Override
             public void onSubmit() {
-                ApplicationUser user = new ApplicationUser("x", "x", "Tanja Kikkenborg", "x",
-                        UserRole.NORMAL);
-                WicketSession.get().setApplicationUser(user);
-                setResponsePage(HomePage.class);
-                
-                /*
-                ApplicationUser bariUser =
-                        BariUserBusiness.isValidUser(userLogin.getModelObject(),
+                ApplicationUser appUser =
+                        ApplicationUserBusiness.isValidUser(userLogin.getModelObject(),
                         password.getModelObject());
-                if (bariUser != null) {
-                    BariSession bariSession = BariSession.get();
-                    bariSession.setBariUser(bariUser);
-                    setResponsePage(Overview.class);
+                if (appUser != null) {
+                    WicketSession.get().setApplicationUser(appUser);
+                    setResponsePage(HomePage.class);
                 }
                 else {
                     setErrorMessage("Fejl i login eller password.");
                 }
-                 
-                 */
             }
       });
     }

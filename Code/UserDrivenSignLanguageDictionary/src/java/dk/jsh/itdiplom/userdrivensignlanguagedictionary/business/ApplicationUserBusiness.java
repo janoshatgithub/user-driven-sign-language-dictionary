@@ -1,0 +1,46 @@
+package dk.jsh.itdiplom.userdrivensignlanguagedictionary.business;
+
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.HibernateUtil;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+/**
+ * Business metods for ApplicationUser.
+ *
+ * @author Jan S. Hansen
+ */
+public class ApplicationUserBusiness {
+
+    /**
+     * Gets a applicationUser from login and password.
+     * 
+     * @param login user login
+     * @param password password
+     * @return a ApplicationUser or null if login or password is wrong.
+     */
+    public static ApplicationUser isValidUser(String login, String password) {
+        ApplicationUser appUser = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "select appUser from "
+                + "dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity."
+                + "ApplicationUser appUser "
+                + "where appUser.login = :login "
+                + "and appUser.password = :password " 
+                + "and appUser.emailVerified is not null";
+        Query query = session.createQuery(hql);
+        query.setString("login", login);
+        query.setString("password", login);
+        List<ApplicationUser> appUsers = query.list();
+        if (appUsers.size() == 1) {
+            appUser = appUsers.get(0);
+        }
+        else if (appUsers.size() > 1) {
+            throw new RuntimeException("More then one user with login " +
+                    login);
+        }
+        session.close();
+        return appUser;
+    }
+}

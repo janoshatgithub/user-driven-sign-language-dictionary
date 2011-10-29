@@ -2,6 +2,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants.UserRole;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -28,6 +29,12 @@ public class ApplicationUser implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length=50, nullable = false)
     protected String email;
+    @Column( nullable = true)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    protected Date emailVerificationSent;
+    @Column(nullable = true)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    protected Date emailVerified;
     @Enumerated(EnumType.STRING)
     @Column(length=10, nullable = false)
     protected UserRole userRole;
@@ -36,7 +43,8 @@ public class ApplicationUser implements Serializable {
     }
 
     public ApplicationUser(String login, String password, String fullname,
-            String email, UserRole userRole) {
+            String email, Date emailVerificationSent,
+            Date emailVerified, UserRole userRole) {
         this.login = login;
         this.password = password;
         this.fullname = fullname;
@@ -88,7 +96,23 @@ public class ApplicationUser implements Serializable {
         this.password = password;
     }
 
-    public UserRole getUserRole() {
+    public Date getEmailVerificationSent() {
+        return emailVerificationSent;
+    }
+
+    public void setEmailVerificationSent(Date emailVerificationSent) {
+        this.emailVerificationSent = emailVerificationSent;
+    }
+
+    public Date getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Date emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+    
+     public UserRole getUserRole() {
         return userRole;
     }
 

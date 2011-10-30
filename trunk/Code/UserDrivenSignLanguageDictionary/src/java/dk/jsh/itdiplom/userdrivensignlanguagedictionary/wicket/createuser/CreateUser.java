@@ -1,9 +1,11 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUserBusiness;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
@@ -61,7 +63,7 @@ public final class CreateUser extends BasePage {
                 else {
                     userLogin.add(new AttributeModifier("style", true,
                             new Model("border-color:default;")));
-                };
+                }
                 if (!password.isValid()) {
                     setErrorMessage("Password skal være mindst 3 tegn langt");
                     password.add(new AttributeModifier("style", true,
@@ -71,7 +73,7 @@ public final class CreateUser extends BasePage {
                 else {
                     password.add(new AttributeModifier("style", true,
                             new Model("border-color:default;")));
-                };
+                }
                 
                 //Test if it is a valid email
                 if (!email.isValid()) {
@@ -183,7 +185,18 @@ public final class CreateUser extends BasePage {
                     repeatPassword.add(new AttributeModifier("style", true,
                             new Model("border-color:default;")));
                 }
-
+                
+                ApplicationUser newUser = new ApplicationUser(
+                        userLogin.getModelObject(),
+                        password.getModelObject(),
+                        fullName.getModelObject(),
+                        email.getModelObject(),
+                        new Date(),
+                        null, 
+                        Constants.UserRole.NORMAL);
+                
+                ApplicationUserBusiness.saveNew(newUser);
+                
                 //todo
                 setResponsePage(UserCreated.class);
             }

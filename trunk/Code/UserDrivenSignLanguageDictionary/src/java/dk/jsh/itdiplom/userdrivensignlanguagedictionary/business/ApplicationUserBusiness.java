@@ -5,6 +5,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * Business metods for ApplicationUser.
@@ -43,4 +44,17 @@ public class ApplicationUserBusiness {
         session.close();
         return appUser;
     }
+    
+    /**
+     * Persist a new Application user.
+     * 
+     * @param newUser a new ApplicationUser 
+     */
+    public static void saveNew(ApplicationUser newUser) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        session.save(newUser);
+        tx.commit();
+        session.close();
+    }    
 }

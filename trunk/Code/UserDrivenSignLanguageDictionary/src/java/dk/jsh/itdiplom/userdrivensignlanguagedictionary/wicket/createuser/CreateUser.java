@@ -4,10 +4,13 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUser
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.Application;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import java.util.Date;
+import javax.servlet.ServletContext;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
@@ -187,6 +190,19 @@ public final class CreateUser extends BasePage {
                             new Model("border-color:default;")));
                 }
                 
+                //Test if login is in use
+                if (ApplicationUserBusiness.isUserLoginInUse(
+                        userLogin.getModelObject())) {
+                    setErrorMessage("Bruger koden bruges af en anden bruger.");
+                    userLogin.add(new AttributeModifier("style", true,
+                            new Model("border-color:red;")));
+                    return;
+                } 
+                else {
+                    userLogin.add(new AttributeModifier("style", true,
+                            new Model("border-color:default;")));
+                }
+                
                 ApplicationUser newUser = new ApplicationUser(
                         userLogin.getModelObject(),
                         password.getModelObject(),
@@ -197,10 +213,18 @@ public final class CreateUser extends BasePage {
                         Constants.UserRole.NORMAL);
                 
                 //Try to send an e-mail
+                PageParameters pageParameters = new PageParameters("login=" 
+                        + userLogin.getModelObject());
+                CharSequence pageUrl = urlFor(EmailVerified.class, pageParameters);
+                //TODO: Fix this.
+                String fullURL = "http://localhost:8084/"
+                        + "UserDrivenSignLanguageDictionary/wicket/" 
+                        + pageUrl.toString();
+                String link = "<a href='" + fullURL +"'>Bekræft email</a>";
+                
                 EMailSender eMailSender = EMailSender.getInstance();
                 if (eMailSender.sendNoReplyEmail(email.getModelObject(),
-                        "Velkommen til Tegn til tiden", "TODO: Body")) {
-
+                        "Velkommen til Tegn til tiden", "TODO: Body " + link)) {
                     ApplicationUserBusiness.saveNew(newUser);
                     setResponsePage(UserCreated.class);
                 }

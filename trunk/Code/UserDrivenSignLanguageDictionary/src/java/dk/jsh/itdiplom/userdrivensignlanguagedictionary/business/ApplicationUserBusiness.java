@@ -2,6 +2,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.business;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.HibernateUtil;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -50,7 +51,7 @@ public class ApplicationUserBusiness {
     /**
      * Persist a new Application user.
      * 
-     * @param newUser a new ApplicationUser 
+     * @param newUser a new ApplicationUser
      */
     public static void saveNew(ApplicationUser newUser) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -59,4 +60,46 @@ public class ApplicationUserBusiness {
         tx.commit();
         session.close();
     }    
+    
+    /**
+     * Test if a user login is in use.
+     * 
+     * @param login user login to test
+     * @return true is user login is in use. 
+     */
+    public static boolean isUserLoginInUse(String login) {
+        boolean inUse = false;
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "select appUser "
+                + "from dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity."
+                + "ApplicationUser appUser "
+                + "where appUser.login = :login";
+        Query query = session.createQuery(hql);
+        query.setString("login", login);
+        if (query.list().isEmpty()) {
+            inUse = false;
+        }
+        else {
+            inUse = true;
+        };
+        session.close();
+        return inUse;
+    }
+    
+    public static void setEmailVerified(String login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "select appUser "
+                + "from dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity."
+                + "ApplicationUser appUser "
+                + "where appUser.login = :login";
+        Query query = session.createQuery(hql);
+        query.setString("login", login);
+        ApplicationUser user = (ApplicationUser)query.list().get(0);
+        user.setEmailVerified(new Date());
+        Transaction tx = session.beginTransaction();
+        session.save(user);
+        tx.commit();
+        session.close();
+    }
 }

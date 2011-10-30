@@ -49,6 +49,8 @@ public class ApplicationUser implements Serializable {
         this.password = password;
         this.fullname = fullname;
         this.email = email;
+        this.emailVerificationSent = emailVerificationSent;
+        this.emailVerified = emailVerified;
         this.userRole = userRole;
     }
 

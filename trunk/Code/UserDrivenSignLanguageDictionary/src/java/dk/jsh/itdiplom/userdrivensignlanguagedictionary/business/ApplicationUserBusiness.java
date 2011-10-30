@@ -13,6 +13,8 @@ import org.hibernate.Transaction;
  * @author Jan S. Hansen
  */
 public class ApplicationUserBusiness {
+    
+    private ApplicationUserBusiness(){};
 
     /**
      * Gets a applicationUser from login and password.

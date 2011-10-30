@@ -3,6 +3,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUserBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import java.util.Date;
@@ -195,10 +196,19 @@ public final class CreateUser extends BasePage {
                         null, 
                         Constants.UserRole.NORMAL);
                 
-                ApplicationUserBusiness.saveNew(newUser);
-                
-                //todo
-                setResponsePage(UserCreated.class);
+                //Try to send an e-mail
+                EMailSender eMailSender = EMailSender.getInstance();
+                if (eMailSender.sendNoReplyEmail(email.getModelObject(),
+                        "Velkommen til Tegn til tiden", "TODO: Body")) {
+
+                    ApplicationUserBusiness.saveNew(newUser);
+                    setResponsePage(UserCreated.class);
+                }
+                else {
+                    setErrorMessage("Kunne ikke afsende e-mail, tjek den "
+                            + "indtastede e-mail adresse. "
+                            + "Eller prøv igen senere.");
+                }
             }
         });
 

@@ -211,7 +211,22 @@ public final class CreateUser extends BasePage {
                         new Date(),
                         null, 
                         Constants.UserRole.NORMAL);
-                
+               
+                String mailBody = createMailBody();
+                EMailSender eMailSender = EMailSender.getInstance();
+                if (eMailSender.sendNoReplyEmail(email.getModelObject(),
+                        "Velkommen til Tegn til tiden", mailBody)) {
+                    ApplicationUserBusiness.saveNew(newUser);
+                    setResponsePage(UserCreated.class);
+                }
+                else {
+                    setErrorMessage("Kunne ikke afsende e-mail, tjek den "
+                            + "indtastede e-mail adresse. "
+                            + "Eller prøv igen senere.");
+                }
+            }
+
+            private String createMailBody() {
                 //Try to send an e-mail
                 PageParameters pageParameters = new PageParameters("login=" 
                         + userLogin.getModelObject());
@@ -221,18 +236,24 @@ public final class CreateUser extends BasePage {
                         + "UserDrivenSignLanguageDictionary/wicket/" 
                         + pageUrl.toString();
                 String link = "<a href='" + fullURL +"'>Bekræft email</a>";
-                
-                EMailSender eMailSender = EMailSender.getInstance();
-                if (eMailSender.sendNoReplyEmail(email.getModelObject(),
-                        "Velkommen til Tegn til tiden", "TODO: Body " + link)) {
-                    ApplicationUserBusiness.saveNew(newUser);
-                    setResponsePage(UserCreated.class);
-                }
-                else {
-                    setErrorMessage("Kunne ikke afsende e-mail, tjek den "
-                            + "indtastede e-mail adresse. "
-                            + "Eller prøv igen senere.");
-                }
+                String email = "<a href='mailto:jan.sch.hansen@gmail.com?"
+                        + "Subject=Spørgsmål til Tegn til tiden'>"
+                        + "jan.sch.hansen@gmail.com</a>";
+                StringBuilder mailBody = new StringBuilder();
+                mailBody.append("Velkommen til Tegn til tiden. <br/><br/>");
+                mailBody.append("Før du kan logge på systemet skal du trykke ");
+                mailBody.append("på følgende link, for at bekrærft din mail adresse.<br/><br/>");
+                mailBody.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                mailBody.append(link);
+                mailBody.append("<br/><br/>");
+                mailBody.append("OBS! - Denne mail kan ikke besvares.<br/>");
+                mailBody.append("Eventuelle spørgsmål kan rettes til Jan Scrhøder Hansen på ");
+                mailBody.append("e-mail: ");
+                mailBody.append(email);
+                mailBody.append("<br/><br/>");
+                mailBody.append("Med venlig hilsen<br/>");
+                mailBody.append("Tegn til tiden");
+                return mailBody.toString();
             }
         });
 

@@ -69,6 +69,6 @@ public class EMailSender {
      */
     public boolean sendNoReplyEmail(String toEmailAddr, String subject, 
             String body) {
-        return sendEmail("NoReply@NoReply.dk", toEmailAddr, subject, body);
+        return sendEmail("NoReply@TegnTilTiden.dk", toEmailAddr, subject, body);
     }
 }

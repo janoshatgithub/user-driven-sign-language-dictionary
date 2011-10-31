@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- * BariUser entity class.
+ * Application user entity class.
  *
  * @author Jan S. Hansen
  */

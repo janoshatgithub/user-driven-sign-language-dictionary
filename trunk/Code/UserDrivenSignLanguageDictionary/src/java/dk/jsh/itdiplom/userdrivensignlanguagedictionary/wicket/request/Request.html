@@ -8,9 +8,26 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div style="width: 200px">
+    <div style="width: 600px">
         <h2>Foresp&oslash;rgelse</h2>
-        TODO
+        <form action="#" wicket:id="form">
+            <table border="1" width="100%">
+                <tr>
+                    <td>
+                        Vis:
+                        <span wicket:id="showAllRequest">
+                            <input type="radio">Mine</input>
+                            <input type="radio">Alle</input>
+                        </span>    
+                    </td>
+                    <td>
+                        <div style="float:right">
+                            Link to opret
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>    
     </div>    
 </span>
 </wicket:extend> 

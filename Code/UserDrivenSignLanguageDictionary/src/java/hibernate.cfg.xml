@@ -22,6 +22,8 @@
     <!-- List of annotated classes -->
     <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser" />
     <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup" />
+    <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word" />
+    <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroupWordRelation" />
     
   </session-factory>
 </hibernate-configuration>

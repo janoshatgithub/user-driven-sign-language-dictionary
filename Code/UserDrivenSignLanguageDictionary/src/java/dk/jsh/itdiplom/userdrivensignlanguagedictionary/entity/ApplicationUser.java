@@ -66,6 +66,10 @@ public class ApplicationUser implements Serializable {
         return version;
     }
 
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public String getFullname() {
         return fullname;
     }

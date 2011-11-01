@@ -53,6 +53,10 @@ public class WordGroup implements Serializable{
         return version;
     }
 
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+    
     public String getName() {
         return name;
     }

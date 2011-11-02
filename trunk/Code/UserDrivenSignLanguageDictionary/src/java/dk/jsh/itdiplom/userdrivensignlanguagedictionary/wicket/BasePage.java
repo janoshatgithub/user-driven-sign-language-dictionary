@@ -15,7 +15,7 @@ public abstract class BasePage extends WebPage {
         WicketSession session = WicketSession.get();
         ApplicationUser appUser = null;
         if (session.isAuthenticated()) {
-            appUser =session.getApplicationUser(); 
+            appUser = session.getApplicationUser(); 
         }
         add(new HeaderPanel("headerpanel", appUser)); 
         add(new FooterPanel("footerpanel", "Udviklet af Jan Schrøder Hansen - "

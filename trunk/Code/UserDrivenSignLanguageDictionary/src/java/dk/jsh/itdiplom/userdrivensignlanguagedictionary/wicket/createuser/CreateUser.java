@@ -4,11 +4,9 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUser
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
-import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.Application;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import java.util.Date;
-import javax.servlet.ServletContext;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
@@ -44,9 +42,6 @@ public final class CreateUser extends BasePage {
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
         
-        PropertyModel errorMessageModel =
-                new PropertyModel(this, "errorMessage");
-        borderBodyContainer.add(new Label("error", errorMessageModel));
         //Add a form as an inner class.
         Form form = new Form("form") {
             //Handles required fields error.
@@ -258,6 +253,9 @@ public final class CreateUser extends BasePage {
         });
 
         //Add error items
+        PropertyModel errorMessageModel =
+                new PropertyModel(this, "errorMessage");
+        borderBodyContainer.add(new Label("error", errorMessageModel));
         errorIconImage.setVisible(false);
         borderBodyContainer.add(errorIconImage);
     }

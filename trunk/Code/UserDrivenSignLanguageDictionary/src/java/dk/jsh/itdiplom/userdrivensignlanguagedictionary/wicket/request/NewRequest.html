@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:extend> 
+<span wicket:id = "mainNavigation">
+    <div style="width: 600px">
+        <h2>Opret foresp&oslash;rgelse</h2>
+        <form action="#" wicket:id="form">
+            <table border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td style="width:170px">Ord der ønskes forslag til:</td>
+                        <td>
+                            <input wicket:id="word" type="text"
+                                   name="" value="" size="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top">Beskrivelse af ordet:</td>
+                        <td>
+                            <textarea wicket:id="description" rows="5" cols="50">
+                            </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div style="float:right">
+                                <input wicket:id="save" type="submit"
+                                       value="Gem" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>  
+        <div id="error">
+            <table align="center">
+                <tr>
+                    <td><img wicket:id="erroricon"/></td>
+                    <td><span wicket:id="error">Error message goes here</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>    
+</span>
+</wicket:extend> 
+</body>
+</html>

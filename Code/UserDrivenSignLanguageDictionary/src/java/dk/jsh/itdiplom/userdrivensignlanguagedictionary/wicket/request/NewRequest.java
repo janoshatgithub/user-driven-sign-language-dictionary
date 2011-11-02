@@ -1,7 +1,11 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
+import java.util.Date;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
@@ -82,7 +86,15 @@ public final class NewRequest extends BasePage {
         form.add(new Button("save") {
             @Override
             public void onSubmit() {
+                //Test if word exists
+                //TODO
+                WicketSession session = WicketSession.get();
+                Word newWord = new Word(word.getModelObject(), 
+                        description.getModelObject(), new Date(), 
+                        session.getApplicationUser());
                 
+                WordBusiness.saveNew(newWord);
+                setResponsePage(Request.class);
             }
         });
         

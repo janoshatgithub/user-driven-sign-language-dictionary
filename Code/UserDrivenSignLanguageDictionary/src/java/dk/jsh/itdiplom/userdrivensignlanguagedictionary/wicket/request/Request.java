@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 
 /**
@@ -36,8 +37,10 @@ public final class Request extends BasePage {
         userOrAll.setSuffix("");
         form.add(userOrAll);
         
-        
-        
-        
+        //Link to create new request
+        BookmarkablePageLink createNewLink = 
+                new BookmarkablePageLink("createLink", 
+                        NewRequest.class);
+        form.add(createNewLink);
     }
 }

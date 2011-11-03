@@ -1,20 +1,25 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordGroupBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import java.util.Date;
+import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
@@ -24,14 +29,22 @@ import org.apache.wicket.model.PropertyModel;
  * @author Jan S. Hansen
  */
 public final class NewRequest extends BasePage {
+
+    private static class WorkGroup {
+
+        public WorkGroup() {
+        }
+    }
     private String errorMessage = "";
     private TextField<String> word;
     private TextArea<String> description;
     private Image errorIconImage = new Image("erroricon", 
             new ResourceReference(BasePage.class, "icons/attention.png"));
     
+    private WorkGroup selectedWorkGroup;
 
     public NewRequest() {
+        
         MenuBorder menuBorder = new MenuBorder("mainNavigation"); 
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
@@ -81,6 +94,18 @@ public final class NewRequest extends BasePage {
         description = new TextArea("description", new Model(""));
         description.setRequired(true);
         form.add(description);
+        
+        DropDownChoice<WordGroup> existingWordGroupChoice = 
+            new DropDownChoice<WordGroup>("existingGroups", 
+                    null,
+                    new LoadableDetachableModel<List<WordGroup>>() {
+                        @Override
+                        protected List<WordGroup> load() {
+                            return WordGroupBusiness.getAllWordGroups();
+                        }
+                    }
+                );        
+        form.add(existingWordGroupChoice);
         
         //Add button to the form.
         form.add(new Button("save") {

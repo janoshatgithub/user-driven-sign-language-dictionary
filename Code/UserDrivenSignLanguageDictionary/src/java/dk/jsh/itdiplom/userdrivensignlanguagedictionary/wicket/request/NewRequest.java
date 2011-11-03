@@ -87,7 +87,18 @@ public final class NewRequest extends BasePage {
             @Override
             public void onSubmit() {
                 //Test if word exists
-                //TODO
+                if (WordBusiness.isWordInUse(word.getModelObject())) {
+                    setErrorMessage("Ordet findes i forvejen.");
+                    word.add(new AttributeModifier("style", true,
+                            new Model("border-color:red;")));
+                    return;
+                } 
+                else {
+                    word.add(new AttributeModifier("style", true,
+                            new Model("border-color:default;")));
+                }
+                
+                //Save
                 WicketSession session = WicketSession.get();
                 Word newWord = new Word(word.getModelObject(), 
                         description.getModelObject(), new Date(), 
@@ -113,5 +124,4 @@ public final class NewRequest extends BasePage {
         this.errorMessage = errorMessage;
         errorIconImage.setVisible(true);
     }
-   
 }

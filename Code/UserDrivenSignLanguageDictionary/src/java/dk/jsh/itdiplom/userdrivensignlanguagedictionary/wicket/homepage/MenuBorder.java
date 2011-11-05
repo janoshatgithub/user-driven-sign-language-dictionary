@@ -40,7 +40,7 @@ public class MenuBorder extends Border
         addMenuLink(repeatingView, HomePage.class, "Søg");
         addMenuLink(repeatingView, About.class, "Om denne side");
         if (session.isAuthenticated()) {
-            addMenuLink(repeatingView, Request.class, "Forespørgelse");
+            addMenuLink(repeatingView, Request.class, "Mine forespørgelser");
             addLogoffMenuLink(navigationBorder, session);
         }
         else {

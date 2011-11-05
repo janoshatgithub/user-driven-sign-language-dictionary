@@ -10,26 +10,39 @@
 <span wicket:id = "mainNavigation">
     <div style="width: 600px">
         <h2>Foresp&oslash;rgelse</h2>
-        <form action="#" wicket:id="form">
-            <table border="1" width="100%">
-                <tr>
-                    <td>
+        <table border="0" width="100%">
+            <tr>
+                <td>
+                    <form action="#" wicket:id="form">
                         Vis:
                         <span wicket:id="showAllRequest">
                             <input type="radio">Mine</input>
                             <input type="radio">Alle</input>
                         </span>    
-                    </td>
-                    <td>
-                        <div style="float:right">
-                            <a href="#" wicket:id="createLink">
-                                Opret
-                            </a>
+                    </form>
+                </td>
+                <td>
+                    <div style="float:right">
+                        <a href="#" wicket:id="createLink">
+                            Opret
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" >
+                    <fieldset>
+                        <div wicket:id="pageable">
+                            <b><span wicket:id="word">Ord</span></b><br/>
+                            &nbsp;&nbsp;&nbsp;Oprettet den <span wicket:id="created"></span> af <span wicket:id="byUser"></span><br/>
                         </div>
-                    </td>
-                </tr>
-            </table>
-        </form>    
+                   </fieldset>
+                </td>
+            </tr>
+        </table>
+        <div style="float:right">
+            <span wicket:id="navigator">[dataview navigator]</span>
+        </div>
     </div>    
 </span>
 </wicket:extend> 

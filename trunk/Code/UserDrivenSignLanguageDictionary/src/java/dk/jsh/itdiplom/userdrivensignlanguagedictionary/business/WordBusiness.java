@@ -2,6 +2,8 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.business;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.HibernateUtil;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -51,5 +53,24 @@ public class WordBusiness {
         };
         session.close();
         return inUse;
+    }
+    
+    /**
+     * Get all word.
+     * 
+     * @return A list of Word.
+     */
+    public static List<Word> getAllWords() {
+        List<Word> wordList = new ArrayList<Word>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = 
+                  "select word from "
+                + "dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity."
+                + "Word word "
+                + "order by word.word";
+        Query query = session.createQuery(hql);
+        wordList = query.list();
+        session.close();
+        return wordList;
     }
 }

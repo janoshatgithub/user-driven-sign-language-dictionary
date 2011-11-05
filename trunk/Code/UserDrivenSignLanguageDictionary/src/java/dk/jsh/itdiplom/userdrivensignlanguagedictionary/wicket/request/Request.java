@@ -2,7 +2,9 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 
 import java.util.Arrays;
@@ -23,26 +25,11 @@ import org.apache.wicket.model.PropertyModel;
  * @author Jan S. Hansen
  */
 public final class Request extends BasePage {
-    //choices in radio button
-    private static final List<String> radioChoices = Arrays
-			.asList(new String[] {"Mine", "Alle"});
-    private String selected = "Mine";
 
     public Request() {
         MenuBorder menuBorder = new MenuBorder("mainNavigation"); 
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
-        Form form = new Form("form") {
-            
-            
-        };
-        borderBodyContainer.add(form);
-        
-        RadioChoice<String> userOrAll = new RadioChoice<String>(
-            "showAllRequest", new PropertyModel<String>(this, "selected"), 
-                radioChoices);
-        userOrAll.setSuffix("");
-        form.add(userOrAll);
         
         //Link to create new request
         BookmarkablePageLink createNewLink = 
@@ -50,9 +37,11 @@ public final class Request extends BasePage {
                         NewRequest.class);
         borderBodyContainer.add(createNewLink);
         
-        List<Word> allWords = WordBusiness.getAllWords();
+        WicketSession wicketSession = WicketSession.get();
+        List<Word> allWords = 
+                WordBusiness.getAllWordsCreatedByUser(wicketSession.getApplicationUser());
         PageableListView pageableListView =
-                new PageableListView("pageable", allWords, 10) {
+                new PageableListView("pageable", allWords, 5) {
             @Override
             protected void populateItem(final ListItem item) {
                 final Word word = (Word)item.getModelObject();
@@ -61,8 +50,33 @@ public final class Request extends BasePage {
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
                 item.add(new Label("byUser", 
                         word.getRequestCreatedBy().getFullname())); 
+                List<String> wordGroupList = word.getSortedWordGroups();
+                item.add(new Label("groups", makeWordGroupString(wordGroupList)));
+            }
+
+            private String makeWordGroupString(List<String> wordGroupList) {
+                StringBuilder groups = new StringBuilder();
+                int noOfGroups = wordGroupList.size();
+                if (noOfGroups > 0) {
+                    for (int i = 0; i < noOfGroups; i++) {
+                        String wordGroup = wordGroupList.get(i);
+                        if (i > 0 && i < noOfGroups - 1) {
+                            groups.append(", ");
+                        }
+                        else if (i == noOfGroups -1) {
+                            groups.append(" og ");
+                        }
+                        groups.append(wordGroup);
+                    }
+                }
+                else {
+                    groups.append("Ikke tilknyttet nogen gruppe");
+                }
+                groups.append(".");
+                return groups.toString();
             }
         };
+        
         borderBodyContainer.add(pageableListView);
         borderBodyContainer.add(new PagingNavigator("navigator", pageableListView));
         

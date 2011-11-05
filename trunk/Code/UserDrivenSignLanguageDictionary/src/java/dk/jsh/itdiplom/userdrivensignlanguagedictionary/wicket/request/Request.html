@@ -8,33 +8,30 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div style="width: 600px">
-        <h2>Foresp&oslash;rgelse</h2>
+    <div>
+        <h2>Mine foresp&oslash;rgelser</h2>
         <table border="0" width="100%">
             <tr>
                 <td>
-                    <form action="#" wicket:id="form">
-                        Vis:
-                        <span wicket:id="showAllRequest">
-                            <input type="radio">Mine</input>
-                            <input type="radio">Alle</input>
-                        </span>    
-                    </form>
-                </td>
-                <td>
                     <div style="float:right">
                         <a href="#" wicket:id="createLink">
-                            Opret
+                            Opret ny forespørgelse
+                        </a>
+                        &nbsp;
+                        <a href="#">
+                            Mine grupper - TODO
                         </a>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" >
+                <td>
                     <fieldset>
+                        <legend>Mine foresp&oslash;rgelser</legend>
                         <div wicket:id="pageable">
                             <b><span wicket:id="word">Ord</span></b><br/>
                             &nbsp;&nbsp;&nbsp;Oprettet den <span wicket:id="created"></span> af <span wicket:id="byUser"></span><br/>
+                            &nbsp;&nbsp;&nbsp;Grupper: <span wicket:id="groups"></span><br/>
                         </div>
                    </fieldset>
                 </td>

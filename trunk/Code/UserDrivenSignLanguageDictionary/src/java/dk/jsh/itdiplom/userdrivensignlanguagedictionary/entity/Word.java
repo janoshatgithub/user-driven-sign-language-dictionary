@@ -1,7 +1,10 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -29,6 +32,13 @@ public class Word implements Serializable {
     @ManyToOne(optional=false)
     @org.hibernate.annotations.ForeignKey(name="fk_word_applicationuser")
     protected ApplicationUser requestCreatedBy;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="WORDGROUPWORDRELATION",
+            joinColumns={@JoinColumn(name="WORD_ID")},
+            inverseJoinColumns={@JoinColumn(name="WORDGROUP_ID")}
+            )
+    protected List<WordGroup> wordGroups;
 
     public Word() {
     }
@@ -87,5 +97,18 @@ public class Word implements Serializable {
 
     public void setCreatedDateTime(Date createdDateTime) {
         this.createdDateTime = createdDateTime;
+    }
+
+    public List<WordGroup> getWordGroups() {
+        return wordGroups;
+    }
+    
+    public List<String> getSortedWordGroups() {
+        List<String> list = new ArrayList<String>();
+        for (WordGroup wordGroup: wordGroups) {
+            list.add(wordGroup.name);
+        }
+        Collections.sort(list);
+        return list;
     }
 }

@@ -2,22 +2,20 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
-import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 
-import java.util.Arrays;
 import java.util.List;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.Model;
 
 /**
  * Request page.
@@ -45,11 +43,12 @@ public final class Request extends BasePage {
             @Override
             protected void populateItem(final ListItem item) {
                 final Word word = (Word)item.getModelObject();
-                item.add(new Label("word", word.getWord()));
+                Label wordLabel = new Label("word", word.getWord());
+                wordLabel.add(new AttributeModifier("title",
+                        new Model(word.getDescription())));
+                item.add(wordLabel);
                 item.add(new Label("created", 
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
-                item.add(new Label("byUser", 
-                        word.getRequestCreatedBy().getFullname())); 
                 List<String> wordGroupList = word.getSortedWordGroups();
                 item.add(new Label("groups", makeWordGroupString(wordGroupList)));
             }

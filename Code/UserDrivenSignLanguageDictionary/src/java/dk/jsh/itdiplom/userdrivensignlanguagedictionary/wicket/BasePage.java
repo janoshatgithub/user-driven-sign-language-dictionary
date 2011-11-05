@@ -1,6 +1,7 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;           
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+import java.text.SimpleDateFormat;
 import org.apache.wicket.markup.html.WebPage;
 
 /** 
@@ -9,6 +10,8 @@ import org.apache.wicket.markup.html.WebPage;
  * @author Jan S. Hansen
  */
 public abstract class BasePage extends WebPage {
+    protected final static SimpleDateFormat standardDateTimeFormat =
+        new SimpleDateFormat("dd/MM-yyyy HH:mm");
 
     public BasePage() { 
         super(); 

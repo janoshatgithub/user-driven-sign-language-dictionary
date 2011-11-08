@@ -6,8 +6,10 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
 import java.util.List;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -47,8 +49,8 @@ public final class Request extends BasePage {
                 Link wordLink = new Link("wordLink") {
                     @Override
                     public void onClick() {
-                        //Page page = new Update(bariCase);
-                        //setResponsePage(page);
+                        Page page = new SelectedWord(word);
+                        setResponsePage(page);
                     }
                 };
                 wordLink.add(new AttributeModifier("title", true,

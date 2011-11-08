@@ -44,9 +44,19 @@ public final class Request extends BasePage {
             protected void populateItem(final ListItem item) {
                 final Word word = (Word)item.getModelObject();
                 Label wordLabel = new Label("word", word.getWord());
-                wordLabel.add(new AttributeModifier("title",
-                        new Model(word.getDescription())));
-                item.add(wordLabel);
+                Link wordLink = new Link("wordLink") {
+                    @Override
+                    public void onClick() {
+                        //Page page = new Update(bariCase);
+                        //setResponsePage(page);
+                    }
+                };
+                wordLink.add(new AttributeModifier("title", true,
+                    new Model(word.getDescription())));
+                wordLink.add(wordLabel);
+                item.add(wordLink);
+
+                
                 item.add(new Label("created", 
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
                 List<String> wordGroupList = word.getSortedWordGroups();

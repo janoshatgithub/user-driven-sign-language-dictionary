@@ -4,6 +4,8 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Upload;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.link.Link;
@@ -15,7 +17,7 @@ import org.apache.wicket.markup.html.link.Link;
  */
 public final class SelectedWord extends BasePage {
 
-    public SelectedWord(Word word) {
+    public SelectedWord(final Word word) {
         MenuBorder menuBorder = new MenuBorder("mainNavigation"); 
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
@@ -24,6 +26,8 @@ public final class SelectedWord extends BasePage {
         Link uploadLink = new Link("uploadLink") {
             @Override
             public void onClick() {
+                Page page = new Upload(word);
+                setResponsePage(page);
             }
         };
         WicketSession wicketSession = WicketSession.get();

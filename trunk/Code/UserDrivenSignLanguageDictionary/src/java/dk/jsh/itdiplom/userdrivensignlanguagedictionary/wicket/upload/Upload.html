@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:extend> 
+<span wicket:id = "mainNavigation">
+    <h2>Upload forslag til ord: <span wicket:id="word">[word]</span></h2>
+    <table border="0">
+        <tr>
+            <td>
+                <div style="float:right">
+                    <a href="#" wicket:id="back">Tilbage</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <form wicket:id="form">
+                    <label>Vælg video fil:</label>&nbsp; 
+                    <input wicket:id="fileUpload" size="50" type="file"/>&nbsp;
+                    <input type="submit" value="Upload"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div wicket:id="feedback"></div>
+            </td>
+        </tr>
+    </table>
+    <div id="error">
+        <table align="center">
+            <tr>
+                <td><img wicket:id="erroricon"/></td>
+                <td><span wicket:id="error">Error message goes here</span></td>
+            </tr>
+        </table>
+    </div>
+</span>
+</wicket:extend> 
+</body>
+</html>

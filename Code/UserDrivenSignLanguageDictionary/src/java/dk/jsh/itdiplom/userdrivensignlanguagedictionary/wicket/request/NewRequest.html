@@ -8,55 +8,53 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div>
-        <h2>Opret foresp&oslash;rgelse</h2>
-        <form action="#" wicket:id="form">
-            <table border="0" width="100%">
-                <tbody>
-                    <tr>
-                        <td style="width:170px">Ord der ønskes forslag til:</td>
-                        <td>
-                            <input wicket:id="word" type="text"
-                                   name="" value="" size="50" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top">Beskrivelse af ordet:</td>
-                        <td>
-                            <textarea wicket:id="description" rows="5" cols="50">
-                            </textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table border="0" width="100%">
-                <tbody>
-                   <tr>
-                       <td>&nbsp;</td>
-                   </tr>
-                    <tr>
-                        <td>
-                            <div style="float:right">
-                                <input wicket:id="save" type="submit"
-                                       value="Gem" />
-                                &nbsp;
-                                <input  type="submit"
-                                       value="Gem og tilknyt grupper - TODO" />
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>  
-        <div id="error">
-            <table align="center">
+    <h2>Opret foresp&oslash;rgelse</h2>
+    <form action="#" wicket:id="form">
+        <table border="0" width="100%">
+            <tbody>
                 <tr>
-                    <td><img wicket:id="erroricon"/></td>
-                    <td><span wicket:id="error">Error message goes here</span></td>
+                    <td style="width:170px">Ord der ønskes forslag til:</td>
+                    <td>
+                        <input wicket:id="word" type="text"
+                               name="" value="" size="50" />
+                    </td>
                 </tr>
-            </table>
-        </div>
-    </div>    
+                <tr>
+                    <td style="vertical-align: top">Beskrivelse af ordet:</td>
+                    <td>
+                        <textarea wicket:id="description" rows="5" cols="50">
+                        </textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="0" width="100%">
+            <tbody>
+               <tr>
+                   <td>&nbsp;</td>
+               </tr>
+                <tr>
+                    <td>
+                        <div style="float:right">
+                            <input wicket:id="save" type="submit"
+                                   value="Gem" />
+                            &nbsp;
+                            <input  type="submit"
+                                   value="Gem og tilknyt grupper - TODO" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>  
+    <div id="error">
+        <table align="center">
+            <tr>
+                <td><img wicket:id="erroricon"/></td>
+                <td><span wicket:id="error">Error message goes here</span></td>
+            </tr>
+        </table>
+    </div>
 </span>
 </wicket:extend> 
 </body>

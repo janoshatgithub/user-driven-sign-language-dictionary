@@ -4,7 +4,14 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.logging.Logger;
 import org.apache.wicket.Page;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
@@ -23,6 +30,8 @@ import org.apache.wicket.model.PropertyModel;
  * @author Jan S. Hansen
  */
 public final class Upload extends BasePage {
+    static final Logger logger = Logger.getLogger(Upload.class.getName());
+    
     private FileUploadField fileUpload;
     private String UPLOAD_FOLDER = "C:\\Temp\\Upload\\";
     private String errorMessage = "";
@@ -46,6 +55,7 @@ public final class Upload extends BasePage {
         Form form = new Form("form") {
             @Override
             protected void onSubmit() {
+                logger.info("Upload started");
                 errorIconImage.setVisible(false);
                 final FileUpload uploadedFile = fileUpload.getFileUpload();
 		if (uploadedFile != null) {
@@ -58,11 +68,20 @@ public final class Upload extends BasePage {
                     try {
                         newFile.createNewFile();
                         uploadedFile.writeTo(newFile);
+                        Runtime runtime = Runtime.getRuntime();
+                        String cmdLine = "C:\\GoogleCode\\"
+                                + "user-driven-sign-language-dictionary"
+                                + "\\ffmpeg2theora-0.28.exe "  
+                                + " -o " + UPLOAD_FOLDER + "jan.ogv " 
+                                + UPLOAD_FOLDER + newFile.getName();
+ 
+                        
+                        
                         info("Filen " + newFile.getName() +
-                                " er uploaded.");
+                                " er uploaded og konverteret.");
                     }
                     catch (Exception exception) {
-                        setErrorMessage("Fejl under upload.");
+                        setErrorMessage("Fejl under upload og konvertering.");
                     }
         	}
             }

@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import org.apache.log4j.Logger;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Convert video files to the OGG video format.
@@ -13,8 +13,7 @@ import org.apache.log4j.Logger;
  * @author Jan S. Hansen
  */
 public class ConvertVideo {
-    static final Logger logger = Logger.getLogger(ConvertVideo.class);
-    
+    static final Logger logger = Logger.getLogger(ConvertVideo.class.getName());
     
     /**
      * Convert video file til ogg file format.
@@ -33,13 +32,16 @@ public class ConvertVideo {
         cmdLine.append(" ");
         cmdLine.append(source);
         try {
+            logger.info("Convert video: " + cmdLine.toString());
             Process process = runtime.exec(cmdLine.toString());
             
+            //Start thread to read standard error
             ProcessOutput err = new ProcessOutput(process.getErrorStream(), 
                     "ERR");
             Thread errThread = new Thread(err);
             errThread.start();
             
+            //Start thread to read standard output
             ProcessOutput std = new ProcessOutput(process.getInputStream(), 
                     "STD");
             Thread stdThread = new Thread(std);
@@ -47,7 +49,7 @@ public class ConvertVideo {
 
             process.waitFor();
         } catch (Exception exception) {
-            logger.error("Error converting video", exception);
+            logger.log(Level.SEVERE, "Error converting video", exception);
             return false;
         }
         return true;
@@ -72,7 +74,8 @@ public class ConvertVideo {
                     logger.info(type + ": " + line);
                 }
             } catch (IOException ex) {
-                logger.error("Error reading output of type " + type, ex);
+                logger.log(Level.SEVERE, "Error reading output of type " + type,
+                        ex);
             }
         }
     }

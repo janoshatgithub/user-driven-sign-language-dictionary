@@ -1,11 +1,14 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.util;
 
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.Application;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.wicket.ResourceReference;
 
 /**
  * Convert video files to the OGG video format.
@@ -53,6 +56,42 @@ public class ConvertVideo {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Create a OGV wicket resource name. Format UserId_xx_wordId_yy.ogv
+     * 
+     * @param userId User id
+     * @param wordId word id
+     * @return a OGV wicket resource name.
+     */
+    public String createOgvResourceName(String userId, String wordId) {
+        StringBuilder sb = new StringBuilder("UserId_");
+        sb.append(userId);
+        sb.append("_wordId_");
+        sb.append(wordId);
+        sb.append("_");
+        Date now = new Date();
+        sb.append(now.getTime());
+        sb.append(".ogv");
+        return sb.toString();
+    }
+    
+    /**
+     * Create ogv filename with full path
+     * 
+     * @param resourceName resource name
+     * @return filename
+     */
+    public String createOgvFilename(String resourceName) {
+        //TODO: Fix this
+        StringBuilder sb = new StringBuilder("C:\\GoogleCode\\"
+                + "user-driven-sign-language-dictionary\\Code\\"
+                + "UserDrivenSignLanguageDictionary\\build\\web\\"
+                + "WEB-INF\\classes\\dk\\jsh\\itdiplom\\"
+                + "userdrivensignlanguagedictionary\\wicket\\uploadedvideo\\");
+        sb.append(resourceName);
+        return sb.toString();
     }
     
     private class ProcessOutput implements Runnable {

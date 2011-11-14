@@ -3,6 +3,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.ConvertVideo;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
 import java.io.File;
@@ -51,8 +52,13 @@ public final class Upload extends BasePage {
                 errorIconImage.setVisible(false);
                 final FileUpload uploadedFile = fileUpload.getFileUpload();
 		if (uploadedFile != null) {
+                    WicketSession wicketSession = WicketSession.get();
+                    String userId = wicketSession.getApplicationUser().getId().
+                            toString();
+                    
                     // write to a new file
                     File newFile = new File(UPLOAD_FOLDER
+                            + "UserId_" + userId + "_" 
                             + uploadedFile.getClientFileName());
                     if (newFile.exists()) {
                             newFile.delete();
@@ -62,10 +68,15 @@ public final class Upload extends BasePage {
                         uploadedFile.writeTo(newFile);
                         
                         ConvertVideo cv = new ConvertVideo();
-                        cv.convert(UPLOAD_FOLDER + newFile.getName(), 
-                                UPLOAD_FOLDER + "ggg.ogv");
+                        String destVideoReferenceName = 
+                                cv.createOgvResourceName(
+                                userId,
+                                word.getId().toString());
+                        String destVideoPath = cv.createOgvFilename(
+                                destVideoReferenceName);
+                        cv.convert(newFile.getAbsolutePath() , destVideoPath);
                         
-                        info("Filen " + newFile.getName() +
+                        info("Filen " + uploadedFile.getClientFileName() +
                                 " er uploaded og konverteret.");
                     }
                     catch (Exception exception) {

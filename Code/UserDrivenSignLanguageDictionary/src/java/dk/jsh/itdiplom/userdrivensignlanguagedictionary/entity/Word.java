@@ -33,8 +33,9 @@ public class Word implements Serializable {
     @org.hibernate.annotations.ForeignKey(name="fk_word_applicationuser")
     protected ApplicationUser requestCreatedBy;
     @ManyToMany(fetch = FetchType.EAGER)
+    @OrderBy("name")
     @JoinTable(
-            name="WORDGROUPWORDRELATION",
+            name="WordGroupWordRelation",
             joinColumns={@JoinColumn(name="WORD_ID")},
             inverseJoinColumns={@JoinColumn(name="WORDGROUP_ID")}
             )

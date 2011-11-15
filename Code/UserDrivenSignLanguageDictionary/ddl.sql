@@ -5,12 +5,6 @@
     alter table VideoFile 
         drop constraint fk_file_word;
 
-    alter table WORDGROUPWORDRELATION 
-        drop constraint FKFBA15D1B95DF93D5;
-
-    alter table WORDGROUPWORDRELATION 
-        drop constraint FKFBA15D1BD17B663F;
-
     alter table Word 
         drop constraint fk_word_applicationuser;
 
@@ -26,8 +20,6 @@
     drop table ApplicationUser;
 
     drop table VideoFile;
-
-    drop table WORDGROUPWORDRELATION;
 
     drop table Word;
 
@@ -57,11 +49,6 @@
         toWord_id bigint not null,
         uploadedBy_id bigint not null,
         primary key (id)
-    );
-
-    create table WORDGROUPWORDRELATION (
-        WORD_ID bigint not null,
-        WORDGROUP_ID bigint not null
     );
 
     create table Word (
@@ -101,16 +88,6 @@
     alter table VideoFile 
         add constraint fk_file_word 
         foreign key (toWord_id) 
-        references Word;
-
-    alter table WORDGROUPWORDRELATION 
-        add constraint FKFBA15D1B95DF93D5 
-        foreign key (WORDGROUP_ID) 
-        references WordGroup;
-
-    alter table WORDGROUPWORDRELATION 
-        add constraint FKFBA15D1BD17B663F 
-        foreign key (WORD_ID) 
         references Word;
 
     alter table Word 

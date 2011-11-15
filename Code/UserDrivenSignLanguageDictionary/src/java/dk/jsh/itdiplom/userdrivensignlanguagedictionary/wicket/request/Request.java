@@ -57,7 +57,6 @@ public final class Request extends BasePage {
                     new Model(word.getDescription())));
                 wordLink.add(wordLabel);
                 item.add(wordLink);
-
                 
                 item.add(new Label("created", 
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 

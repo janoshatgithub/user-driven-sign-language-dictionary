@@ -24,6 +24,7 @@
     <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup" />
     <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word" />
     <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroupWordRelation" />
+    <mapping class="dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.VideoFile" />
     
   </session-factory>
 </hibernate-configuration>

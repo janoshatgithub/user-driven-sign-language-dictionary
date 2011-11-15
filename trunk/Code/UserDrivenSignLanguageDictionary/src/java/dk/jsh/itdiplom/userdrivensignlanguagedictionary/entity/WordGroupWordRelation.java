@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * Word group Word many to many relation.
+ * Word group/Word many to many relation.
  * 
  * @author Jan S. Hansen
  */

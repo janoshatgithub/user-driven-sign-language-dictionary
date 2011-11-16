@@ -16,6 +16,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 
 /**
@@ -43,9 +44,12 @@ public final class SelectedWord extends BasePage {
             uploadLink.setVisible(false);
         }
         borderBodyContainer.add(uploadLink);
-        
+        borderBodyContainer.add(new FeedbackPanel("feedback"));
         List<VideoFile> videoFileList = 
                 VideoFileBusiness.getAllVideoFilesForAWord(word);
+        if (videoFileList.size() == 0) {
+            info("Ingen forslag er uploadet.");
+        }
         PageableListView pageableListView =
                 new PageableListView("pageable", videoFileList, 5) {
             @Override

@@ -143,3 +143,11 @@ em {
     text-align: center;
     color: red;
 }
+
+.even {
+    background-color: #fff;
+}
+
+.odd {
+    background-color: #ececec;
+}

@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 
 /**
@@ -62,6 +63,14 @@ public final class Request extends BasePage {
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
                 List<String> wordGroupList = word.getSortedWordGroups();
                 item.add(new Label("groups", makeWordGroupString(wordGroupList)));
+                item.add(new AttributeModifier("class",
+                    true, new AbstractReadOnlyModel<String>() {
+                    @Override
+                    public String getObject()
+                    {
+                        return (item.getIndex() % 2 == 1) ? "even" : "odd";
+                    }
+                }));
             }
 
             private String makeWordGroupString(List<String> wordGroupList) {

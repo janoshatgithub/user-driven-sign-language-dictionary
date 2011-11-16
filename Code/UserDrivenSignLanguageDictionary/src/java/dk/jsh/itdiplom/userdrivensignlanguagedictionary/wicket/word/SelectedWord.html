@@ -30,10 +30,26 @@
                 <td>
                     <fieldset>
                         <legend>Forslag</legend>
+                        <div wicket:id="pageable">
+                            <table border="0">
+                                <tr>
+                                    <td>
+                                        Uploadet af 
+                                        <span wicket:id="byUser">[user]</span>
+                                        den 
+                                        <span wicket:id="dateTime">[dato/tid]</span>&nbsp;-&nbsp; 
+                                        <a href="#" wicket:id="videoLink" title="Vis video">Vis</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </fieldset>
                 </td>
             </tr>
         </table>
+        <div style="float:right">
+            <span wicket:id="navigator">[dataview navigator]</span>
+        </div>
     </div>    
 </span>
 </wicket:extend> 

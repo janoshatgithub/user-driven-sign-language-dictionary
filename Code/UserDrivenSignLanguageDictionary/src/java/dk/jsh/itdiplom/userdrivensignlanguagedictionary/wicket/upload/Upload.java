@@ -83,16 +83,23 @@ public final class Upload extends BasePage {
                                 destVideoReferenceName);
                         cv.convert(newFile.getAbsolutePath() , destVideoPath);
                         
-                        VideoFile videoFile = new VideoFile(fileName, 
-                                destVideoReferenceName, new Date(), user, word);
-                        VideoFileBusiness.saveNew(videoFile);
-                        
-                        info("Filen " + fileName +
-                                " er uploaded og konverteret.");
+                        File convertedFile = new File(destVideoPath);
+                        if (convertedFile.exists()) {
+
+                            VideoFile videoFile = new VideoFile(fileName, 
+                                    destVideoReferenceName, new Date(), user, word);
+                            VideoFileBusiness.saveNew(videoFile);
+
+                            info("Filen " + fileName +
+                                    " er uploaded og konverteret.");
+                        }
+                        else {
+                            setErrorMessage("Fejl ved konvertering af filen.");
+                        }
                     }
                     catch (Exception exception) {
                         logger.log(Level.SEVERE, "Error converting video", exception);
-                        setErrorMessage("Fejl under upload og konvertering.");
+                        setErrorMessage("Fejl under upload.");
                     }
         	}
             }

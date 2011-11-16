@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 
@@ -37,10 +38,15 @@ public final class Request extends BasePage {
                 new BookmarkablePageLink("createLink", 
                         NewRequest.class);
         borderBodyContainer.add(createNewLink);
+        borderBodyContainer.add(new FeedbackPanel("feedback"));
         
         WicketSession wicketSession = WicketSession.get();
         List<Word> allWords = 
                 WordBusiness.getAllWordsCreatedByUser(wicketSession.getApplicationUser());
+        if (allWords.size() == 0) {
+            info("Ingen forspørgelser.");
+        }
+        
         PageableListView pageableListView =
                 new PageableListView("pageable", allWords, 5) {
             @Override

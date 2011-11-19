@@ -12,9 +12,16 @@
     <table border="0">
         <tr>
             <td>
+                <div style="float:right">
+                    <a href="#" wicket:id="back">Tilbage</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <fieldset>
-                    <legend>Beskrivelse ordet</legend>
-                    <span wicket:id="description">[Description]</span>
+                    <legend>Beskrivelse af ordet</legend>
+                    <span wicket:id="wordDescription">[WordDescription]</span>
                 </fieldset>
             </td>
         </tr>
@@ -23,6 +30,14 @@
                 <video wicket:id="video" width="600"> 
                     Din browser uderstøtter ikke HTML5 Video.
                 </video>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Beskrivelse af video</legend>
+                    <span wicket:id="videoDescription">[VideoDescription]</span>
+                </fieldset>
             </td>
         </tr>
     </table>

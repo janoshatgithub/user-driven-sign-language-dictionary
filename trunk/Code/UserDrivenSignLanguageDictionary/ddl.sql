@@ -42,6 +42,7 @@
 
     create table VideoFile (
         id bigint not null generated always as identity,
+        description varchar(250),
         fileName varchar(100) not null,
         resourceName varchar(50) not null,
         uploadedDateTime timestamp not null,

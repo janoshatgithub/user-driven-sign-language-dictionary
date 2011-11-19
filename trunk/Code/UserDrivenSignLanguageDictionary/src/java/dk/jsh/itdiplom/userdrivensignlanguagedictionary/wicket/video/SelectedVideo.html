@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>SelectedVideo</title>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
-    </head>
-    <body>
-        <!--        <span wicket:id='mainNavigation'/> -->
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:extend> 
+<span wicket:id = "mainNavigation">
+    <h2>Forslag til: <span wicket:id="word">[word]</span></h2>
+    <table border="0">
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Beskrivelse ordet</legend>
+                    <span wicket:id="description">[Description]</span>
+                </fieldset>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <video wicket:id="video" width="600"> 
+                    Din browser uderstøtter ikke HTML5 Video.
+                </video>
+            </td>
+        </tr>
+    </table>
+</span>
+</wicket:extend> 
+</body>
 </html>

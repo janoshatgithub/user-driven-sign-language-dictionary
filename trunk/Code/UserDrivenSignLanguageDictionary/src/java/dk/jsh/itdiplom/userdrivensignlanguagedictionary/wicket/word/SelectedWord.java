@@ -7,6 +7,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Upload;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.video.SelectedVideo;
 import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
@@ -62,7 +63,8 @@ public final class SelectedWord extends BasePage {
                 Link videoLink = new Link("videoLink") {
                     @Override
                     public void onClick() {
-                        //TODO
+                        Page page = new SelectedVideo(word, videoFile);
+                        setResponsePage(page);
                     }
                 };
                 item.add(videoLink);

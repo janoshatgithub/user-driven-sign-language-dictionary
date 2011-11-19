@@ -30,6 +30,7 @@ public final class About extends BasePage {
         
         IModel<List<VideoSource>> videoSourceList = 
                 new AbstractReadOnlyModel<List<VideoSource>>() {
+            @Override
             public List<VideoSource> getObject() {
                 return videoSources;
             }
@@ -37,10 +38,5 @@ public final class About extends BasePage {
         Html5Video html5Video = new Html5Video("aboutVideo", videoSourceList);
         
         borderBodyContainer.add(html5Video);
-
-        
-        
-        
-        
     }
 }

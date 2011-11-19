@@ -104,6 +104,5 @@ public final class Request extends BasePage {
         
         borderBodyContainer.add(pageableListView);
         borderBodyContainer.add(new PagingNavigator("navigator", pageableListView));
-        
     }
 }

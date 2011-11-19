@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -8,14 +9,26 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div style="width: 600px">
-        <h2>Om denne side</h2>
-        TODO Video med skønne Tanja<br/>
-        <video wicket:id="aboutVideo" width="320" height="240"> 
-            Din browser uderstøtter ikke HTML5 Video.
-        </video>
-        <br/>xxx
-    </div>    
+    <h2>Om denne side</h2>
+    <table border="0">
+        <tr>
+            <td align="center">
+                <video wicket:id="aboutVideo"> 
+                    Din browser uderstøtter ikke HTML5 Video.
+                </video>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset>
+                    Denne side er tænkt som en brugerdreven dansk tegnsprogsordbog.<br/>
+                        Dvs. at man som bruger, af denne side, 
+                        kan spørger andre tegnsprogskyndige,<br/> 
+                        om hjælp til ord man ikke selv kender.
+                </fieldset>
+            </td>
+        </tr>
+    </table>
 </span>
 </wicket:extend> 
 </body>

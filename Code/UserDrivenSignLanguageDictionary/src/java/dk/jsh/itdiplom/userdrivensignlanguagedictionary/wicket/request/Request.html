@@ -8,60 +8,58 @@
 <body>
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div>
-        <h2>Mine foresp&oslash;rgelser</h2>
-        <table border="0" width="100%">
-            <tr>
-                <td>
-                    <div style="float:right">
-                        <a href="#" wicket:id="createLink">
-                            Opret ny forespørgelse
-                        </a>
-                        &nbsp;
-                        <a href="#">
-                            Mine grupper - TODO
-                        </a>
+    <h2>Mine foresp&oslash;rgelser</h2>
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <div style="float:right">
+                    <a href="#" wicket:id="createLink">
+                        Opret ny forespørgelse
+                    </a>
+                    &nbsp;
+                    <a href="#">
+                        Mine grupper - TODO
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Mine foresp&oslash;rgelser</legend>
+                    <div wicket:id="feedback"></div>
+                    <div wicket:id="pageable">
+                        <table border="0">
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#" wicket:id="wordLink"><span wicket:id="word">Ord</span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Oprettet den <span wicket:id="created"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Grupper: <span wicket:id="groups"></span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <fieldset>
-                        <legend>Mine foresp&oslash;rgelser</legend>
-                        <div wicket:id="feedback"></div>
-                        <div wicket:id="pageable">
-                            <table border="0">
-                                <tr>
-                                    <td colspan="2">
-                                        <a href="#" wicket:id="wordLink"><span wicket:id="word">Ord</span></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        Oprettet den <span wicket:id="created"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        &nbsp;
-                                    </td>
-                                    <td>
-                                        Grupper: <span wicket:id="groups"></span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                   </fieldset>
-                </td>
-            </tr>
-        </table>
-        <div style="float:right">
-            <span wicket:id="navigator">[dataview navigator]</span>
-        </div>
-    </div>    
+               </fieldset>
+            </td>
+        </tr>
+    </table>
+    <div style="float:right">
+        <span wicket:id="navigator">[dataview navigator]</span>
+    </div>
 </span>
 </wicket:extend> 
 </body>

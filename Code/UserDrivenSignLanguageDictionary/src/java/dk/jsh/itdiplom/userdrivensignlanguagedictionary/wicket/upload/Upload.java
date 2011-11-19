@@ -13,16 +13,19 @@ import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 /**
@@ -34,6 +37,7 @@ public final class Upload extends BasePage {
     static final Logger logger = Logger.getLogger(Upload.class.getName());
     
     private FileUploadField fileUpload;
+    private TextArea<String> description;
     private String UPLOAD_FOLDER = "C:\\Temp\\Upload\\";
     private String errorMessage = "";
     private Image errorIconImage = new Image("erroricon", 
@@ -54,6 +58,29 @@ public final class Upload extends BasePage {
         borderBodyContainer.add(back);
         
         Form form = new Form("form") {
+            @Override
+            protected void onError() {
+                if (emptyRequiredFields()) {
+                    setErrorMessage("'Vælg video fil' skal udfyldes.");
+                    return;
+                }
+            }
+
+            private boolean emptyRequiredFields() {
+                //Test for empty/required fields
+                boolean emptyFields = false;
+                if (!fileUpload.checkRequired()) {
+                    emptyFields = true;
+                    fileUpload.add(new AttributeModifier("style", true,
+                            new Model("border-color:red;")));
+                }
+                else {
+                    fileUpload.add(new AttributeModifier("style", true,
+                            new Model("border-color:default;")));
+                }
+                return emptyFields;
+            }
+            
             @Override
             protected void onSubmit() {
                 errorIconImage.setVisible(false);
@@ -87,11 +114,11 @@ public final class Upload extends BasePage {
                         if (convertedFile.exists()) {
 
                             VideoFile videoFile = new VideoFile(fileName, 
+                                    description.getModelObject(), 
                                     destVideoReferenceName, new Date(), user, word);
                             VideoFileBusiness.saveNew(videoFile);
-
-                            info("Filen " + fileName +
-                                    " er uploaded og konverteret.");
+                            Page page = new SelectedWord(word);
+                            setResponsePage(page);
                         }
                         else {
                             setErrorMessage("Fejl ved konvertering af filen.");
@@ -109,11 +136,13 @@ public final class Upload extends BasePage {
  
 	// max upload size, 10k
 	//form.setMaxSize(Bytes.kilobytes(10));
- 
-	form.add(fileUpload = new FileUploadField("fileUpload"));
+        fileUpload = new FileUploadField("fileUpload");
+	form.add(fileUpload);
+        fileUpload.setRequired(true);
+        description = new TextArea("description", new Model(""));
+        form.add(description);
         
         borderBodyContainer.add(form);
-        borderBodyContainer.add(new FeedbackPanel("feedback"));
         
         //Add error items
         PropertyModel errorMessageModel =

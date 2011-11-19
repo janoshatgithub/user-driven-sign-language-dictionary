@@ -23,15 +23,31 @@
         <tr>
             <td>
                 <form wicket:id="form">
-                    <label>Vælg video fil:</label>&nbsp; 
-                    <input wicket:id="fileUpload" size="50" type="file"/>&nbsp;
-                    <input type="submit" value="Upload"/>
+                    <table border="0">
+                        <tr>
+                            <td>
+                                <label>Vælg video fil:</label>&nbsp; 
+                                <input wicket:id="fileUpload" size="50" type="file"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Beskrivelse af video:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea wicket:id="description" rows="5" cols="60">
+                                </textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <input type="submit" value="Upload og gem"/>
+                            </td>
+                        </tr>
+                    </table>
                 </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div wicket:id="feedback"></div>
             </td>
         </tr>
     </table>

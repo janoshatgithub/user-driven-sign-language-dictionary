@@ -21,6 +21,8 @@ public class VideoFile implements Serializable {
     protected Integer version;
     @Column(length=100, nullable = false)
     protected String fileName;
+    @Column(length=250, nullable = true)
+    protected String description;
     @Column(length=50, nullable = false)
     protected String resourceName;
     @Column(nullable = false)
@@ -36,9 +38,11 @@ public class VideoFile implements Serializable {
     public VideoFile() {
     };
 
-    public VideoFile(String fileName, String resourceName, Date uploadedDateTime, 
+    public VideoFile(String fileName, String description, String resourceName,
+            Date uploadedDateTime, 
             ApplicationUser uploadedBy, Word toWord) {
         this.fileName = fileName;
+        this.description = description;
         this.resourceName = resourceName;
         this.uploadedDateTime = uploadedDateTime;
         this.uploadedBy = uploadedBy;
@@ -67,6 +71,14 @@ public class VideoFile implements Serializable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getResourceName() {

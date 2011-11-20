@@ -16,10 +16,6 @@
                     <a href="#" wicket:id="createLink">
                         Opret ny forespørgelse
                     </a>
-                    &nbsp;
-                    <a href="#">
-                        Mine grupper - TODO
-                    </a>
                 </div>
             </td>
         </tr>
@@ -31,24 +27,23 @@
                     <div wicket:id="pageable">
                         <table border="0">
                             <tr>
+                                <td>
+                                    <a href="#" wicket:id="wordLink" title="Vis forslag"> 
+                                        <span wicket:id="word">Ord</span>
+                                    </a>
+                                </td>
+                                <td align="right">
+                                    <a href="#" title="Ikke implementeret">Ret</a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2">
-                                    <a href="#" wicket:id="wordLink"><span wicket:id="word">Ord</span></a>
+                                    &nbsp;&nbsp;&nbsp;Oprettet den <span wicket:id="created"></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    Oprettet den <span wicket:id="created"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td>
-                                    Grupper: <span wicket:id="groups"></span>
+                                <td colspan="2">
+                                    &nbsp;&nbsp;&nbsp;Grupper: <span wicket:id="groups"></span>
                                 </td>
                             </tr>
                         </table>

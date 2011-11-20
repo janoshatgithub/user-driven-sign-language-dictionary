@@ -48,7 +48,7 @@ public final class Request extends BasePage {
         }
         
         PageableListView pageableListView =
-                new PageableListView("pageable", allWords, 5) {
+                new PageableListView("pageable", allWords, 4) {
             @Override
             protected void populateItem(final ListItem item) {
                 final Word word = (Word)item.getModelObject();

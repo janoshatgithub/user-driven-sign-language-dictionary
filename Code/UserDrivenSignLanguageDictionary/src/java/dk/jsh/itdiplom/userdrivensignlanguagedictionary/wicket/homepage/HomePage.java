@@ -3,7 +3,11 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Page;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
@@ -11,6 +15,12 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
@@ -24,7 +34,10 @@ public class HomePage extends BasePage {
     private TextField<String> searchFor;
     private Image errorIconImage = new Image("erroricon", 
             new ResourceReference(BasePage.class, "icons/attention.png"));
-
+    private List<Word> wordsFound = new ArrayList<Word>(); 
+    private PageableListView pageableListView;
+    private FeedbackPanel feedbackPanel;
+    
     public HomePage() {
         MenuBorder menuBorder = new MenuBorder("mainNavigation"); 
         add(menuBorder);
@@ -40,6 +53,7 @@ public class HomePage extends BasePage {
             @Override
             protected void onError() {
                 if (!searchFor.checkRequired()) {
+                    feedbackPanel.setVisible(false);
                     setErrorMessage("Søgefeltet skal udfyldes.");
                 }
             }
@@ -54,10 +68,79 @@ public class HomePage extends BasePage {
             @Override
             public void onSubmit() {
                 removeErrorMessage();
-                List<Word> words = 
-                        WordBusiness.search(searchFor.getModelObject());
+                wordsFound = WordBusiness.search(searchFor.getModelObject());
+                if (wordsFound.size() == 0) {
+                    feedbackPanel.setVisible(true);
+                    info("Ingen ord fundet.");
+                }
+                else {
+                    feedbackPanel.setVisible(false);
+                    pageableListView.setList(wordsFound);
+                }
             }
         });
+        
+        //Search results
+        feedbackPanel = new FeedbackPanel("feedback");
+        feedbackPanel.setVisible(false);
+        borderBodyContainer.add(feedbackPanel);
+        pageableListView =
+                new PageableListView("pageable", wordsFound, 4) {
+            @Override
+            protected void populateItem(final ListItem item) {
+                final Word word = (Word)item.getModelObject();
+                Label wordLabel = new Label("word", word.getWord());
+                Link wordLink = new Link("wordLink") {
+                    @Override
+                    public void onClick() {
+                        Page page = new SelectedWord(word);
+                        setResponsePage(page);
+                    }
+                };
+                wordLink.add(new AttributeModifier("title", true,
+                    new Model(word.getDescription())));
+                wordLink.add(wordLabel);
+                item.add(wordLink);
+                
+                item.add(new Label("created", 
+                        standardDateTimeFormat.format(word.getCreatedDateTime()))); 
+                List<String> wordGroupList = word.getSortedWordGroups();
+                item.add(new Label("groups", makeWordGroupString(wordGroupList)));
+                item.add(new AttributeModifier("class",
+                    true, new AbstractReadOnlyModel<String>() {
+                    @Override
+                    public String getObject()
+                    {
+                        return (item.getIndex() % 2 == 1) ? "even" : "odd";
+                    }
+                }));
+            }
+
+            private String makeWordGroupString(List<String> wordGroupList) {
+                StringBuilder groups = new StringBuilder();
+                int noOfGroups = wordGroupList.size();
+                if (noOfGroups > 0) {
+                    for (int i = 0; i < noOfGroups; i++) {
+                        String wordGroup = wordGroupList.get(i);
+                        if (i > 0 && i < noOfGroups - 1) {
+                            groups.append(", ");
+                        }
+                        else if (i == noOfGroups -1) {
+                            groups.append(" og ");
+                        }
+                        groups.append(wordGroup);
+                    }
+                }
+                else {
+                    groups.append("Ikke tilknyttet nogen gruppe");
+                }
+                groups.append(".");
+                return groups.toString();
+            }
+        };
+        
+        borderBodyContainer.add(pageableListView);
+        borderBodyContainer.add(new PagingNavigator("navigator", pageableListView));
     }
     
     /**

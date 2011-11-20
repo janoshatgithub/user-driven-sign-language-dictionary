@@ -26,7 +26,36 @@
             </tr>
         </table>
     </form>
+    <fieldset>
+        <legend>Resultat</legend>
+        <div wicket:id="feedback"></div>
+        <div wicket:id="pageable">
+            <table border="0">
+                <tr>
+                    <td>
+                        <a href="#" wicket:id="wordLink" title="Vis forslag"> 
+                            <span wicket:id="word">Ord</span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        &nbsp;&nbsp;&nbsp;Oprettet den <span wicket:id="created"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        &nbsp;&nbsp;&nbsp;Grupper: <span wicket:id="groups"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+    <div style="float:right">
+        <span wicket:id="navigator">[dataview navigator]</span>
+    </div>
     <div id="error">
+        <br/>
         <table align="center">
             <tr>
                 <td><img wicket:id="erroricon"/></td>

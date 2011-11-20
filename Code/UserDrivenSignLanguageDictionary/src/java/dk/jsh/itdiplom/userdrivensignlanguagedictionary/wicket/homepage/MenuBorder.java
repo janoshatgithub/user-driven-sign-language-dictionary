@@ -11,7 +11,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.border.BoxBorder;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
@@ -43,11 +42,13 @@ public class MenuBorder extends Border
         addMenuLink(repeatingView, About.class, "Om denne side", 
                 "Information om denne side");
         if (session.isAuthenticated()) {
-            addMenuLink(repeatingView, Request.class, "Forespørgelser", 
+            addMenuLink(repeatingView, HomePage.class, "Alle forespørgelser", 
+                    "Vis oversigt over alle forespørgelser");
+            addMenuLink(repeatingView, Request.class, "Mine forespørgelser", 
                     "Vis oversigt over egne forespørgelser");
-            addMenuLink(repeatingView, HomePage.class, "Grupper", 
+            addMenuLink(repeatingView, HomePage.class, "Mine grupper", 
                     "Vis oversigt over egne grupper");
-            addMenuLink(repeatingView, HomePage.class, "Uploads", 
+            addMenuLink(repeatingView, HomePage.class, "Mine uploads", 
                     "Vis oversigt over egne uploads");
             addMenuLink(repeatingView, HomePage.class, "Bruger oplysninger",
                     "Vis/ret egne brugeroplysninger");

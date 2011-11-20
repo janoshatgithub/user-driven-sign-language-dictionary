@@ -5,6 +5,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.VideoFile;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.ConvertVideo;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
@@ -24,7 +25,6 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
@@ -117,6 +117,7 @@ public final class Upload extends BasePage {
                                     description.getModelObject(), 
                                     destVideoReferenceName, new Date(), user, word);
                             VideoFileBusiness.saveNew(videoFile);
+                            emailToRequester(word);
                             Page page = new SelectedWord(word);
                             setResponsePage(page);
                         }
@@ -158,5 +159,21 @@ public final class Upload extends BasePage {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
         errorIconImage.setVisible(true);
+    }
+    
+    /**
+     * Demo of mail to request user. 
+     * TODO: Move this to an application thread.
+     * 
+     * @param requester Application user that should receive a mail.
+     */
+    private void emailToRequester(Word word) {
+        WicketSession wicketSession = WicketSession.get();
+        if (!word.getRequestCreatedBy().getId().equals(
+                wicketSession.getApplicationUser().getId())) {
+            EMailSender emailSender = EMailSender.getInstance();
+            emailSender.sendNoReplyEmail(word.getRequestCreatedBy().getEmail(), 
+                "Nyt forslag til " + word.getWord(), "TODO");
+        }
     }
 }

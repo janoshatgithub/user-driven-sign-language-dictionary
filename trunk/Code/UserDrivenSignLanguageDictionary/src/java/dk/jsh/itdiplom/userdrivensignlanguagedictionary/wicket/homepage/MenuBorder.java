@@ -5,6 +5,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about.About;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser.CreateUser;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
@@ -13,6 +14,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.Model;
 
 /**
  * Border component.
@@ -37,14 +39,23 @@ public class MenuBorder extends Border
         RepeatingView repeatingView = new RepeatingView("menuItems");
         navigationBorder.add(repeatingView);
         
-        addMenuLink(repeatingView, HomePage.class, "Søg");
-        addMenuLink(repeatingView, About.class, "Om denne side");
+        addMenuLink(repeatingView, HomePage.class, "Søg", "Søg efter ord");
+        addMenuLink(repeatingView, About.class, "Om denne side", 
+                "Information om denne side");
         if (session.isAuthenticated()) {
-            addMenuLink(repeatingView, Request.class, "Mine forespørgelser");
+            addMenuLink(repeatingView, Request.class, "Forespørgelser", 
+                    "Vis oversigt over egne forespørgelser");
+            addMenuLink(repeatingView, HomePage.class, "Grupper", 
+                    "Vis oversigt over egne grupper");
+            addMenuLink(repeatingView, HomePage.class, "Uploads", 
+                    "Vis oversigt over egne uploads");
+            addMenuLink(repeatingView, HomePage.class, "Bruger oplysninger",
+                    "Vis/ret egne brugeroplysninger");
             addLogoffMenuLink(navigationBorder, session);
         }
         else {
-            addMenuLink(repeatingView, CreateUser.class, "Ny bruger");
+            addMenuLink(repeatingView, CreateUser.class, "Ny bruger", 
+                    "Opret ny bruger");
             addLoginMenuLink(navigationBorder);
         }
         
@@ -53,12 +64,14 @@ public class MenuBorder extends Border
     }
 
     private void addMenuLink(RepeatingView repeatingView, Class pageClass,
-            String text) {
+            String text, String title) {
         WebMarkupContainer parent =
                 new WebMarkupContainer(repeatingView.newChildId());
         repeatingView.add(parent);
         BookmarkablePageLink link = new BookmarkablePageLink("menuItemLink", 
                 pageClass); 
+        link.add(new AttributeModifier("title", true,
+                    new Model(title)));
         parent.add(link);
         link.add(new Label("menuItemText", text));
     }
@@ -68,6 +81,8 @@ public class MenuBorder extends Border
                 new BookmarkablePageLink("loginLogOffMenuItemLink", 
                         Login.class); 
         navigationBorder.add(loginLink);
+        loginLink.add(new AttributeModifier("title", true,
+            new Model("Log på systemet.")));
         loginLink.add(new Label("loginLogoffText", "Log på"));
     }
 
@@ -81,6 +96,8 @@ public class MenuBorder extends Border
             }
         };
         navigationBorder.add(logoffLink);
+        logoffLink.add(new AttributeModifier("title", true,
+            new Model("Log af systemet.")));
         logoffLink.add(new Label("loginLogoffText", "Log af"));
     }
 }

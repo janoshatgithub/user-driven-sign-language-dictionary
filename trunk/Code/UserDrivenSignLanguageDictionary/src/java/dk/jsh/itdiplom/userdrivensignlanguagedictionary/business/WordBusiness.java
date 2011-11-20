@@ -76,4 +76,38 @@ public class WordBusiness {
         session.close();
         return wordList;
     }
+    
+    /**
+     * Search for words.
+     * 
+     * @param search search string
+     * @return a list of words that match the search criteria
+     */
+    public static List<Word> search(String search) {
+        List<Word> wordList = new ArrayList<Word>();
+        search = search.toLowerCase();
+        search = search.replace("*", "%");
+        search = search.replace("?", "_");
+        boolean useLike = false;
+        if (search.indexOf("%") != -1 || search.indexOf("_") != -1) {
+            useLike = true;
+        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        StringBuilder hql = new StringBuilder();
+        hql.append("select word from ");
+        hql.append("dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.");
+        hql.append("Word word ");
+        if (useLike) {
+            hql.append("where lower(word.word) like :search ");
+        }
+        else {
+            hql.append("where lower(word.word) = :search ");
+        }
+        hql.append("order by word.word");
+        Query query = session.createQuery(hql.toString());
+        query.setString("search", search);
+        wordList = query.list();
+        session.close();
+        return wordList;
+    }
 }

@@ -17,7 +17,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 
 /**
- * Border component.
+ * Menu border component.
  * 
  * @author Jan S. Hansen
  */

@@ -8,10 +8,32 @@
 <body> 
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
-    <div style="width: 200px">
-        <h2>S&oslash;g</h2>
-        TODO
-    </div>    
+    <h2>S&oslash;g</h2>
+    <form action="#" wicket:id="form">
+        <table border="0">
+            <tr>
+                <td>S&oslash;g efter ord:</td>
+                <td>
+                    <input wicket:id="searchFor" type="text"
+                         name="" value="" size="20" 
+                         title="Ord der skal søges efter. Brug * hvis du vil søge efter ord der ligner."
+                         tabindex="1"/>
+                </td>
+                <td>
+                    <input wicket:id="search" type="submit"
+                           value="S&oslash;g" tabindex="2"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div id="error">
+        <table align="center">
+            <tr>
+                <td><img wicket:id="erroricon"/></td>
+                <td><span wicket:id="error">Error message goes here</span></td>
+            </tr>
+        </table>
+    </div>
 </span>
 </wicket:extend> 
 </body> 

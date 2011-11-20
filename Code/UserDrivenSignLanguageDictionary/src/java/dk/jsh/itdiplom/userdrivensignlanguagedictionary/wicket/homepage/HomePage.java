@@ -2,6 +2,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.Text;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class HomePage extends BasePage {
                 item.add(new Label("created", 
                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
                 List<String> wordGroupList = word.getSortedWordGroups();
-                item.add(new Label("groups", makeWordGroupString(wordGroupList)));
+                item.add(new Label("groups", Text.makeWordGroupString(wordGroupList)));
                 item.add(new AttributeModifier("class",
                     true, new AbstractReadOnlyModel<String>() {
                     @Override
@@ -114,28 +115,6 @@ public class HomePage extends BasePage {
                         return (item.getIndex() % 2 == 1) ? "even" : "odd";
                     }
                 }));
-            }
-
-            private String makeWordGroupString(List<String> wordGroupList) {
-                StringBuilder groups = new StringBuilder();
-                int noOfGroups = wordGroupList.size();
-                if (noOfGroups > 0) {
-                    for (int i = 0; i < noOfGroups; i++) {
-                        String wordGroup = wordGroupList.get(i);
-                        if (i > 0 && i < noOfGroups - 1) {
-                            groups.append(", ");
-                        }
-                        else if (i == noOfGroups -1) {
-                            groups.append(" og ");
-                        }
-                        groups.append(wordGroup);
-                    }
-                }
-                else {
-                    groups.append("Ikke tilknyttet nogen gruppe");
-                }
-                groups.append(".");
-                return groups.toString();
             }
         };
         

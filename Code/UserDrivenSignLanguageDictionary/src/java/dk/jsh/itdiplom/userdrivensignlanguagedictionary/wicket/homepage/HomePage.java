@@ -1,7 +1,9 @@
 package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordGroupBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.Text;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
@@ -13,6 +15,7 @@ import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
@@ -32,7 +35,8 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class HomePage extends BasePage {
     private String errorMessage = "";
-    private TextField<String> searchFor;
+    private DropDownChoice<String> searchFor;
+    private TextField<String> searchText;
     private Image errorIconImage = new Image("erroricon", 
             new ResourceReference(BasePage.class, "icons/attention.png"));
     private List<Word> wordsFound = new ArrayList<Word>(); 
@@ -53,31 +57,46 @@ public class HomePage extends BasePage {
             //Handles required fields error.
             @Override
             protected void onError() {
-                if (!searchFor.checkRequired()) {
+                if (!searchText.checkRequired()) {
                     feedbackPanel.setVisible(false);
                     setErrorMessage("Søgefeltet skal udfyldes.");
                 }
             }
         };
         borderBodyContainer.add(form);
-        searchFor = new TextField("searchFor", new Model(""));
-        searchFor.setRequired(true);
+        
+        searchFor = new DropDownChoice("searchFor",
+                new Model(SearchType.WORD.getDescription()), 
+                SearchType.getDescriptions());
         form.add(searchFor);
+        searchText = new TextField("searchText", new Model(""));
+        searchText.setRequired(true);
+        form.add(searchText);
         
         //Add button to the form.
         form.add(new Button("search") {
             @Override
             public void onSubmit() {
                 removeErrorMessage();
-                wordsFound = WordBusiness.search(searchFor.getModelObject());
-                if (wordsFound.size() == 0) {
+                if (SearchType.getSearchType(searchFor.getModelObject()) 
+                        == SearchType.WORD) {
+                    wordsFound = WordBusiness.search(searchText.getModelObject());
+                }
+                else {
+                    List<WordGroup> wordGroups = 
+                            WordGroupBusiness.search(searchText.getModelObject());
+                    if (!wordGroups.isEmpty()) {
+                        wordsFound = WordBusiness.search(wordGroups);
+                    }
+                }
+                if (wordsFound.isEmpty()) {
                     feedbackPanel.setVisible(true);
                     info("Ingen ord fundet.");
                 }
                 else {
                     feedbackPanel.setVisible(false);
-                    pageableListView.setList(wordsFound);
                 }
+                pageableListView.setList(wordsFound);
             }
         });
         
@@ -137,4 +156,31 @@ public class HomePage extends BasePage {
         this.errorMessage = "";
         errorIconImage.setVisible(false);
     }
+    
+    public enum SearchType {
+        WORD("Ord"),
+        GROUP("Gruppe");
+
+        private String description;
+
+        SearchType(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public static List<String> getDescriptions() {
+            List<String> descriptions = new ArrayList<String>();
+            descriptions.add(WORD.description);
+            descriptions.add(GROUP.description);
+            return descriptions;
+        }
+
+        public static SearchType getSearchType(String description) {
+            if (WORD.description.equals(description)) return WORD;
+            return GROUP;
+        }
+     }
 }

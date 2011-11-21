@@ -12,9 +12,15 @@
     <form action="#" wicket:id="form">
         <table border="0">
             <tr>
-                <td>S&oslash;g efter ord:</td>
+                <td>S&oslash;g efter:</td>
                 <td>
-                    <input wicket:id="searchFor" type="text"
+                    <select wicket:id="searchFor" name="">
+                        <option>Ord</option>
+                        <option>Gruppe</option>
+                    </select>
+                </td>
+                <td>
+                    <input wicket:id="searchText" type="text"
                          name="" value="" size="20" 
                          title="Ord der skal søges efter. Brug * hvis du vil søge efter ord der ligner."
                          tabindex="1"/>

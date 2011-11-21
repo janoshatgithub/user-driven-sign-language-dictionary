@@ -97,6 +97,7 @@ public class HomePage extends BasePage {
                     feedbackPanel.setVisible(false);
                 }
                 pageableListView.setList(wordsFound);
+                pageableListView.setCurrentPage(0);
             }
         });
         

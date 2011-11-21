@@ -44,6 +44,8 @@ public class MenuBorder extends Border
         if (session.isAuthenticated()) {
             addMenuLink(repeatingView, HomePage.class, "Alle forespørgelser", 
                     "Vis oversigt over alle forespørgelser");
+            addMenuLink(repeatingView, HomePage.class, "Alle grupper", 
+                    "Vis oversigt over alle grupper");
             addMenuLink(repeatingView, Request.class, "Mine forespørgelser", 
                     "Vis oversigt over egne forespørgelser");
             addMenuLink(repeatingView, HomePage.class, "Mine grupper", 
@@ -55,6 +57,8 @@ public class MenuBorder extends Border
             addLogoffMenuLink(navigationBorder, session);
         }
         else {
+            addMenuLink(repeatingView, HomePage.class, "Alle grupper", 
+                    "Vis oversigt over alle grupper");
             addMenuLink(repeatingView, CreateUser.class, "Ny bruger", 
                     "Opret ny bruger");
             addLoginMenuLink(navigationBorder);

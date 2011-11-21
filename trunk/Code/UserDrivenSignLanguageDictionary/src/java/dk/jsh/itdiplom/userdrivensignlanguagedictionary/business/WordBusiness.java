@@ -125,7 +125,8 @@ public class WordBusiness {
         hql.append("select word from ");
         hql.append("dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.");
         hql.append("Word word ");
-        hql.append("where word.wordGroups.wordid in (");
+        hql.append("join word.wordGroups wordGroup ");
+        hql.append("where wordGroup.id in (");
         boolean first = true;
         for (WordGroup wordGroup : wordGroups) {
             if (first) {

@@ -23,7 +23,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 
 /**
- * Request page.
+ * My request page.
  * 
  * @author Jan S. Hansen
  */

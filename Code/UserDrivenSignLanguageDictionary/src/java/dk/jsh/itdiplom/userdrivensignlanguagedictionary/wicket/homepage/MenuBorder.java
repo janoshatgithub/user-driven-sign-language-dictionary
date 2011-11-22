@@ -2,9 +2,13 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
 
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about.About;
-import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.createuser.CreateUser;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.user.CreateUser;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.group.AllGroups;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.group.Groups;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.AllRequest;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Uploads;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -42,15 +46,15 @@ public class MenuBorder extends Border
         addMenuLink(repeatingView, About.class, "Om denne side", 
                 "Information om denne side");
         if (session.isAuthenticated()) {
-            addMenuLink(repeatingView, HomePage.class, "Alle forespørgelser", 
+            addMenuLink(repeatingView, AllRequest.class, "Alle forespørgelser", 
                     "Vis oversigt over alle forespørgelser, som mangler forslag.");
-            addMenuLink(repeatingView, HomePage.class, "Alle grupper", 
+            addMenuLink(repeatingView, AllGroups.class, "Alle grupper", 
                     "Vis oversigt over alle grupper");
             addMenuLink(repeatingView, Request.class, "Mine forespørgelser", 
                     "Vis oversigt over egne forespørgelser");
-            addMenuLink(repeatingView, HomePage.class, "Mine grupper", 
+            addMenuLink(repeatingView, Groups.class, "Mine grupper", 
                     "Vis oversigt over egne grupper");
-            addMenuLink(repeatingView, HomePage.class, "Mine uploads", 
+            addMenuLink(repeatingView, Uploads.class, "Mine uploads", 
                     "Vis oversigt over egne uploads");
             addMenuLink(repeatingView, HomePage.class, "Bruger oplysninger",
                     "Vis/ret egne brugeroplysninger");

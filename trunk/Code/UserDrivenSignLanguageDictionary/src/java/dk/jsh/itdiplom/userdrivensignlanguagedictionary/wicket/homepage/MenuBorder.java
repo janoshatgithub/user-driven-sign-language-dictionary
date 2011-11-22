@@ -9,6 +9,7 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.AllRequest;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Uploads;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.user.ChangeUser;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -56,7 +57,7 @@ public class MenuBorder extends Border
                     "Vis oversigt over egne grupper");
             addMenuLink(repeatingView, Uploads.class, "Mine uploads", 
                     "Vis oversigt over egne uploads");
-            addMenuLink(repeatingView, HomePage.class, "Bruger oplysninger",
+            addMenuLink(repeatingView, ChangeUser.class, "Ret brugeroplysninger",
                     "Vis/ret egne brugeroplysninger");
             addLogoffMenuLink(navigationBorder, session);
         }

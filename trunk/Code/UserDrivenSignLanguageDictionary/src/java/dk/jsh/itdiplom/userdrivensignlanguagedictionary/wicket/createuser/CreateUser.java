@@ -222,7 +222,6 @@ public final class CreateUser extends BasePage {
             }
 
             private String createMailBody() {
-                //Try to send an e-mail
                 PageParameters pageParameters = new PageParameters("login=" 
                         + userLogin.getModelObject());
                 CharSequence pageUrl = urlFor(EmailVerified.class, pageParameters);

@@ -43,7 +43,7 @@ public class MenuBorder extends Border
                 "Information om denne side");
         if (session.isAuthenticated()) {
             addMenuLink(repeatingView, HomePage.class, "Alle forespørgelser", 
-                    "Vis oversigt over alle forespørgelser");
+                    "Vis oversigt over alle forespørgelser, som mangler forslag.");
             addMenuLink(repeatingView, HomePage.class, "Alle grupper", 
                     "Vis oversigt over alle grupper");
             addMenuLink(repeatingView, Request.class, "Mine forespørgelser", 

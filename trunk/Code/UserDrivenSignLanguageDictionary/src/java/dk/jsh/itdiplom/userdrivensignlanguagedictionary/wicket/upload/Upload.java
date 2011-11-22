@@ -117,7 +117,7 @@ public final class Upload extends BasePage {
                                     description.getModelObject(), 
                                     destVideoReferenceName, new Date(), user, word);
                             VideoFileBusiness.saveNew(videoFile);
-                            emailToRequester(word);
+                            emailToRequester(word, videoFile);
                             Page page = new SelectedWord(word);
                             setResponsePage(page);
                         }
@@ -167,13 +167,36 @@ public final class Upload extends BasePage {
      * 
      * @param requester Application user that should receive a mail.
      */
-    private void emailToRequester(Word word) {
+    private void emailToRequester(Word word, VideoFile videoFile) {
         WicketSession wicketSession = WicketSession.get();
         if (!word.getRequestCreatedBy().getId().equals(
                 wicketSession.getApplicationUser().getId())) {
             EMailSender emailSender = EMailSender.getInstance();
             emailSender.sendNoReplyEmail(word.getRequestCreatedBy().getEmail(), 
-                "Nyt forslag til " + word.getWord(), "TODO");
+                "Nyt forslag til " + word.getWord(), 
+                createMailBody(word, videoFile));
         }
+    }
+    
+    private String createMailBody(Word word, VideoFile videoFile) {
+        String email = "<a href='mailto:jan.sch.hansen@gmail.com?"
+                + "Subject=Spørgsmål til Tegn til tiden'>"
+                + "jan.sch.hansen@gmail.com</a>";
+        StringBuilder mailBody = new StringBuilder();
+        mailBody.append("Der er kommet et nyt forslag til ordet: <b>");
+        mailBody.append(word.getWord());
+        mailBody.append("</b>.<br/>");
+        mailBody.append("Med følgende beskrivelse:<br/>");
+        mailBody.append(" - ");
+        mailBody.append(videoFile.getDescription());
+        mailBody.append(".<br/><br/>");
+        mailBody.append("OBS! - Denne mail kan ikke besvares.<br/>");
+        mailBody.append("Eventuelle spørgsmål kan rettes til Jan Scrhøder Hansen på ");
+        mailBody.append("e-mail: ");
+        mailBody.append(email);
+        mailBody.append("<br/><br/>");
+        mailBody.append("Med venlig hilsen<br/>");
+        mailBody.append("Tegn til tiden");
+        return mailBody.toString();
     }
 }

@@ -36,22 +36,28 @@
         <legend>Resultat</legend>
         <div wicket:id="feedback"></div>
         <div wicket:id="pageable">
-            <table border="0">
+            <table border="0" width="100%">
                 <tr>
-                    <td>
+                    <td colspan="2">
                         <a href="#" wicket:id="wordLink" title="Vis forslag"> 
                             <span wicket:id="word">Ord</span>
                         </a>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        &nbsp;&nbsp;&nbsp;Oprettet den <span wicket:id="created"></span>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        Oprettet den <span wicket:id="created"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        &nbsp;&nbsp;&nbsp;Grupper: <span wicket:id="groups"></span>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        Grupper: <span wicket:id="groups"></span>
                     </td>
                 </tr>
             </table>

@@ -144,4 +144,28 @@ public class WordBusiness {
         session.close();
         return wordList;
     }
+    
+    /**
+     * Get all words without uploads
+     * 
+     * @return a list of all words without uploads
+     */
+    public static List<Word> getAllWordsWithoutUploads() {
+        List<Word> wordList = new ArrayList<Word>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        StringBuilder hql = new StringBuilder();
+        hql.append("select word from ");
+        hql.append("dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.");
+        hql.append("Word word ");
+        hql.append("where word.id not in (");
+        hql.append("select distinct (videoFile.toWord.id) from ");
+        hql.append("dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.");
+        hql.append("VideoFile videoFile ");
+        hql.append(") ");
+        hql.append("order by word.word");
+        Query query = session.createQuery(hql.toString());
+        wordList = query.list();
+        session.close();
+        return wordList;
+    }
 }

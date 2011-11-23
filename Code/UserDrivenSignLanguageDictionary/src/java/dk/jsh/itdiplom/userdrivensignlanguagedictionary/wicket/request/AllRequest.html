@@ -9,7 +9,42 @@
 <wicket:extend> 
 <span wicket:id = "mainNavigation">
     <h2>Alle foresp&oslash;rgelser</h2>
-    Under udvikling.
+    <fieldset>
+        <legend>Alle foresp&oslash;rgelser uden uploads</legend>
+        <div wicket:id="feedback"></div>
+        <div wicket:id="pageable">
+            <table border="0" width="100%">
+                <tr>
+                    <td colspan="3">
+                        <a href="#" wicket:id="wordLink"> 
+                            <span wicket:id="word">Ord</span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        Oprettet den <span wicket:id="created"></span>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        Grupper: <span wicket:id="groups"></span>
+                    </td>
+                    <td align="right">
+                        <a href="#" wicket:id="uploadLink" title="Upload video forslag">
+                            Upload forslag
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+   </fieldset>
+    <div style="float:right">
+        <span wicket:id="navigator">[dataview navigator]</span>
+    </div>
 </span>
 </wicket:extend> 
 </body>

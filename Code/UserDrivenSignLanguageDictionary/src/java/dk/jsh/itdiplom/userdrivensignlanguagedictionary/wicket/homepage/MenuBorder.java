@@ -62,7 +62,7 @@ public class MenuBorder extends Border
             addLogoffMenuLink(navigationBorder, session);
         }
         else {
-            addMenuLink(repeatingView, HomePage.class, "Alle grupper", 
+            addMenuLink(repeatingView, AllGroups.class, "Alle grupper", 
                     "Vis oversigt over alle grupper");
             addMenuLink(repeatingView, CreateUser.class, "Ny bruger", 
                     "Opret ny bruger");

@@ -4,9 +4,9 @@ import dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.Text;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Upload;
-import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.video.SelectedVideo;
 import dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
 import java.util.List;
 import org.apache.wicket.AttributeModifier;
@@ -29,6 +29,8 @@ import org.apache.wicket.model.Model;
 public final class AllRequest extends BasePage {
 
     public AllRequest() {
+        final WicketSession wicketSession = WicketSession.get();
+        
         MenuBorder menuBorder = new MenuBorder("mainNavigation"); 
         add(menuBorder);
         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
@@ -69,6 +71,9 @@ public final class AllRequest extends BasePage {
                         setResponsePage(page);
                     }
                 };
+                if (!wicketSession.isAuthenticated()) {
+                    uploadLink.setEnabled(false);
+                }
                 item.add(uploadLink);
                 
                 

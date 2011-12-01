@@ -47,12 +47,12 @@ public class MenuBorder extends Border
         addMenuLink(repeatingView, About.class, "Om denne side", 
                 "Information om denne side");
         if (session.isAuthenticated()) {
-            addMenuLink(repeatingView, AllRequest.class, "Alle forespørgelser", 
-                    "Vis oversigt over alle forespørgelser, som mangler forslag.");
+            addMenuLink(repeatingView, AllRequest.class, "Alle forespørgsler", 
+                    "Vis oversigt over alle forespørgsler, som mangler forslag.");
             addMenuLink(repeatingView, AllGroups.class, "Alle grupper", 
                     "Vis oversigt over alle grupper");
-            addMenuLink(repeatingView, Request.class, "Mine forespørgelser", 
-                    "Vis oversigt over egne forespørgelser");
+            addMenuLink(repeatingView, Request.class, "Mine forespørgsler", 
+                    "Vis oversigt over egne forespørgsler");
             addMenuLink(repeatingView, Groups.class, "Mine grupper", 
                     "Vis oversigt over egne grupper");
             addMenuLink(repeatingView, Uploads.class, "Mine uploads", 

@@ -3,7 +3,7 @@ package dk.jsh.itdiplom.userdrivensignlanguagedictionary.util;
 import java.util.List;
 
 /**
- * Text utilities
+ * Text utilities.
  * 
  * @author Jan S. Hansen
  */
@@ -12,7 +12,7 @@ public class Text {
     /**
      * Make at list of word groups.
      * 
-     * @param wordGroupList a WordGroupList
+     * @param wordGroupList a Word group list
      * @return a string of wordGroups
      */
     public static String makeWordGroupString(List<String> wordGroupList) {

@@ -32,13 +32,13 @@ public class EMailSender {
     }
     
     /**
-     * Send an email.
+     * Send an e-mail.
      * 
      * @param fromEmailAddr from e-mail address
      * @param toEmailAddr to e-mail adress
      * @param subject e-mail subject
      * @param body e-mail body text
-     * @return 
+     * @return true if no errors occurs.
      */
     public boolean sendEmail(String fromEmailAddr, String toEmailAddr,
                     String subject, String body) {
@@ -60,12 +60,12 @@ public class EMailSender {
     }
     
     /**
-     * Send an no-reply email.
+     * Send a no-reply e-mail.
      * 
      * @param toEmailAddr to e-mail adress
      * @param subject e-mail subject
      * @param body e-mail body text
-     * @return 
+     * @return true if no errors occurs.
      */
     public boolean sendNoReplyEmail(String toEmailAddr, String subject, 
             String body) {

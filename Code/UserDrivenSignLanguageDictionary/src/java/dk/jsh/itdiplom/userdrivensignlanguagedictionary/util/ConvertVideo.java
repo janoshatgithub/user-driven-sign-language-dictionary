@@ -57,7 +57,7 @@ public class ConvertVideo {
     }
     
     /**
-     * Create a OGV wicket resource name. Format UserId_xx_wordId_yy_mm.ogv.
+     * Create an OGV wicket resource name. Format UserId_xx_wordId_yy_mm.ogv.
      * xx = user Id (Database PK), yy = word Id and mm = milliseconds since 
      * 1/1-1970.
      * 
@@ -78,7 +78,7 @@ public class ConvertVideo {
     }
     
     /**
-     * Create ogv filename with full path
+     * Creates an OGV filename with full path.
      * 
      * @param resourceName resource name
      * @return filename

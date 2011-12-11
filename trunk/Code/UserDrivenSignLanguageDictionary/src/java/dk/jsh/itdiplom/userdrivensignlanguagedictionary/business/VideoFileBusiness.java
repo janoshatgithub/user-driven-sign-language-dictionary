@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * Business metods for File.
+ * Business metods for VideoFile.
  * 
  * @author Jan S. Hansen
  */

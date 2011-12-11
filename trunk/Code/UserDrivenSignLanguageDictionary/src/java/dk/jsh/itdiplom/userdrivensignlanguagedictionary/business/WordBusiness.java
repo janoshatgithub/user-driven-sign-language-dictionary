@@ -58,7 +58,7 @@ public class WordBusiness {
     }
     
     /**
-     * Get all word created by a specific user.
+     * Get all words created by a specific user.
      * 
      * @return A list of Word.
      */

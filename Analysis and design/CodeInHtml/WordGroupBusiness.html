@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>WordGroupBusiness.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\business\WordGroupBusiness.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.business;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.HibernateUtil;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> org.hibernate.Query;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> org.hibernate.Session;
+<span class="line-number"> 9</span> 
+<span class="line-number">10</span> <span class="comment">/**</span>
+<span class="line-number">11</span> <span class="comment"> * </span><span class="comment">Business</span> <span class="comment">metods</span> <span class="comment">for</span> <span class="comment">word</span> <span class="comment">groups</span><span class="comment">.</span> 
+<span class="line-number">12</span> <span class="comment"> * </span>
+<span class="line-number">13</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">14</span>  <span class="comment">*/</span>
+<span class="line-number">15</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> WordGroupBusiness {
+<span class="line-number">16</span>     <span class="keyword-directive">private</span> WordGroupBusiness() {}
+<span class="line-number">17</span>     
+<span class="line-number">18</span>     <span class="comment">/**</span>
+<span class="line-number">19</span> <span class="comment">     * </span><span class="comment">Get</span> <span class="comment">all</span> <span class="comment">word</span> <span class="comment">groups</span><span class="comment">.</span>
+<span class="line-number">20</span> <span class="comment">     * </span>
+<span class="line-number">21</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">A</span> <span class="comment">list</span> <span class="comment">of</span> <span class="comment">WordGroup</span><span class="comment">.</span>
+<span class="line-number">22</span>      <span class="comment">*/</span>
+<span class="line-number">23</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;WordGroup&gt; getAllWordGroups() {
+<span class="line-number">24</span>         List&lt;WordGroup&gt; wordGroupList = <span class="keyword-directive">new</span> ArrayList&lt;WordGroup&gt;();
+<span class="line-number">25</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number">26</span>         String hql = 
+<span class="line-number">27</span>                   <span class="character">&quot;</span><span class="character">select wordGroup from </span><span class="character">&quot;</span>
+<span class="line-number">28</span>                 + <span class="character">&quot;</span><span class="character">dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.</span><span class="character">&quot;</span>
+<span class="line-number">29</span>                 + <span class="character">&quot;</span><span class="character">WordGroup wordGroup </span><span class="character">&quot;</span>
+<span class="line-number">30</span>                 + <span class="character">&quot;</span><span class="character">order by wordGroup.name</span><span class="character">&quot;</span>;
+<span class="line-number">31</span>         Query query = session.createQuery(hql);
+<span class="line-number">32</span>         wordGroupList = query.list();
+<span class="line-number">33</span>         session.close();
+<span class="line-number">34</span>         <span class="keyword-directive">return</span> wordGroupList;
+<span class="line-number">35</span>     }
+<span class="line-number">36</span>     
+<span class="line-number">37</span>     <span class="comment">/**</span>
+<span class="line-number">38</span> <span class="comment">     * </span><span class="comment">Search</span> <span class="comment">for</span> <span class="comment">groups</span><span class="comment">.</span>
+<span class="line-number">39</span> <span class="comment">     * </span>
+<span class="line-number">40</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">search</span> <span class="comment">search</span> <span class="comment">string</span>
+<span class="line-number">41</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">list</span> <span class="comment">of</span> <span class="comment">word</span> <span class="comment">groups</span> <span class="comment">that</span> <span class="comment">match</span> <span class="comment">the</span> <span class="comment">search</span> <span class="comment">criteria</span>
+<span class="line-number">42</span>      <span class="comment">*/</span>
+<span class="line-number">43</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;WordGroup&gt; search(String search) {
+<span class="line-number">44</span>         List&lt;WordGroup&gt; wordGroupList = <span class="keyword-directive">new</span> ArrayList&lt;WordGroup&gt;();
+<span class="line-number">45</span>         search = search.toLowerCase();
+<span class="line-number">46</span>         search = search.replace(<span class="character">&quot;</span><span class="character">*</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">%</span><span class="character">&quot;</span>);
+<span class="line-number">47</span>         search = search.replace(<span class="character">&quot;</span><span class="character">?</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">_</span><span class="character">&quot;</span>);
+<span class="line-number">48</span>         <span class="keyword-directive">boolean</span> useLike = <span class="keyword-directive">false</span>;
+<span class="line-number">49</span>         <span class="keyword-directive">if</span> (search.indexOf(<span class="character">&quot;</span><span class="character">%</span><span class="character">&quot;</span>) != -1 || search.indexOf(<span class="character">&quot;</span><span class="character">_</span><span class="character">&quot;</span>) != -1) {
+<span class="line-number">50</span>             useLike = <span class="keyword-directive">true</span>;
+<span class="line-number">51</span>         }
+<span class="line-number">52</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number">53</span>         StringBuilder hql = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number">54</span>         hql.append(<span class="character">&quot;</span><span class="character">select wordGroup from </span><span class="character">&quot;</span>);
+<span class="line-number">55</span>         hql.append(<span class="character">&quot;</span><span class="character">dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.</span><span class="character">&quot;</span>);
+<span class="line-number">56</span>         hql.append(<span class="character">&quot;</span><span class="character">WordGroup wordGroup </span><span class="character">&quot;</span>);
+<span class="line-number">57</span>         <span class="keyword-directive">if</span> (useLike) {
+<span class="line-number">58</span>             hql.append(<span class="character">&quot;</span><span class="character">where lower(wordGroup.name) like :search </span><span class="character">&quot;</span>);
+<span class="line-number">59</span>         }
+<span class="line-number">60</span>         <span class="keyword-directive">else</span> {
+<span class="line-number">61</span>             hql.append(<span class="character">&quot;</span><span class="character">where lower(wordGroup.name) = :search </span><span class="character">&quot;</span>);
+<span class="line-number">62</span>         }
+<span class="line-number">63</span>         hql.append(<span class="character">&quot;</span><span class="character">order by wordGroup.name</span><span class="character">&quot;</span>);
+<span class="line-number">64</span>         Query query = session.createQuery(hql.toString());
+<span class="line-number">65</span>         query.setString(<span class="character">&quot;</span><span class="character">search</span><span class="character">&quot;</span>, search);
+<span class="line-number">66</span>         wordGroupList = query.list();
+<span class="line-number">67</span>         session.close();
+<span class="line-number">68</span>         <span class="keyword-directive">return</span> wordGroupList;
+<span class="line-number">69</span>     }
+<span class="line-number">70</span> }
+<span class="line-number">71</span> 
+</pre></body>
+</html>

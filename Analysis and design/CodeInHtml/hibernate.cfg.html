@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>hibernate.cfg.xml</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.xml-comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.xml-attribute {color: #009900}
+.xml-value {color: #ce7b00}
+.ST0 {color: #00007c; font-family: Monospaced; font-weight: bold}
+.xml-tag {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\hibernate.cfg.xml</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="ST0">&lt;?</span><span class="ST0">xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<span class="line-number"> 2</span> <span class="ST0">&lt;!DOCTYPE hibernate-configuration PUBLIC </span><span class="xml-value">&quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;</span> <span class="xml-value">&quot;http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd&quot;</span><span class="ST0">&gt;</span>
+<span class="line-number"> 3</span> <span class="xml-tag">&lt;hibernate-configuration</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 4</span>   <span class="xml-tag">&lt;session-factory</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 5</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.dialect&quot;</span><span class="xml-tag">&gt;</span>org.hibernate.dialect.DerbyDialect<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 6</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.driver_class&quot;</span><span class="xml-tag">&gt;</span>org.apache.derby.jdbc.ClientDriver<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 7</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.url&quot;</span><span class="xml-tag">&gt;</span>jdbc:derby://localhost:1527/sample<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 8</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.username&quot;</span><span class="xml-tag">&gt;</span>app<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number"> 9</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.password&quot;</span><span class="xml-tag">&gt;</span>app<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">10</span>     
+<span class="line-number">11</span>     
+<span class="line-number">12</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.dialect&quot;</span><span class="xml-tag">&gt;</span>org.hibernate.dialect.DerbyDialect<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">13</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.driver_class&quot;</span><span class="xml-tag">&gt;</span>org.apache.derby.jdbc.ClientDriver<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">14</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.url&quot;</span><span class="xml-tag">&gt;</span>jdbc:derby://localhost:1527/UDSLD<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">15</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.username&quot;</span><span class="xml-tag">&gt;</span>app<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">16</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.connection.password&quot;</span><span class="xml-tag">&gt;</span>app<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">17</span> 
+<span class="line-number">18</span>     <span class="xml-comment">&lt;!-- Show and print nice SQL on stdout --&gt;</span>
+<span class="line-number">19</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.show_sql&quot;</span><span class="xml-tag">&gt;</span>true<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">20</span>     <span class="xml-tag">&lt;property</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernate.format_sql&quot;</span><span class="xml-tag">&gt;</span>true<span class="xml-tag">&lt;/property</span><span class="xml-tag">&gt;</span>
+<span class="line-number">21</span> 
+<span class="line-number">22</span>     <span class="xml-comment">&lt;!-- List of annotated classes --&gt;</span>
+<span class="line-number">23</span>     <span class="xml-tag">&lt;mapping</span> <span class="xml-attribute">class</span>=<span class="xml-value">&quot;dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">24</span>     <span class="xml-tag">&lt;mapping</span> <span class="xml-attribute">class</span>=<span class="xml-value">&quot;dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">25</span>     <span class="xml-tag">&lt;mapping</span> <span class="xml-attribute">class</span>=<span class="xml-value">&quot;dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">26</span>     <span class="xml-tag">&lt;mapping</span> <span class="xml-attribute">class</span>=<span class="xml-value">&quot;dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroupWordRelation&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">27</span>     <span class="xml-tag">&lt;mapping</span> <span class="xml-attribute">class</span>=<span class="xml-value">&quot;dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.VideoFile&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">28</span>     
+<span class="line-number">29</span>   <span class="xml-tag">&lt;/session-factory</span><span class="xml-tag">&gt;</span>
+<span class="line-number">30</span> <span class="xml-tag">&lt;/hibernate-configuration</span><span class="xml-tag">&gt;</span>
+<span class="line-number">31</span> 
+<span class="line-number">32</span> 
+</pre></body>
+</html>

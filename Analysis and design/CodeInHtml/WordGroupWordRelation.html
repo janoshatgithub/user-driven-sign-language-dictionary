@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>WordGroupWordRelation.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\entity\WordGroupWordRelation.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.io.Serializable;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> javax.persistence.*;
+<span class="line-number"> 5</span> 
+<span class="line-number"> 6</span> <span class="comment">/**</span>
+<span class="line-number"> 7</span> <span class="comment"> * </span><span class="comment">Word</span> <span class="comment">group</span><span class="comment">/</span><span class="comment">Word</span> <span class="comment">many</span> <span class="comment">to</span> <span class="comment">many</span> <span class="comment">relation</span><span class="comment">.</span>
+<span class="line-number"> 8</span> <span class="comment"> * </span>
+<span class="line-number"> 9</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">10</span>  <span class="comment">*/</span>
+<span class="line-number">11</span> @Entity
+<span class="line-number">12</span> @Table(name=<span class="character">&quot;</span><span class="character">WordGroupWordRelation</span><span class="character">&quot;</span>,
+<span class="line-number">13</span>        uniqueConstraints = {
+<span class="line-number">14</span>             @UniqueConstraint(columnNames={<span class="character">&quot;</span><span class="character">wordGroup_id</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">word_id</span><span class="character">&quot;</span>})
+<span class="line-number">15</span> })
+<span class="line-number">16</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> WordGroupWordRelation <span class="keyword-directive">implements</span> Serializable {
+<span class="line-number">17</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> <span class="keyword-directive">long</span> serialVersionUID = 1L;
+<span class="line-number">18</span>     
+<span class="line-number">19</span>     @Id
+<span class="line-number">20</span>     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="line-number">21</span>     <span class="keyword-directive">protected</span> Long id;
+<span class="line-number">22</span>     @Version
+<span class="line-number">23</span>     @Column(nullable = <span class="keyword-directive">false</span>)
+<span class="line-number">24</span>     <span class="keyword-directive">protected</span> Integer version;
+<span class="line-number">25</span>     @ManyToOne(optional=<span class="keyword-directive">false</span>)
+<span class="line-number">26</span>     @org.hibernate.annotations.ForeignKey(name=<span class="character">&quot;</span><span class="character">fk_wordgroupwordrelation_wordgroup</span><span class="character">&quot;</span>)
+<span class="line-number">27</span>     <span class="keyword-directive">protected</span> WordGroup wordGroup;
+<span class="line-number">28</span>     @ManyToOne(optional=<span class="keyword-directive">false</span>)
+<span class="line-number">29</span>     @org.hibernate.annotations.ForeignKey(name=<span class="character">&quot;</span><span class="character">fk_wordgroupwordrelation_word</span><span class="character">&quot;</span>)
+<span class="line-number">30</span>     <span class="keyword-directive">protected</span> Word word;
+<span class="line-number">31</span> 
+<span class="line-number">32</span>     <span class="keyword-directive">public</span> WordGroupWordRelation() {
+<span class="line-number">33</span>     }
+<span class="line-number">34</span> 
+<span class="line-number">35</span>     <span class="keyword-directive">public</span> WordGroupWordRelation(WordGroup wordGroup, Word word) {
+<span class="line-number">36</span>         <span class="keyword-directive">this</span>.wordGroup = wordGroup;
+<span class="line-number">37</span>         <span class="keyword-directive">this</span>.word = word;
+<span class="line-number">38</span>     }
+<span class="line-number">39</span> 
+<span class="line-number">40</span>     <span class="keyword-directive">public</span> Long getId() {
+<span class="line-number">41</span>         <span class="keyword-directive">return</span> id;
+<span class="line-number">42</span>     }
+<span class="line-number">43</span> 
+<span class="line-number">44</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setId(Long id) {
+<span class="line-number">45</span>         <span class="keyword-directive">this</span>.id = id;
+<span class="line-number">46</span>     }
+<span class="line-number">47</span> 
+<span class="line-number">48</span>     <span class="keyword-directive">public</span> Integer getVersion() {
+<span class="line-number">49</span>         <span class="keyword-directive">return</span> version;
+<span class="line-number">50</span>     }
+<span class="line-number">51</span> 
+<span class="line-number">52</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setVersion(Integer version) {
+<span class="line-number">53</span>         <span class="keyword-directive">this</span>.version = version;
+<span class="line-number">54</span>     }
+<span class="line-number">55</span> 
+<span class="line-number">56</span>     <span class="keyword-directive">public</span> Word getWord() {
+<span class="line-number">57</span>         <span class="keyword-directive">return</span> word;
+<span class="line-number">58</span>     }
+<span class="line-number">59</span> 
+<span class="line-number">60</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setWord(Word word) {
+<span class="line-number">61</span>         <span class="keyword-directive">this</span>.word = word;
+<span class="line-number">62</span>     }
+<span class="line-number">63</span> 
+<span class="line-number">64</span>     <span class="keyword-directive">public</span> WordGroup getWordGroup() {
+<span class="line-number">65</span>         <span class="keyword-directive">return</span> wordGroup;
+<span class="line-number">66</span>     }
+<span class="line-number">67</span> 
+<span class="line-number">68</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setWordGroup(WordGroup wordGroup) {
+<span class="line-number">69</span>         <span class="keyword-directive">this</span>.wordGroup = wordGroup;
+<span class="line-number">70</span>     }
+<span class="line-number">71</span> }
+<span class="line-number">72</span> 
+</pre></body>
+</html>

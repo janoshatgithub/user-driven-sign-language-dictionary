@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Text.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\util\Text.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 4</span> 
+<span class="line-number"> 5</span> <span class="comment">/**</span>
+<span class="line-number"> 6</span> <span class="comment"> * </span><span class="comment">Text</span> <span class="comment">utilities</span><span class="comment">.</span>
+<span class="line-number"> 7</span> <span class="comment"> * </span>
+<span class="line-number"> 8</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 9</span>  <span class="comment">*/</span>
+<span class="line-number">10</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> Text {
+<span class="line-number">11</span>     
+<span class="line-number">12</span>     <span class="comment">/**</span>
+<span class="line-number">13</span> <span class="comment">     * </span><span class="comment">Make</span> <span class="comment">at</span> <span class="comment">list</span> <span class="comment">of</span> <span class="comment">word</span> <span class="comment">groups</span><span class="comment">.</span>
+<span class="line-number">14</span> <span class="comment">     * </span>
+<span class="line-number">15</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">wordGroupList</span> <span class="comment">a</span> <span class="comment">Word</span> <span class="comment">group</span> <span class="comment">list</span>
+<span class="line-number">16</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">string</span> <span class="comment">of</span> <span class="comment">wordGroups</span>
+<span class="line-number">17</span>      <span class="comment">*/</span>
+<span class="line-number">18</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> String makeWordGroupString(List&lt;String&gt; wordGroupList) {
+<span class="line-number">19</span>         StringBuilder groups = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number">20</span>         <span class="keyword-directive">int</span> noOfGroups = wordGroupList.size();
+<span class="line-number">21</span>         <span class="keyword-directive">if</span> (noOfGroups &gt; 0) {
+<span class="line-number">22</span>             <span class="keyword-directive">for</span> (<span class="keyword-directive">int</span> i = 0; i &lt; noOfGroups; i++) {
+<span class="line-number">23</span>                 String wordGroup = wordGroupList.get(i);
+<span class="line-number">24</span>                 <span class="keyword-directive">if</span> (i &gt; 0 &amp;&amp; i &lt; noOfGroups - 1) {
+<span class="line-number">25</span>                     groups.append(<span class="character">&quot;</span><span class="character">, </span><span class="character">&quot;</span>);
+<span class="line-number">26</span>                 }
+<span class="line-number">27</span>                 <span class="keyword-directive">else</span> <span class="keyword-directive">if</span> (i == noOfGroups -1) {
+<span class="line-number">28</span>                     groups.append(<span class="character">&quot;</span><span class="character"> og </span><span class="character">&quot;</span>);
+<span class="line-number">29</span>                 }
+<span class="line-number">30</span>                 groups.append(wordGroup);
+<span class="line-number">31</span>             }
+<span class="line-number">32</span>         }
+<span class="line-number">33</span>         <span class="keyword-directive">else</span> {
+<span class="line-number">34</span>             groups.append(<span class="character">&quot;</span><span class="character">Ikke tilknyttet nogen gruppe</span><span class="character">&quot;</span>);
+<span class="line-number">35</span>         }
+<span class="line-number">36</span>         groups.append(<span class="character">&quot;</span><span class="character">.</span><span class="character">&quot;</span>);
+<span class="line-number">37</span>         <span class="keyword-directive">return</span> groups.toString();
+<span class="line-number">38</span>     }
+<span class="line-number">39</span> }
+<span class="line-number">40</span> 
+</pre></body>
+</html>

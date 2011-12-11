@@ -87,6 +87,11 @@ public class ApplicationUserBusiness {
         return inUse;
     }
     
+    /**
+     * Set e-mail verified to true.
+     * 
+     * @param login user login  
+     */
     public static void setEmailVerified(String login) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "select appUser "

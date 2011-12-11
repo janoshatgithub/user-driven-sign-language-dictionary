@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>ddl.sql</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.line-number {background-color: #e9e8e2}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\ddl.sql</td></tr></table>
+<pre>
+<span class="line-number">  1</span> 
+<span class="line-number">  2</span>     alter table VideoFile 
+<span class="line-number">  3</span>         drop constraint fk_file_applicationuser;
+<span class="line-number">  4</span> 
+<span class="line-number">  5</span>     alter table VideoFile 
+<span class="line-number">  6</span>         drop constraint fk_file_word;
+<span class="line-number">  7</span> 
+<span class="line-number">  8</span>     alter table Word 
+<span class="line-number">  9</span>         drop constraint fk_word_applicationuser;
+<span class="line-number"> 10</span> 
+<span class="line-number"> 11</span>     alter table WordGroup 
+<span class="line-number"> 12</span>         drop constraint fk_wordgroup_applicationuser;
+<span class="line-number"> 13</span> 
+<span class="line-number"> 14</span>     alter table WordGroupWordRelation 
+<span class="line-number"> 15</span>         drop constraint fk_wordgroupwordrelation_wordgroup;
+<span class="line-number"> 16</span> 
+<span class="line-number"> 17</span>     alter table WordGroupWordRelation 
+<span class="line-number"> 18</span>         drop constraint fk_wordgroupwordrelation_word;
+<span class="line-number"> 19</span> 
+<span class="line-number"> 20</span>     drop table ApplicationUser;
+<span class="line-number"> 21</span> 
+<span class="line-number"> 22</span>     drop table VideoFile;
+<span class="line-number"> 23</span> 
+<span class="line-number"> 24</span>     drop table Word;
+<span class="line-number"> 25</span> 
+<span class="line-number"> 26</span>     drop table WordGroup;
+<span class="line-number"> 27</span> 
+<span class="line-number"> 28</span>     drop table WordGroupWordRelation;
+<span class="line-number"> 29</span> 
+<span class="line-number"> 30</span>     create table ApplicationUser (
+<span class="line-number"> 31</span>         id bigint not null generated always as identity,
+<span class="line-number"> 32</span>         email varchar(50) not null,
+<span class="line-number"> 33</span>         emailVerificationSent timestamp,
+<span class="line-number"> 34</span>         emailVerified timestamp,
+<span class="line-number"> 35</span>         fullname varchar(50) not null,
+<span class="line-number"> 36</span>         login varchar(20) not null unique,
+<span class="line-number"> 37</span>         password varchar(20) not null,
+<span class="line-number"> 38</span>         userRole varchar(10) not null,
+<span class="line-number"> 39</span>         version integer not null,
+<span class="line-number"> 40</span>         primary key (id)
+<span class="line-number"> 41</span>     );
+<span class="line-number"> 42</span> 
+<span class="line-number"> 43</span>     create table VideoFile (
+<span class="line-number"> 44</span>         id bigint not null generated always as identity,
+<span class="line-number"> 45</span>         description varchar(250),
+<span class="line-number"> 46</span>         fileName varchar(100) not null,
+<span class="line-number"> 47</span>         resourceName varchar(50) not null,
+<span class="line-number"> 48</span>         uploadedDateTime timestamp not null,
+<span class="line-number"> 49</span>         version integer not null,
+<span class="line-number"> 50</span>         toWord_id bigint not null,
+<span class="line-number"> 51</span>         uploadedBy_id bigint not null,
+<span class="line-number"> 52</span>         primary key (id)
+<span class="line-number"> 53</span>     );
+<span class="line-number"> 54</span> 
+<span class="line-number"> 55</span>     create table Word (
+<span class="line-number"> 56</span>         id bigint not null generated always as identity,
+<span class="line-number"> 57</span>         createdDateTime timestamp not null,
+<span class="line-number"> 58</span>         description varchar(250),
+<span class="line-number"> 59</span>         version integer not null,
+<span class="line-number"> 60</span>         word varchar(50) not null unique,
+<span class="line-number"> 61</span>         requestCreatedBy_id bigint not null,
+<span class="line-number"> 62</span>         primary key (id)
+<span class="line-number"> 63</span>     );
+<span class="line-number"> 64</span> 
+<span class="line-number"> 65</span>     create table WordGroup (
+<span class="line-number"> 66</span>         id bigint not null generated always as identity,
+<span class="line-number"> 67</span>         createdDateTime timestamp not null,
+<span class="line-number"> 68</span>         description varchar(250),
+<span class="line-number"> 69</span>         name varchar(30) not null unique,
+<span class="line-number"> 70</span>         version integer not null,
+<span class="line-number"> 71</span>         createdBy_id bigint not null,
+<span class="line-number"> 72</span>         primary key (id)
+<span class="line-number"> 73</span>     );
+<span class="line-number"> 74</span> 
+<span class="line-number"> 75</span>     create table WordGroupWordRelation (
+<span class="line-number"> 76</span>         id bigint not null generated always as identity,
+<span class="line-number"> 77</span>         version integer not null,
+<span class="line-number"> 78</span>         word_id bigint not null,
+<span class="line-number"> 79</span>         wordGroup_id bigint not null,
+<span class="line-number"> 80</span>         primary key (id),
+<span class="line-number"> 81</span>         unique (wordGroup_id, word_id)
+<span class="line-number"> 82</span>     );
+<span class="line-number"> 83</span> 
+<span class="line-number"> 84</span>     alter table VideoFile 
+<span class="line-number"> 85</span>         add constraint fk_file_applicationuser 
+<span class="line-number"> 86</span>         foreign key (uploadedBy_id) 
+<span class="line-number"> 87</span>         references ApplicationUser;
+<span class="line-number"> 88</span> 
+<span class="line-number"> 89</span>     alter table VideoFile 
+<span class="line-number"> 90</span>         add constraint fk_file_word 
+<span class="line-number"> 91</span>         foreign key (toWord_id) 
+<span class="line-number"> 92</span>         references Word;
+<span class="line-number"> 93</span> 
+<span class="line-number"> 94</span>     alter table Word 
+<span class="line-number"> 95</span>         add constraint fk_word_applicationuser 
+<span class="line-number"> 96</span>         foreign key (requestCreatedBy_id) 
+<span class="line-number"> 97</span>         references ApplicationUser;
+<span class="line-number"> 98</span> 
+<span class="line-number"> 99</span>     alter table WordGroup 
+<span class="line-number">100</span>         add constraint fk_wordgroup_applicationuser 
+<span class="line-number">101</span>         foreign key (createdBy_id) 
+<span class="line-number">102</span>         references ApplicationUser;
+<span class="line-number">103</span> 
+<span class="line-number">104</span>     alter table WordGroupWordRelation 
+<span class="line-number">105</span>         add constraint fk_wordgroupwordrelation_wordgroup 
+<span class="line-number">106</span>         foreign key (wordGroup_id) 
+<span class="line-number">107</span>         references WordGroup;
+<span class="line-number">108</span> 
+<span class="line-number">109</span>     alter table WordGroupWordRelation 
+<span class="line-number">110</span>         add constraint fk_wordgroupwordrelation_word 
+<span class="line-number">111</span>         foreign key (word_id) 
+<span class="line-number">112</span>         references Word;
+<span class="line-number">113</span> 
+<span class="line-number">114</span> 
+</pre></body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>build.xml</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.xml-comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.xml-attribute {color: #009900}
+.xml-value {color: #ce7b00}
+.ST0 {color: #00007c; font-family: Monospaced; font-weight: bold}
+.xml-tag {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\build.xml</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="ST0">&lt;?</span><span class="ST0">xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<span class="line-number"> 2</span> <span class="xml-comment">&lt;!-- You may freely edit this file. See commented blocks below for --&gt;</span>
+<span class="line-number"> 3</span> <span class="xml-comment">&lt;!-- some examples of how to customize the build. --&gt;</span>
+<span class="line-number"> 4</span> <span class="xml-comment">&lt;!-- (If you delete it and reopen the project it will be recreated.) --&gt;</span>
+<span class="line-number"> 5</span> <span class="xml-comment">&lt;!-- By default, only the Clean and Build commands use this build script. --&gt;</span>
+<span class="line-number"> 6</span> <span class="xml-comment">&lt;!-- Commands such as Run, Debug, and Test only use this build script if --&gt;</span>
+<span class="line-number"> 7</span> <span class="xml-comment">&lt;!-- the Compile on Save feature is turned off for the project. --&gt;</span>
+<span class="line-number"> 8</span> <span class="xml-comment">&lt;!-- You can turn off the Compile on Save (or Deploy on Save) setting --&gt;</span>
+<span class="line-number"> 9</span> <span class="xml-comment">&lt;!-- in the project&#39;s Project Properties dialog box.--&gt;</span>
+<span class="line-number">10</span> <span class="xml-tag">&lt;project</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;UserDrivenSignLanguageDictionary&quot;</span> <span class="xml-attribute">default</span>=<span class="xml-value">&quot;default&quot;</span> <span class="xml-attribute">basedir</span>=<span class="xml-value">&quot;.&quot;</span><span class="xml-tag">&gt;</span>
+<span class="line-number">11</span>     <span class="xml-tag">&lt;description</span><span class="xml-tag">&gt;</span>Builds, tests, and runs the project UserDrivenSignLanguageDictionary.<span class="xml-tag">&lt;/description</span><span class="xml-tag">&gt;</span>
+<span class="line-number">12</span>     <span class="xml-tag">&lt;import</span> <span class="xml-attribute">file</span>=<span class="xml-value">&quot;nbproject/build-impl.xml&quot;</span><span class="xml-tag">/&gt;</span>
+<span class="line-number">13</span>     <span class="xml-comment">&lt;!--</span>
+<span class="line-number">14</span> 
+<span class="line-number">15</span> <span class="xml-comment">    There exist several targets which are by default empty and which can be </span>
+<span class="line-number">16</span> <span class="xml-comment">    used for execution of your tasks. These targets are usually executed </span>
+<span class="line-number">17</span> <span class="xml-comment">    before and after some main targets. They are: </span>
+<span class="line-number">18</span> 
+<span class="line-number">19</span> <span class="xml-comment">      -pre-init:                 called before initialization of project properties </span>
+<span class="line-number">20</span> <span class="xml-comment">      -post-init:                called after initialization of project properties </span>
+<span class="line-number">21</span> <span class="xml-comment">      -pre-compile:              called before javac compilation </span>
+<span class="line-number">22</span> <span class="xml-comment">      -post-compile:             called after javac compilation </span>
+<span class="line-number">23</span> <span class="xml-comment">      -pre-compile-single:       called before javac compilation of single file</span>
+<span class="line-number">24</span> <span class="xml-comment">      -post-compile-single:      called after javac compilation of single file</span>
+<span class="line-number">25</span> <span class="xml-comment">      -pre-compile-test:         called before javac compilation of JUnit tests</span>
+<span class="line-number">26</span> <span class="xml-comment">      -post-compile-test:        called after javac compilation of JUnit tests</span>
+<span class="line-number">27</span> <span class="xml-comment">      -pre-compile-test-single:  called before javac compilation of single JUnit test</span>
+<span class="line-number">28</span> <span class="xml-comment">      -post-compile-test-single: called after javac compilation of single JUunit test</span>
+<span class="line-number">29</span> <span class="xml-comment">      -pre-dist:                 called before archive building </span>
+<span class="line-number">30</span> <span class="xml-comment">      -post-dist:                called after archive building </span>
+<span class="line-number">31</span> <span class="xml-comment">      -post-clean:               called after cleaning build products </span>
+<span class="line-number">32</span> <span class="xml-comment">      -pre-run-deploy:           called before deploying</span>
+<span class="line-number">33</span> <span class="xml-comment">      -post-run-deploy:          called after deploying</span>
+<span class="line-number">34</span> 
+<span class="line-number">35</span> <span class="xml-comment">    Example of pluging an obfuscator after the compilation could look like </span>
+<span class="line-number">36</span> 
+<span class="line-number">37</span> <span class="xml-comment">        &lt;target name=&quot;-post-compile&quot;&gt;</span>
+<span class="line-number">38</span> <span class="xml-comment">            &lt;obfuscate&gt;</span>
+<span class="line-number">39</span> <span class="xml-comment">                &lt;fileset dir=&quot;${build.classes.dir}&quot;/&gt;</span>
+<span class="line-number">40</span> <span class="xml-comment">            &lt;/obfuscate&gt;</span>
+<span class="line-number">41</span> <span class="xml-comment">        &lt;/target&gt;</span>
+<span class="line-number">42</span> 
+<span class="line-number">43</span> <span class="xml-comment">    For list of available properties check the imported </span>
+<span class="line-number">44</span> <span class="xml-comment">    nbproject/build-impl.xml file. </span>
+<span class="line-number">45</span> 
+<span class="line-number">46</span> 
+<span class="line-number">47</span> <span class="xml-comment">    Other way how to customize the build is by overriding existing main targets.</span>
+<span class="line-number">48</span> <span class="xml-comment">    The target of interest are: </span>
+<span class="line-number">49</span> 
+<span class="line-number">50</span> <span class="xml-comment">      init-macrodef-javac:    defines macro for javac compilation</span>
+<span class="line-number">51</span> <span class="xml-comment">      init-macrodef-junit:   defines macro for junit execution</span>
+<span class="line-number">52</span> <span class="xml-comment">      init-macrodef-debug:    defines macro for class debugging</span>
+<span class="line-number">53</span> <span class="xml-comment">      do-dist:                archive building</span>
+<span class="line-number">54</span> <span class="xml-comment">      run:                    execution of project </span>
+<span class="line-number">55</span> <span class="xml-comment">      javadoc-build:          javadoc generation </span>
+<span class="line-number">56</span> 
+<span class="line-number">57</span> <span class="xml-comment">    Example of overriding the target for project execution could look like </span>
+<span class="line-number">58</span> 
+<span class="line-number">59</span> <span class="xml-comment">        &lt;target name=&quot;run&quot; depends=&quot;&lt;PROJNAME&gt;-impl.jar&quot;&gt;</span>
+<span class="line-number">60</span> <span class="xml-comment">            &lt;exec dir=&quot;bin&quot; executable=&quot;launcher.exe&quot;&gt;</span>
+<span class="line-number">61</span> <span class="xml-comment">                &lt;arg file=&quot;${dist.jar}&quot;/&gt;</span>
+<span class="line-number">62</span> <span class="xml-comment">            &lt;/exec&gt;</span>
+<span class="line-number">63</span> <span class="xml-comment">        &lt;/target&gt;</span>
+<span class="line-number">64</span> 
+<span class="line-number">65</span> <span class="xml-comment">    Notice that overridden target depends on jar target and not only on </span>
+<span class="line-number">66</span> <span class="xml-comment">    compile target as regular run target does. Again, for list of available </span>
+<span class="line-number">67</span> <span class="xml-comment">    properties which you can use check the target you are overriding in </span>
+<span class="line-number">68</span> <span class="xml-comment">    nbproject/build-impl.xml file. </span>
+<span class="line-number">69</span> 
+<span class="line-number">70</span> <span class="xml-comment">    --&gt;</span>
+<span class="line-number">71</span>     
+<span class="line-number">72</span>     <span class="xml-tag">&lt;target</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;schemaexport&quot;</span><span class="xml-tag">&gt;</span>
+<span class="line-number">73</span>         
+<span class="line-number">74</span>         <span class="xml-tag">&lt;path</span> <span class="xml-attribute">id</span>=<span class="xml-value">&quot;project.classpath&quot;</span><span class="xml-tag">&gt;</span>
+<span class="line-number">75</span>             <span class="xml-tag">&lt;fileset</span> <span class="xml-attribute">dir</span>=<span class="xml-value">&quot;build/web/WEB-INF/lib&quot;</span><span class="xml-tag">&gt;</span>
+<span class="line-number">76</span>                 <span class="xml-tag">&lt;include</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;**/*.jar&quot;</span><span class="xml-tag">/&gt;</span>
+<span class="line-number">77</span>                 <span class="xml-tag">&lt;include</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;**/*.zip&quot;</span><span class="xml-tag">/&gt;</span>
+<span class="line-number">78</span>             <span class="xml-tag">&lt;/fileset</span><span class="xml-tag">&gt;</span>
+<span class="line-number">79</span>         <span class="xml-tag">&lt;/path</span><span class="xml-tag">&gt;</span>
+<span class="line-number">80</span>         
+<span class="line-number">81</span>         <span class="xml-tag">&lt;taskdef</span> <span class="xml-attribute">name</span>=<span class="xml-value">&quot;hibernatetool&quot;</span>
+<span class="line-number">82</span>              <span class="xml-attribute">classname</span>=<span class="xml-value">&quot;org.hibernate.tool.ant.HibernateToolTask&quot;</span>
+<span class="line-number">83</span>              <span class="xml-attribute">classpathref</span>=<span class="xml-value">&quot;project.classpath&quot;</span><span class="xml-tag">/&gt;</span>
+<span class="line-number">84</span> 
+<span class="line-number">85</span>         <span class="xml-tag">&lt;hibernatetool</span> <span class="xml-attribute">destdir</span>=<span class="xml-value">&quot;.&quot;</span><span class="xml-tag">&gt;</span>
+<span class="line-number">86</span>             <span class="xml-tag">&lt;classpath</span> <span class="xml-attribute">path</span>=<span class="xml-value">&quot;build/web/WEB-INF/classes&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">87</span>             <span class="xml-tag">&lt;annotationconfiguration</span> <span class="xml-attribute">configurationfile</span>=<span class="xml-value">&quot;src/java/hibernate.cfg.xml&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">88</span>             <span class="xml-tag">&lt;hbm2ddl</span>
+<span class="line-number">89</span>                <span class="xml-attribute">drop</span>=<span class="xml-value">&quot;true&quot;</span>
+<span class="line-number">90</span>                <span class="xml-attribute">create</span>=<span class="xml-value">&quot;true&quot;</span>
+<span class="line-number">91</span>                <span class="xml-attribute">export</span>=<span class="xml-value">&quot;true&quot;</span>
+<span class="line-number">92</span>                <span class="xml-attribute">outputfilename</span>=<span class="xml-value">&quot;ddl.sql&quot;</span>
+<span class="line-number">93</span>                <span class="xml-attribute">delimiter</span>=<span class="xml-value">&quot;;&quot;</span>
+<span class="line-number">94</span>                <span class="xml-attribute">format</span>=<span class="xml-value">&quot;true&quot;</span> <span class="xml-tag">/&gt;</span>
+<span class="line-number">95</span>         <span class="xml-tag">&lt;/hibernatetool</span><span class="xml-tag">&gt;</span>
+<span class="line-number">96</span>     <span class="xml-tag">&lt;/target</span><span class="xml-tag">&gt;</span>
+<span class="line-number">97</span> <span class="xml-tag">&lt;/project</span><span class="xml-tag">&gt;</span>
+<span class="line-number">98</span> 
+<span class="line-number">99</span> 
+</pre></body>
+</html>

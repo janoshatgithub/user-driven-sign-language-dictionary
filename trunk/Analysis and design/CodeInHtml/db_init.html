@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>db_init.sql</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.sql-block-comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.sql-keyword {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\db_init.sql</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="sql-block-comment">-- Extra constrains</span>
+<span class="line-number"> 2</span> <span class="sql-keyword">alter table ApplicationUser</span>
+<span class="line-number"> 3</span> <span class="sql-keyword">add constraint valid_user_roles</span>
+<span class="line-number"> 4</span> <span class="sql-keyword">check (userrole in (&#39;ADMIN&#39;, &#39;NORMAL&#39;));</span>
+<span class="line-number"> 5</span> 
+<span class="line-number"> 6</span> <span class="sql-keyword">alter table ApplicationUser</span>
+<span class="line-number"> 7</span> <span class="sql-keyword">add constraint password_length_ge_3</span>
+<span class="line-number"> 8</span> <span class="sql-keyword">check (length(password) &gt;= 3);</span>
+<span class="line-number"> 9</span> 
+<span class="line-number">10</span> <span class="sql-block-comment">-- Test data</span>
+<span class="line-number">11</span> <span class="sql-block-comment">---------------------------------------</span>
+<span class="line-number">12</span> <span class="sql-block-comment">-- Users</span>
+<span class="line-number">13</span> <span class="sql-keyword">insert into applicationuser </span>
+<span class="line-number">14</span>   (login, password, userrole, fullname, email, emailverificationsent,
+<span class="line-number">15</span>    emailverified, version) 
+<span class="line-number">16</span> <span class="sql-keyword">values </span>
+<span class="line-number">17</span>   (&#39;jsh&#39;, &#39;jsh&#39;, &#39;NORMAL&#39;, &#39;Jan Schrøder Hansen&#39;, &#39;jsh@jsh.dk&#39;, 
+<span class="line-number">18</span>    &#39;2011-10-29 10:10:10&#39;, &#39;2011-10-29 10:10:12&#39;, 1);
+<span class="line-number">19</span> 
+<span class="line-number">20</span> <span class="sql-keyword">insert into applicationuser </span>
+<span class="line-number">21</span>   (login, password, userrole, fullname, email, emailverificationsent,
+<span class="line-number">22</span>    emailverified, version) 
+<span class="line-number">23</span> <span class="sql-keyword">values </span>
+<span class="line-number">24</span>   (&#39;tki&#39;, &#39;tki&#39;, &#39;NORMAL&#39;, &#39;Tanja Kikkenborg&#39;, &#39;tki@tki.dk&#39;, 
+<span class="line-number">25</span>    &#39;2011-10-29 10:10:10&#39;, &#39;2011-10-29 10:10:12&#39;, 1);
+<span class="line-number">26</span> 
+<span class="line-number">27</span> 
+</pre></body>
+</html>

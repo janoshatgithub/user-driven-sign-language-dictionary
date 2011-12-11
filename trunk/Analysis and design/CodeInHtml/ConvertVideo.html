@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>ConvertVideo.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.ST1 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\util\ConvertVideo.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> java.io.BufferedReader;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> java.io.IOException;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> java.io.InputStream;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> java.io.InputStreamReader;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> java.util.logging.Logger;
+<span class="line-number"> 10</span> 
+<span class="line-number"> 11</span> <span class="comment">/**</span>
+<span class="line-number"> 12</span> <span class="comment"> * </span><span class="comment">Convert</span> <span class="comment">video</span> <span class="comment">files</span> <span class="comment">to</span> <span class="comment">the</span> <span class="comment">OGG</span> <span class="comment">video</span> <span class="comment">format</span><span class="comment">.</span>
+<span class="line-number"> 13</span> <span class="comment"> * </span>
+<span class="line-number"> 14</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 15</span>  <span class="comment">*/</span>
+<span class="line-number"> 16</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> ConvertVideo {
+<span class="line-number"> 17</span>     <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> Logger logger = Logger.getLogger(ConvertVideo.<span class="keyword-directive">class</span>.getName());
+<span class="line-number"> 18</span>     
+<span class="line-number"> 19</span>     <span class="comment">/**</span>
+<span class="line-number"> 20</span> <span class="comment">     * </span><span class="comment">Convert</span> <span class="comment">video</span> <span class="comment">file</span> <span class="comment">til</span> <span class="comment">ogg</span> <span class="comment">file</span> <span class="comment">format</span><span class="comment">.</span>
+<span class="line-number"> 21</span> <span class="comment">     * </span>
+<span class="line-number"> 22</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">source</span> <span class="comment">Source</span> <span class="comment">file</span> <span class="comment">name</span>
+<span class="line-number"> 23</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">dest</span> <span class="comment">Destination</span> <span class="comment">file</span> <span class="comment">name</span>
+<span class="line-number"> 24</span>      <span class="comment">*/</span>
+<span class="line-number"> 25</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">boolean</span> convert(String source, String dest)  {
+<span class="line-number"> 26</span>         Runtime runtime = Runtime.getRuntime();
+<span class="line-number"> 27</span>         <span class="comment">//TODO: location of ffmpeg2theora-0.28.exe in a properties file</span>
+<span class="line-number"> 28</span>         StringBuilder cmdLine = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number"> 29</span>         cmdLine.append(<span class="character">&quot;</span><span class="ST1">\\</span><span class="character">GoogleCode</span><span class="ST1">\\</span><span class="character">user-driven-sign-language-dictionary</span><span class="character">&quot;</span>);
+<span class="line-number"> 30</span>         cmdLine.append(<span class="character">&quot;</span><span class="ST1">\\</span><span class="character">ffmpeg2theora-0.28.exe </span><span class="character">&quot;</span>);  
+<span class="line-number"> 31</span>         cmdLine.append(<span class="character">&quot;</span><span class="character"> -o </span><span class="character">&quot;</span>);
+<span class="line-number"> 32</span>         cmdLine.append(dest);
+<span class="line-number"> 33</span>         cmdLine.append(<span class="character">&quot;</span> <span class="character">&quot;</span>);
+<span class="line-number"> 34</span>         cmdLine.append(source);
+<span class="line-number"> 35</span>         <span class="keyword-directive">try</span> {
+<span class="line-number"> 36</span>             logger.info(<span class="character">&quot;</span><span class="character">Convert video: </span><span class="character">&quot;</span> + cmdLine.toString());
+<span class="line-number"> 37</span>             Process process = runtime.exec(cmdLine.toString());
+<span class="line-number"> 38</span>             
+<span class="line-number"> 39</span>             <span class="comment">//Start thread to read standard error</span>
+<span class="line-number"> 40</span>             ProcessOutput err = <span class="keyword-directive">new</span> ProcessOutput(process.getErrorStream(), 
+<span class="line-number"> 41</span>                     <span class="character">&quot;</span><span class="character">ERR</span><span class="character">&quot;</span>);
+<span class="line-number"> 42</span>             Thread errThread = <span class="keyword-directive">new</span> Thread(err);
+<span class="line-number"> 43</span>             errThread.start();
+<span class="line-number"> 44</span>             
+<span class="line-number"> 45</span>             <span class="comment">//Start thread to read standard output</span>
+<span class="line-number"> 46</span>             ProcessOutput std = <span class="keyword-directive">new</span> ProcessOutput(process.getInputStream(), 
+<span class="line-number"> 47</span>                     <span class="character">&quot;</span><span class="character">STD</span><span class="character">&quot;</span>);
+<span class="line-number"> 48</span>             Thread stdThread = <span class="keyword-directive">new</span> Thread(std);
+<span class="line-number"> 49</span>             stdThread.start();
+<span class="line-number"> 50</span> 
+<span class="line-number"> 51</span>             process.waitFor();
+<span class="line-number"> 52</span>         } <span class="keyword-directive">catch</span> (Exception exception) {
+<span class="line-number"> 53</span>             logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Error converting video</span><span class="character">&quot;</span>, exception);
+<span class="line-number"> 54</span>             <span class="keyword-directive">return</span> <span class="keyword-directive">false</span>;
+<span class="line-number"> 55</span>         }
+<span class="line-number"> 56</span>         <span class="keyword-directive">return</span> <span class="keyword-directive">true</span>;
+<span class="line-number"> 57</span>     }
+<span class="line-number"> 58</span>     
+<span class="line-number"> 59</span>     <span class="comment">/**</span>
+<span class="line-number"> 60</span> <span class="comment">     * </span><span class="comment">Create</span> <span class="comment">an</span> <span class="comment">OGV</span> <span class="comment">wicket</span> <span class="comment">resource</span> <span class="comment">name</span><span class="comment">.</span> <span class="comment">Format</span> <span class="comment">UserId_xx_wordId_yy_mm</span><span class="comment">.</span><span class="comment">ogv</span><span class="comment">.</span>
+<span class="line-number"> 61</span> <span class="comment">     * </span><span class="comment">xx</span><span class="comment"> = </span><span class="comment">user</span> <span class="comment">Id</span><span class="comment"> (</span><span class="comment">Database</span> <span class="comment">PK</span><span class="comment">), </span><span class="comment">yy</span><span class="comment"> = </span><span class="comment">word</span> <span class="comment">Id</span> <span class="comment">and</span> <span class="comment">mm</span><span class="comment"> = </span><span class="comment">milliseconds</span> <span class="comment">since</span> 
+<span class="line-number"> 62</span> <span class="comment">     * 1/1-1970</span><span class="comment">.</span>
+<span class="line-number"> 63</span> <span class="comment">     * </span>
+<span class="line-number"> 64</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">userId</span> <span class="comment">User</span> <span class="comment">id</span>
+<span class="line-number"> 65</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">wordId</span> <span class="comment">word</span> <span class="comment">id</span>
+<span class="line-number"> 66</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">OGV</span> <span class="comment">wicket</span> <span class="comment">resource</span> <span class="comment">name</span><span class="comment">.</span>
+<span class="line-number"> 67</span>      <span class="comment">*/</span>
+<span class="line-number"> 68</span>     <span class="keyword-directive">public</span> String createOgvResourceName(String userId, String wordId) {
+<span class="line-number"> 69</span>         StringBuilder sb = <span class="keyword-directive">new</span> StringBuilder(<span class="character">&quot;</span><span class="character">UserId_</span><span class="character">&quot;</span>);
+<span class="line-number"> 70</span>         sb.append(userId);
+<span class="line-number"> 71</span>         sb.append(<span class="character">&quot;</span><span class="character">_wordId_</span><span class="character">&quot;</span>);
+<span class="line-number"> 72</span>         sb.append(wordId);
+<span class="line-number"> 73</span>         sb.append(<span class="character">&quot;</span><span class="character">_</span><span class="character">&quot;</span>);
+<span class="line-number"> 74</span>         Date now = <span class="keyword-directive">new</span> Date();
+<span class="line-number"> 75</span>         sb.append(now.getTime());
+<span class="line-number"> 76</span>         sb.append(<span class="character">&quot;</span><span class="character">.ogv</span><span class="character">&quot;</span>);
+<span class="line-number"> 77</span>         <span class="keyword-directive">return</span> sb.toString();
+<span class="line-number"> 78</span>     }
+<span class="line-number"> 79</span>     
+<span class="line-number"> 80</span>     <span class="comment">/**</span>
+<span class="line-number"> 81</span> <span class="comment">     * </span><span class="comment">Creates</span> <span class="comment">an</span> <span class="comment">OGV</span> <span class="comment">filename</span> <span class="comment">with</span> <span class="comment">full</span> <span class="comment">path</span><span class="comment">.</span>
+<span class="line-number"> 82</span> <span class="comment">     * </span>
+<span class="line-number"> 83</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">resourceName</span> <span class="comment">resource</span> <span class="comment">name</span>
+<span class="line-number"> 84</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">filename</span>
+<span class="line-number"> 85</span>      <span class="comment">*/</span>
+<span class="line-number"> 86</span>     <span class="keyword-directive">public</span> String createOgvFilename(String resourceName) {
+<span class="line-number"> 87</span>         <span class="comment">//TODO: Get full path, should not be hard coded.</span>
+<span class="line-number"> 88</span>         StringBuilder sb = <span class="keyword-directive">new</span> StringBuilder(<span class="character">&quot;</span><span class="character">C:</span><span class="ST1">\\</span><span class="character">GoogleCode</span><span class="ST1">\\</span><span class="character">&quot;</span>
+<span class="line-number"> 89</span>                 + <span class="character">&quot;</span><span class="character">user-driven-sign-language-dictionary</span><span class="ST1">\\</span><span class="character">Code</span><span class="ST1">\\</span><span class="character">&quot;</span>
+<span class="line-number"> 90</span>                 + <span class="character">&quot;</span><span class="character">UserDrivenSignLanguageDictionary</span><span class="ST1">\\</span><span class="character">build</span><span class="ST1">\\</span><span class="character">web</span><span class="ST1">\\</span><span class="character">&quot;</span>
+<span class="line-number"> 91</span>                 + <span class="character">&quot;</span><span class="character">WEB-INF</span><span class="ST1">\\</span><span class="character">classes</span><span class="ST1">\\</span><span class="character">dk</span><span class="ST1">\\</span><span class="character">jsh</span><span class="ST1">\\</span><span class="character">itdiplom</span><span class="ST1">\\</span><span class="character">&quot;</span>
+<span class="line-number"> 92</span>                 + <span class="character">&quot;</span><span class="character">userdrivensignlanguagedictionary</span><span class="ST1">\\</span><span class="character">wicket</span><span class="ST1">\\</span><span class="character">uploadedvideo</span><span class="ST1">\\</span><span class="character">&quot;</span>);
+<span class="line-number"> 93</span>         sb.append(resourceName);
+<span class="line-number"> 94</span>         <span class="keyword-directive">return</span> sb.toString();
+<span class="line-number"> 95</span>     }
+<span class="line-number"> 96</span>     
+<span class="line-number"> 97</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">class</span> ProcessOutput <span class="keyword-directive">implements</span> Runnable {
+<span class="line-number"> 98</span>         <span class="keyword-directive">private</span> InputStream inputStream;
+<span class="line-number"> 99</span>         <span class="keyword-directive">private</span> String type; 
+<span class="line-number">100</span>         
+<span class="line-number">101</span>         <span class="keyword-directive">public</span> ProcessOutput(InputStream inputStream, String type) {
+<span class="line-number">102</span>             <span class="keyword-directive">this</span>.inputStream = inputStream;
+<span class="line-number">103</span>             <span class="keyword-directive">this</span>.type = type;
+<span class="line-number">104</span>         }
+<span class="line-number">105</span>         
+<span class="line-number">106</span>         @Override
+<span class="line-number">107</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> run() {
+<span class="line-number">108</span>             BufferedReader procesOutput = <span class="keyword-directive">new</span> BufferedReader(<span class="keyword-directive">new</span> 
+<span class="line-number">109</span>                 InputStreamReader(inputStream));
+<span class="line-number">110</span>             String line = <span class="keyword-directive">null</span>;
+<span class="line-number">111</span>             <span class="keyword-directive">try</span> {
+<span class="line-number">112</span>                 <span class="keyword-directive">while</span> ((line = procesOutput.readLine()) != <span class="keyword-directive">null</span>) {
+<span class="line-number">113</span>                     logger.info(type + <span class="character">&quot;</span><span class="character">: </span><span class="character">&quot;</span> + line);
+<span class="line-number">114</span>                 }
+<span class="line-number">115</span>             } <span class="keyword-directive">catch</span> (IOException ex) {
+<span class="line-number">116</span>                 logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Error reading output of type </span><span class="character">&quot;</span> + type,
+<span class="line-number">117</span>                         ex);
+<span class="line-number">118</span>             }
+<span class="line-number">119</span>         }
+<span class="line-number">120</span>     }
+<span class="line-number">121</span> }
+<span class="line-number">122</span> 
+</pre></body>
+</html>

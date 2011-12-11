@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>EMailSender.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\util\EMailSender.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.util.Properties;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> javax.mail.Message;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> javax.mail.MessagingException;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> javax.mail.Session;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> javax.mail.Transport;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> javax.mail.internet.InternetAddress;
+<span class="line-number"> 9</span> <span class="keyword-directive">import</span> javax.mail.internet.MimeMessage;
+<span class="line-number">10</span> 
+<span class="line-number">11</span> <span class="comment">/**</span>
+<span class="line-number">12</span> <span class="comment"> * </span><span class="comment">E</span><span class="comment">-</span><span class="comment">Mail</span> <span class="comment">sender</span><span class="comment">.</span> <span class="comment">Singleton</span> <span class="comment">pattern</span><span class="comment">.</span>
+<span class="line-number">13</span> <span class="comment"> *</span>
+<span class="line-number">14</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">15</span>  <span class="comment">*/</span>
+<span class="line-number">16</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> EMailSender {
+<span class="line-number">17</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> Properties emailProperties = <span class="keyword-directive">new</span> Properties();
+<span class="line-number">18</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> EMailSender singletonInstance; 
+<span class="line-number">19</span>     
+<span class="line-number">20</span>     <span class="comment">/**</span>
+<span class="line-number">21</span> <span class="comment">     * </span><span class="comment">Private</span> <span class="comment">constructor</span> <span class="comment">to</span> <span class="comment">prevent</span> <span class="comment">use</span> <span class="comment">of</span> <span class="comment">new</span> <span class="comment">keyword</span> <span class="comment">outside</span> <span class="comment">this</span> <span class="comment">class</span><span class="comment">.</span>
+<span class="line-number">22</span>      <span class="comment">*/</span>
+<span class="line-number">23</span>     <span class="keyword-directive">private</span> EMailSender(){};
+<span class="line-number">24</span>     
+<span class="line-number">25</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> EMailSender getInstance() {
+<span class="line-number">26</span>         <span class="keyword-directive">if</span> (singletonInstance == <span class="keyword-directive">null</span>) {
+<span class="line-number">27</span>             <span class="comment">//TODO: Get host from a property file.</span>
+<span class="line-number">28</span>             emailProperties.put(<span class="character">&quot;</span><span class="character">mail.smtp.host</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">localhost</span><span class="character">&quot;</span>); 
+<span class="line-number">29</span>             singletonInstance = <span class="keyword-directive">new</span> EMailSender();
+<span class="line-number">30</span>         }
+<span class="line-number">31</span>         <span class="keyword-directive">return</span> singletonInstance;
+<span class="line-number">32</span>     }
+<span class="line-number">33</span>     
+<span class="line-number">34</span>     <span class="comment">/**</span>
+<span class="line-number">35</span> <span class="comment">     * </span><span class="comment">Send</span> <span class="comment">an</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span><span class="comment">.</span>
+<span class="line-number">36</span> <span class="comment">     * </span>
+<span class="line-number">37</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">fromEmailAddr</span> <span class="comment">from</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">address</span>
+<span class="line-number">38</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">toEmailAddr</span> <span class="comment">to</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">adress</span>
+<span class="line-number">39</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">subject</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">subject</span>
+<span class="line-number">40</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">body</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">body</span> <span class="comment">text</span>
+<span class="line-number">41</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">no</span> <span class="comment">errors</span> <span class="comment">occurs</span><span class="comment">.</span>
+<span class="line-number">42</span>      <span class="comment">*/</span>
+<span class="line-number">43</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">boolean</span> sendEmail(String fromEmailAddr, String toEmailAddr,
+<span class="line-number">44</span>                     String subject, String body) {
+<span class="line-number">45</span>         Session session = Session.getDefaultInstance(emailProperties, <span class="keyword-directive">null</span>);
+<span class="line-number">46</span>         MimeMessage message = <span class="keyword-directive">new</span> MimeMessage(session);
+<span class="line-number">47</span>         <span class="keyword-directive">try</span> {
+<span class="line-number">48</span>             message.setFrom(<span class="keyword-directive">new</span> InternetAddress(fromEmailAddr));
+<span class="line-number">49</span>             message.addRecipient(Message.RecipientType.TO, <span class="keyword-directive">new</span> InternetAddress(
+<span class="line-number">50</span>                 toEmailAddr));
+<span class="line-number">51</span> 
+<span class="line-number">52</span>             message.setSubject(subject);
+<span class="line-number">53</span>             message.setContent(body, <span class="character">&quot;</span><span class="character">text/html</span><span class="character">&quot;</span>);
+<span class="line-number">54</span>             Transport.send(message);
+<span class="line-number">55</span>             <span class="keyword-directive">return</span> <span class="keyword-directive">true</span>;
+<span class="line-number">56</span>         } <span class="keyword-directive">catch</span> (MessagingException ex) {
+<span class="line-number">57</span>             System.err.println(<span class="character">&quot;</span><span class="character">Cannot send email. </span><span class="character">&quot;</span> + ex);
+<span class="line-number">58</span>             <span class="keyword-directive">return</span> <span class="keyword-directive">false</span>;
+<span class="line-number">59</span>         }
+<span class="line-number">60</span>     }
+<span class="line-number">61</span>     
+<span class="line-number">62</span>     <span class="comment">/**</span>
+<span class="line-number">63</span> <span class="comment">     * </span><span class="comment">Send</span> <span class="comment">a</span> <span class="comment">no</span><span class="comment">-</span><span class="comment">reply</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span><span class="comment">.</span>
+<span class="line-number">64</span> <span class="comment">     * </span>
+<span class="line-number">65</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">toEmailAddr</span> <span class="comment">to</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">adress</span>
+<span class="line-number">66</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">subject</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">subject</span>
+<span class="line-number">67</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">body</span> <span class="comment">e</span><span class="comment">-</span><span class="comment">mail</span> <span class="comment">body</span> <span class="comment">text</span>
+<span class="line-number">68</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">no</span> <span class="comment">errors</span> <span class="comment">occurs</span><span class="comment">.</span>
+<span class="line-number">69</span>      <span class="comment">*/</span>
+<span class="line-number">70</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">boolean</span> sendNoReplyEmail(String toEmailAddr, String subject, 
+<span class="line-number">71</span>             String body) {
+<span class="line-number">72</span>         <span class="keyword-directive">return</span> sendEmail(<span class="character">&quot;</span><span class="character">NoReply@TegnTilTiden.dk</span><span class="character">&quot;</span>, toEmailAddr, subject, body);
+<span class="line-number">73</span>     }
+<span class="line-number">74</span> }
+<span class="line-number">75</span> 
+</pre></body>
+</html>

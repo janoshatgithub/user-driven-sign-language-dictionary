@@ -12,7 +12,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 public class HeaderPanel extends Panel {
 
     /**
-     * Construct.
+     * Constructor
+     * 
      * @param appUser Application user
      * @param exampleTitle title of the example
      */

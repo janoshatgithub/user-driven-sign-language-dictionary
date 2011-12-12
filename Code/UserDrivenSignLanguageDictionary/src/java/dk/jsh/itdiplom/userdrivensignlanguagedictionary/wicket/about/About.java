@@ -17,7 +17,6 @@ import org.apache.wicket.model.IModel;
  * @author Jan S. Hansen
  */
 public final class About extends BasePage {
-
     
     public About() {
         MenuBorder menuBorder = new MenuBorder("mainNavigation");

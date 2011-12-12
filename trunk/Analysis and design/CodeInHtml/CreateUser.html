@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>CreateUser.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\user\CreateUser.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.user;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.ApplicationUserBusiness;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Constants;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> org.apache.wicket.PageParameters;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> org.apache.wicket.ResourceReference;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Button;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Form;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.PasswordTextField;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.TextField;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.image.Image;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.model.Model;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.model.PropertyModel;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.apache.wicket.validation.validator.EmailAddressValidator;
+<span class="line-number"> 23</span> <span class="keyword-directive">import</span> org.apache.wicket.validation.validator.StringValidator;
+<span class="line-number"> 24</span> 
+<span class="line-number"> 25</span> <span class="comment">/**</span>
+<span class="line-number"> 26</span> <span class="comment"> * </span><span class="comment">Create</span> <span class="comment">user</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 27</span> <span class="comment"> * </span>
+<span class="line-number"> 28</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 29</span>  <span class="comment">*/</span>
+<span class="line-number"> 30</span> <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">class</span> CreateUser <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number"> 31</span>     <span class="keyword-directive">private</span> String errorMessage = <span class="character">&quot;&quot;</span>;
+<span class="line-number"> 32</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; fullName;
+<span class="line-number"> 33</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; userLogin;
+<span class="line-number"> 34</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; password;
+<span class="line-number"> 35</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; repeatPassword;
+<span class="line-number"> 36</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; email;
+<span class="line-number"> 37</span>     <span class="keyword-directive">private</span> Image errorIconImage = <span class="keyword-directive">new</span> Image(<span class="character">&quot;</span><span class="character">erroricon</span><span class="character">&quot;</span>, 
+<span class="line-number"> 38</span>             <span class="keyword-directive">new</span> ResourceReference(BasePage.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">icons/attention.png</span><span class="character">&quot;</span>));
+<span class="line-number"> 39</span>     
+<span class="line-number"> 40</span>     <span class="keyword-directive">public</span> CreateUser() {
+<span class="line-number"> 41</span>         MenuBorder menuBorder = <span class="keyword-directive">new</span> MenuBorder(<span class="character">&quot;</span><span class="character">mainNavigation</span><span class="character">&quot;</span>); 
+<span class="line-number"> 42</span>         add(menuBorder);
+<span class="line-number"> 43</span>         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
+<span class="line-number"> 44</span>         
+<span class="line-number"> 45</span>         <span class="comment">//Add a form as an inner class.</span>
+<span class="line-number"> 46</span>         Form form = <span class="keyword-directive">new</span> Form(<span class="character">&quot;</span><span class="character">form</span><span class="character">&quot;</span>) {
+<span class="line-number"> 47</span>             <span class="comment">//Handles required fields error.</span>
+<span class="line-number"> 48</span>             @Override
+<span class="line-number"> 49</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onError() {
+<span class="line-number"> 50</span>                 <span class="keyword-directive">if</span> (emptyRequiredFields()) {
+<span class="line-number"> 51</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Alle felter skal udfyldes.</span><span class="character">&quot;</span>);
+<span class="line-number"> 52</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number"> 53</span>                 }
+<span class="line-number"> 54</span> 
+<span class="line-number"> 55</span>                 <span class="comment">//Test for to short login and password</span>
+<span class="line-number"> 56</span>                 <span class="keyword-directive">if</span> (!userLogin.isValid()) {
+<span class="line-number"> 57</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Bruger kode skal være mindst 3 tegn langt</span><span class="character">&quot;</span>);
+<span class="line-number"> 58</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 59</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 60</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number"> 61</span>                 }
+<span class="line-number"> 62</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 63</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 64</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 65</span>                 }
+<span class="line-number"> 66</span>                 <span class="keyword-directive">if</span> (!password.isValid()) {
+<span class="line-number"> 67</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Password skal være mindst 3 tegn langt</span><span class="character">&quot;</span>);
+<span class="line-number"> 68</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 69</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 70</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number"> 71</span>                 }
+<span class="line-number"> 72</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 73</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 74</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 75</span>                 }
+<span class="line-number"> 76</span>                 
+<span class="line-number"> 77</span>                 <span class="comment">//Test if it is a valid email</span>
+<span class="line-number"> 78</span>                 <span class="keyword-directive">if</span> (!email.isValid()) {
+<span class="line-number"> 79</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Email er ikke valid.</span><span class="character">&quot;</span>);
+<span class="line-number"> 80</span>                     email.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 81</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 82</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number"> 83</span>                 }
+<span class="line-number"> 84</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 85</span>                     email.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 86</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 87</span>                 }
+<span class="line-number"> 88</span>             }
+<span class="line-number"> 89</span> 
+<span class="line-number"> 90</span>             <span class="keyword-directive">private</span> <span class="keyword-directive">boolean</span> emptyRequiredFields() {
+<span class="line-number"> 91</span>                 <span class="comment">//Test for empty/required fields</span>
+<span class="line-number"> 92</span>                 <span class="keyword-directive">boolean</span> emptyFields = <span class="keyword-directive">false</span>;
+<span class="line-number"> 93</span>                 <span class="keyword-directive">if</span> (!fullName.checkRequired()) {
+<span class="line-number"> 94</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number"> 95</span>                     fullName.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 96</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 97</span>                 }
+<span class="line-number"> 98</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 99</span>                     fullName.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">100</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">101</span>                 }
+<span class="line-number">102</span>                 <span class="keyword-directive">if</span> (!userLogin.checkRequired()) {
+<span class="line-number">103</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number">104</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">105</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">106</span>                 }
+<span class="line-number">107</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">108</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">109</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">110</span>                 }
+<span class="line-number">111</span>                 <span class="keyword-directive">if</span> (!password.checkRequired()) {
+<span class="line-number">112</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number">113</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">114</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">115</span>                 }
+<span class="line-number">116</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">117</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">118</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">119</span>                 }
+<span class="line-number">120</span>                 <span class="keyword-directive">if</span> (!repeatPassword.checkRequired()) {
+<span class="line-number">121</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number">122</span>                     repeatPassword.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">123</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">124</span>                 }
+<span class="line-number">125</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">126</span>                     repeatPassword.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">127</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">128</span>                 }
+<span class="line-number">129</span>                 <span class="keyword-directive">if</span> (!email.checkRequired()) {
+<span class="line-number">130</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number">131</span>                     email.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">132</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">133</span>                 }
+<span class="line-number">134</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">135</span>                     email.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">136</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">137</span>                 }
+<span class="line-number">138</span>                 <span class="keyword-directive">return</span> emptyFields;
+<span class="line-number">139</span>             }
+<span class="line-number">140</span>         };
+<span class="line-number">141</span>         borderBodyContainer.add(form);
+<span class="line-number">142</span> 
+<span class="line-number">143</span>         <span class="comment">//Add fields to the form.</span>
+<span class="line-number">144</span>         fullName = <span class="keyword-directive">new</span> TextField(<span class="character">&quot;</span><span class="character">fullName</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">145</span>         fullName.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">146</span>         form.add(fullName);
+<span class="line-number">147</span> 
+<span class="line-number">148</span>         userLogin = <span class="keyword-directive">new</span> TextField(<span class="character">&quot;</span><span class="character">userlogin</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">149</span>         userLogin.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">150</span>         userLogin.add(StringValidator.minimumLength(3));
+<span class="line-number">151</span>         form.add(userLogin);
+<span class="line-number">152</span>         
+<span class="line-number">153</span>         password = <span class="keyword-directive">new</span> PasswordTextField(<span class="character">&quot;</span><span class="character">password</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">154</span>         password.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">155</span>         password.add(StringValidator.minimumLength(3));
+<span class="line-number">156</span>         form.add(password);
+<span class="line-number">157</span>         
+<span class="line-number">158</span>         repeatPassword = <span class="keyword-directive">new</span> PasswordTextField(<span class="character">&quot;</span><span class="character">repeatPassword</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">159</span>         repeatPassword.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">160</span>         repeatPassword.add(StringValidator.minimumLength(3));
+<span class="line-number">161</span>         form.add(repeatPassword);
+<span class="line-number">162</span> 
+<span class="line-number">163</span>         email = <span class="keyword-directive">new</span> TextField(<span class="character">&quot;</span><span class="character">email</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">164</span>         email.add(EmailAddressValidator.getInstance());
+<span class="line-number">165</span>         email.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">166</span>         form.add(email);
+<span class="line-number">167</span>         
+<span class="line-number">168</span>         <span class="comment">//Add button to the form.</span>
+<span class="line-number">169</span>         form.add(<span class="keyword-directive">new</span> Button(<span class="character">&quot;</span><span class="character">save</span><span class="character">&quot;</span>) {
+<span class="line-number">170</span>             @Override
+<span class="line-number">171</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onSubmit() {
+<span class="line-number">172</span>                 <span class="comment">//Test if password = repeat password</span>
+<span class="line-number">173</span>                 <span class="keyword-directive">if</span> (!password.getModelObject().equals(repeatPassword.getModelObject())) {
+<span class="line-number">174</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Password og Gentag password er ikke ens</span><span class="character">&quot;</span>);
+<span class="line-number">175</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">176</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">177</span>                     repeatPassword.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">178</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">179</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number">180</span>                 }
+<span class="line-number">181</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">182</span>                     password.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">183</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">184</span>                     repeatPassword.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">185</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">186</span>                 }
+<span class="line-number">187</span>                 
+<span class="line-number">188</span>                 <span class="comment">//Test if login is in use</span>
+<span class="line-number">189</span>                 <span class="keyword-directive">if</span> (ApplicationUserBusiness.isUserLoginInUse(
+<span class="line-number">190</span>                         userLogin.getModelObject())) {
+<span class="line-number">191</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Bruger koden bruges af en anden bruger.</span><span class="character">&quot;</span>);
+<span class="line-number">192</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">193</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number">194</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number">195</span>                 } 
+<span class="line-number">196</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">197</span>                     userLogin.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">198</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number">199</span>                 }
+<span class="line-number">200</span>                 
+<span class="line-number">201</span>                 ApplicationUser newUser = <span class="keyword-directive">new</span> ApplicationUser(
+<span class="line-number">202</span>                         userLogin.getModelObject(),
+<span class="line-number">203</span>                         password.getModelObject(),
+<span class="line-number">204</span>                         fullName.getModelObject(),
+<span class="line-number">205</span>                         email.getModelObject(),
+<span class="line-number">206</span>                         <span class="keyword-directive">new</span> Date(),
+<span class="line-number">207</span>                         <span class="keyword-directive">null</span>, 
+<span class="line-number">208</span>                         Constants.UserRole.NORMAL);
+<span class="line-number">209</span>                
+<span class="line-number">210</span>                 String mailBody = createMailBody();
+<span class="line-number">211</span>                 EMailSender eMailSender = EMailSender.getInstance();
+<span class="line-number">212</span>                 <span class="keyword-directive">if</span> (eMailSender.sendNoReplyEmail(email.getModelObject(),
+<span class="line-number">213</span>                         <span class="character">&quot;</span><span class="character">Velkommen til Tegn til tiden</span><span class="character">&quot;</span>, mailBody)) {
+<span class="line-number">214</span>                     ApplicationUserBusiness.saveNew(newUser);
+<span class="line-number">215</span>                     setResponsePage(UserCreated.<span class="keyword-directive">class</span>);
+<span class="line-number">216</span>                 }
+<span class="line-number">217</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">218</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Kunne ikke afsende e-mail, tjek den </span><span class="character">&quot;</span>
+<span class="line-number">219</span>                             + <span class="character">&quot;</span><span class="character">indtastede e-mail adresse. </span><span class="character">&quot;</span>
+<span class="line-number">220</span>                             + <span class="character">&quot;</span><span class="character">Eller prøv igen senere.</span><span class="character">&quot;</span>);
+<span class="line-number">221</span>                 }
+<span class="line-number">222</span>             }
+<span class="line-number">223</span> 
+<span class="line-number">224</span>             <span class="keyword-directive">private</span> String createMailBody() {
+<span class="line-number">225</span>                 PageParameters pageParameters = <span class="keyword-directive">new</span> PageParameters(<span class="character">&quot;</span><span class="character">login=</span><span class="character">&quot;</span> 
+<span class="line-number">226</span>                         + userLogin.getModelObject());
+<span class="line-number">227</span>                 CharSequence pageUrl = urlFor(EmailVerified.<span class="keyword-directive">class</span>, pageParameters);
+<span class="line-number">228</span>                 <span class="comment">//TODO: Fix this.</span>
+<span class="line-number">229</span>                 String fullURL = <span class="character">&quot;</span><span class="character">http://localhost:8084/</span><span class="character">&quot;</span>
+<span class="line-number">230</span>                         + <span class="character">&quot;</span><span class="character">UserDrivenSignLanguageDictionary/wicket/</span><span class="character">&quot;</span> 
+<span class="line-number">231</span>                         + pageUrl.toString();
+<span class="line-number">232</span>                 String link = <span class="character">&quot;</span><span class="character">&lt;a href=&#39;</span><span class="character">&quot;</span> + fullURL +<span class="character">&quot;</span><span class="character">&#39;&gt;Bekræft email&lt;/a&gt;</span><span class="character">&quot;</span>;
+<span class="line-number">233</span>                 String email = <span class="character">&quot;</span><span class="character">&lt;a href=&#39;mailto:jan.sch.hansen@gmail.com?</span><span class="character">&quot;</span>
+<span class="line-number">234</span>                         + <span class="character">&quot;</span><span class="character">Subject=Spørgsmål til Tegn til tiden&#39;&gt;</span><span class="character">&quot;</span>
+<span class="line-number">235</span>                         + <span class="character">&quot;</span><span class="character">jan.sch.hansen@gmail.com&lt;/a&gt;</span><span class="character">&quot;</span>;
+<span class="line-number">236</span>                 StringBuilder mailBody = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number">237</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">Velkommen til Tegn til tiden. &lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">238</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">Før du kan logge på systemet skal du trykke </span><span class="character">&quot;</span>);
+<span class="line-number">239</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">på følgende link, for at bekrærft din mail adresse.&lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">240</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><span class="character">&quot;</span>);
+<span class="line-number">241</span>                 mailBody.append(link);
+<span class="line-number">242</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">&lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">243</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">OBS! - Denne mail kan ikke besvares.&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">244</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">Eventuelle spørgsmål kan rettes til Jan Scrhøder Hansen på </span><span class="character">&quot;</span>);
+<span class="line-number">245</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">e-mail: </span><span class="character">&quot;</span>);
+<span class="line-number">246</span>                 mailBody.append(email);
+<span class="line-number">247</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">&lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">248</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">Med venlig hilsen&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">249</span>                 mailBody.append(<span class="character">&quot;</span><span class="character">Tegn til tiden</span><span class="character">&quot;</span>);
+<span class="line-number">250</span>                 <span class="keyword-directive">return</span> mailBody.toString();
+<span class="line-number">251</span>             }
+<span class="line-number">252</span>         });
+<span class="line-number">253</span> 
+<span class="line-number">254</span>         <span class="comment">//Add error items</span>
+<span class="line-number">255</span>         PropertyModel errorMessageModel =
+<span class="line-number">256</span>                 <span class="keyword-directive">new</span> PropertyModel(<span class="keyword-directive">this</span>, <span class="character">&quot;</span><span class="character">errorMessage</span><span class="character">&quot;</span>);
+<span class="line-number">257</span>         borderBodyContainer.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">error</span><span class="character">&quot;</span>, errorMessageModel));
+<span class="line-number">258</span>         errorIconImage.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number">259</span>         borderBodyContainer.add(errorIconImage);
+<span class="line-number">260</span>     }
+<span class="line-number">261</span>     
+<span class="line-number">262</span>     <span class="comment">/**</span>
+<span class="line-number">263</span> <span class="comment">     * </span><span class="comment">Set</span> <span class="comment">error</span> <span class="comment">message</span><span class="comment">.</span>
+<span class="line-number">264</span>      <span class="comment">*/</span>
+<span class="line-number">265</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setErrorMessage(String errorMessage) {
+<span class="line-number">266</span>         <span class="keyword-directive">this</span>.errorMessage = errorMessage;
+<span class="line-number">267</span>         errorIconImage.setVisible(<span class="keyword-directive">true</span>);
+<span class="line-number">268</span>     }
+<span class="line-number">269</span> }
+<span class="line-number">270</span> 
+</pre></body>
+</html>

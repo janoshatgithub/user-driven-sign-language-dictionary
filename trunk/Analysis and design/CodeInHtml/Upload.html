@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Upload.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.ST1 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\upload\Upload.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.VideoFileBusiness;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.VideoFile;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.ConvertVideo;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.EMailSender;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> java.io.File;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> java.util.logging.Logger;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.Page;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.ResourceReference;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Form;
+<span class="line-number"> 23</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.TextArea;
+<span class="line-number"> 24</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.upload.FileUpload;
+<span class="line-number"> 25</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.upload.FileUploadField;
+<span class="line-number"> 26</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.image.Image;
+<span class="line-number"> 27</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.Link;
+<span class="line-number"> 28</span> <span class="keyword-directive">import</span> org.apache.wicket.model.Model;
+<span class="line-number"> 29</span> <span class="keyword-directive">import</span> org.apache.wicket.model.PropertyModel;
+<span class="line-number"> 30</span> 
+<span class="line-number"> 31</span> <span class="comment">/**</span>
+<span class="line-number"> 32</span> <span class="comment"> * </span><span class="comment">Upload</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 33</span> <span class="comment"> * </span>
+<span class="line-number"> 34</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 35</span>  <span class="comment">*/</span>
+<span class="line-number"> 36</span> <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">class</span> Upload <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number"> 37</span>     <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> Logger logger = Logger.getLogger(Upload.<span class="keyword-directive">class</span>.getName());
+<span class="line-number"> 38</span>     
+<span class="line-number"> 39</span>     <span class="keyword-directive">private</span> FileUploadField fileUpload;
+<span class="line-number"> 40</span>     <span class="keyword-directive">private</span> TextArea&lt;String&gt; description;
+<span class="line-number"> 41</span>     <span class="keyword-directive">private</span> String UPLOAD_FOLDER = <span class="character">&quot;</span><span class="character">C:</span><span class="ST1">\\</span><span class="character">Temp</span><span class="ST1">\\</span><span class="character">Upload</span><span class="ST1">\\</span><span class="character">&quot;</span>;
+<span class="line-number"> 42</span>     <span class="keyword-directive">private</span> String errorMessage = <span class="character">&quot;&quot;</span>;
+<span class="line-number"> 43</span>     <span class="keyword-directive">private</span> Image errorIconImage = <span class="keyword-directive">new</span> Image(<span class="character">&quot;</span><span class="character">erroricon</span><span class="character">&quot;</span>, 
+<span class="line-number"> 44</span>             <span class="keyword-directive">new</span> ResourceReference(BasePage.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">icons/attention.png</span><span class="character">&quot;</span>));
+<span class="line-number"> 45</span>     
+<span class="line-number"> 46</span>     <span class="keyword-directive">public</span> Upload(<span class="keyword-directive">final</span> Word word) {
+<span class="line-number"> 47</span>         MenuBorder menuBorder = <span class="keyword-directive">new</span> MenuBorder(<span class="character">&quot;</span><span class="character">mainNavigation</span><span class="character">&quot;</span>); 
+<span class="line-number"> 48</span>         add(menuBorder);
+<span class="line-number"> 49</span>         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
+<span class="line-number"> 50</span>         borderBodyContainer.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">word</span><span class="character">&quot;</span>, word.getWord()));
+<span class="line-number"> 51</span>         Link back = <span class="keyword-directive">new</span> Link(<span class="character">&quot;</span><span class="character">back</span><span class="character">&quot;</span>) {
+<span class="line-number"> 52</span>             @Override
+<span class="line-number"> 53</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onClick() {
+<span class="line-number"> 54</span>                 Page page = <span class="keyword-directive">new</span> SelectedWord(word);
+<span class="line-number"> 55</span>                 setResponsePage(page);
+<span class="line-number"> 56</span>             }
+<span class="line-number"> 57</span>         };
+<span class="line-number"> 58</span>         borderBodyContainer.add(back);
+<span class="line-number"> 59</span>         
+<span class="line-number"> 60</span>         Form form = <span class="keyword-directive">new</span> Form(<span class="character">&quot;</span><span class="character">form</span><span class="character">&quot;</span>) {
+<span class="line-number"> 61</span>             @Override
+<span class="line-number"> 62</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onError() {
+<span class="line-number"> 63</span>                 <span class="keyword-directive">if</span> (emptyRequiredFields()) {
+<span class="line-number"> 64</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">&#39;Vælg video fil&#39; skal udfyldes.</span><span class="character">&quot;</span>);
+<span class="line-number"> 65</span>                     <span class="keyword-directive">return</span>;
+<span class="line-number"> 66</span>                 }
+<span class="line-number"> 67</span>             }
+<span class="line-number"> 68</span> 
+<span class="line-number"> 69</span>             <span class="keyword-directive">private</span> <span class="keyword-directive">boolean</span> emptyRequiredFields() {
+<span class="line-number"> 70</span>                 <span class="comment">//Test for empty/required fields</span>
+<span class="line-number"> 71</span>                 <span class="keyword-directive">boolean</span> emptyFields = <span class="keyword-directive">false</span>;
+<span class="line-number"> 72</span>                 <span class="keyword-directive">if</span> (!fileUpload.checkRequired()) {
+<span class="line-number"> 73</span>                     emptyFields = <span class="keyword-directive">true</span>;
+<span class="line-number"> 74</span>                     fileUpload.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 75</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 76</span>                 }
+<span class="line-number"> 77</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 78</span>                     fileUpload.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 79</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 80</span>                 }
+<span class="line-number"> 81</span>                 <span class="keyword-directive">return</span> emptyFields;
+<span class="line-number"> 82</span>             }
+<span class="line-number"> 83</span>             
+<span class="line-number"> 84</span>             @Override
+<span class="line-number"> 85</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onSubmit() {
+<span class="line-number"> 86</span>                 errorIconImage.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number"> 87</span>                 <span class="keyword-directive">final</span> FileUpload uploadedFile = fileUpload.getFileUpload();
+<span class="line-number"> 88</span>                 <span class="keyword-directive">if</span> (uploadedFile != <span class="keyword-directive">null</span>) {
+<span class="line-number"> 89</span>                     WicketSession wicketSession = WicketSession.get();
+<span class="line-number"> 90</span>                     ApplicationUser user = wicketSession.getApplicationUser();
+<span class="line-number"> 91</span>                     String userId = user.getId().toString();
+<span class="line-number"> 92</span>                     String fileName = uploadedFile.getClientFileName();
+<span class="line-number"> 93</span>                     
+<span class="line-number"> 94</span>                     <span class="comment">// write to a new file</span>
+<span class="line-number"> 95</span>                     File newFile = <span class="keyword-directive">new</span> File(UPLOAD_FOLDER
+<span class="line-number"> 96</span>                             + <span class="character">&quot;</span><span class="character">UserId_</span><span class="character">&quot;</span> + userId + <span class="character">&quot;</span><span class="character">_</span><span class="character">&quot;</span> + fileName);
+<span class="line-number"> 97</span>                     <span class="keyword-directive">if</span> (newFile.exists()) {
+<span class="line-number"> 98</span>                             newFile.delete();
+<span class="line-number"> 99</span>                     }
+<span class="line-number">100</span>                     <span class="keyword-directive">try</span> {
+<span class="line-number">101</span>                         newFile.createNewFile();
+<span class="line-number">102</span>                         uploadedFile.writeTo(newFile);
+<span class="line-number">103</span>                         
+<span class="line-number">104</span>                         ConvertVideo cv = <span class="keyword-directive">new</span> ConvertVideo();
+<span class="line-number">105</span>                         String destVideoReferenceName = 
+<span class="line-number">106</span>                                 cv.createOgvResourceName(
+<span class="line-number">107</span>                                 userId,
+<span class="line-number">108</span>                                 word.getId().toString());
+<span class="line-number">109</span>                         String destVideoPath = cv.createOgvFilename(
+<span class="line-number">110</span>                                 destVideoReferenceName);
+<span class="line-number">111</span>                         cv.convert(newFile.getAbsolutePath() , destVideoPath);
+<span class="line-number">112</span>                         
+<span class="line-number">113</span>                         File convertedFile = <span class="keyword-directive">new</span> File(destVideoPath);
+<span class="line-number">114</span>                         <span class="keyword-directive">if</span> (convertedFile.exists()) {
+<span class="line-number">115</span> 
+<span class="line-number">116</span>                             VideoFile videoFile = <span class="keyword-directive">new</span> VideoFile(fileName, 
+<span class="line-number">117</span>                                     description.getModelObject(), 
+<span class="line-number">118</span>                                     destVideoReferenceName, <span class="keyword-directive">new</span> Date(), user, word);
+<span class="line-number">119</span>                             VideoFileBusiness.saveNew(videoFile);
+<span class="line-number">120</span>                             emailToRequester(word, videoFile);
+<span class="line-number">121</span>                             Page page = <span class="keyword-directive">new</span> SelectedWord(word);
+<span class="line-number">122</span>                             setResponsePage(page);
+<span class="line-number">123</span>                         }
+<span class="line-number">124</span>                         <span class="keyword-directive">else</span> {
+<span class="line-number">125</span>                             setErrorMessage(<span class="character">&quot;</span><span class="character">Fejl ved konvertering af filen.</span><span class="character">&quot;</span>);
+<span class="line-number">126</span>                         }
+<span class="line-number">127</span>                     }
+<span class="line-number">128</span>                     <span class="keyword-directive">catch</span> (Exception exception) {
+<span class="line-number">129</span>                         logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Error converting video</span><span class="character">&quot;</span>, exception);
+<span class="line-number">130</span>                         setErrorMessage(<span class="character">&quot;</span><span class="character">Fejl under upload.</span><span class="character">&quot;</span>);
+<span class="line-number">131</span>                     }
+<span class="line-number">132</span>                 }
+<span class="line-number">133</span>             }
+<span class="line-number">134</span>         };            
+<span class="line-number">135</span>         <span class="comment">// Enable multipart mode (need for uploads file)</span>
+<span class="line-number">136</span>         form.setMultiPart(<span class="keyword-directive">true</span>);
+<span class="line-number">137</span>  
+<span class="line-number">138</span>         <span class="comment">// max upload size, 10k</span>
+<span class="line-number">139</span>         <span class="comment">//form.setMaxSize(Bytes.kilobytes(10));</span>
+<span class="line-number">140</span>         fileUpload = <span class="keyword-directive">new</span> FileUploadField(<span class="character">&quot;</span><span class="character">fileUpload</span><span class="character">&quot;</span>);
+<span class="line-number">141</span>         form.add(fileUpload);
+<span class="line-number">142</span>         fileUpload.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">143</span>         description = <span class="keyword-directive">new</span> TextArea(<span class="character">&quot;</span><span class="character">description</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">144</span>         form.add(description);
+<span class="line-number">145</span>         
+<span class="line-number">146</span>         borderBodyContainer.add(form);
+<span class="line-number">147</span>         
+<span class="line-number">148</span>         <span class="comment">//Add error items</span>
+<span class="line-number">149</span>         PropertyModel errorMessageModel =
+<span class="line-number">150</span>                 <span class="keyword-directive">new</span> PropertyModel(<span class="keyword-directive">this</span>, <span class="character">&quot;</span><span class="character">errorMessage</span><span class="character">&quot;</span>);
+<span class="line-number">151</span>         borderBodyContainer.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">error</span><span class="character">&quot;</span>, errorMessageModel));
+<span class="line-number">152</span>         errorIconImage.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number">153</span>         borderBodyContainer.add(errorIconImage);
+<span class="line-number">154</span>     }
+<span class="line-number">155</span>     
+<span class="line-number">156</span>     <span class="comment">/**</span>
+<span class="line-number">157</span> <span class="comment">     * </span><span class="comment">Set</span> <span class="comment">error</span> <span class="comment">message</span><span class="comment">.</span>
+<span class="line-number">158</span>      <span class="comment">*/</span>
+<span class="line-number">159</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setErrorMessage(String errorMessage) {
+<span class="line-number">160</span>         <span class="keyword-directive">this</span>.errorMessage = errorMessage;
+<span class="line-number">161</span>         errorIconImage.setVisible(<span class="keyword-directive">true</span>);
+<span class="line-number">162</span>     }
+<span class="line-number">163</span>     
+<span class="line-number">164</span>     <span class="comment">/**</span>
+<span class="line-number">165</span> <span class="comment">     * </span><span class="comment">Demo</span> <span class="comment">of</span> <span class="comment">mail</span> <span class="comment">to</span> <span class="comment">request</span> <span class="comment">user</span><span class="comment">.</span> 
+<span class="line-number">166</span> <span class="comment">     * </span><span class="comment">TODO</span><span class="comment">: </span><span class="comment">Move</span> <span class="comment">this</span> <span class="comment">to</span> <span class="comment">an</span> <span class="comment">application</span> <span class="comment">thread</span><span class="comment">.</span>
+<span class="line-number">167</span> <span class="comment">     * </span>
+<span class="line-number">168</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">requester</span> <span class="comment">Application</span> <span class="comment">user</span> <span class="comment">that</span> <span class="comment">should</span> <span class="comment">receive</span> <span class="comment">a</span> <span class="comment">mail</span><span class="comment">.</span>
+<span class="line-number">169</span>      <span class="comment">*/</span>
+<span class="line-number">170</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> emailToRequester(Word word, VideoFile videoFile) {
+<span class="line-number">171</span>         WicketSession wicketSession = WicketSession.get();
+<span class="line-number">172</span>         <span class="keyword-directive">if</span> (!word.getRequestCreatedBy().getId().equals(
+<span class="line-number">173</span>                 wicketSession.getApplicationUser().getId())) {
+<span class="line-number">174</span>             EMailSender emailSender = EMailSender.getInstance();
+<span class="line-number">175</span>             emailSender.sendNoReplyEmail(word.getRequestCreatedBy().getEmail(), 
+<span class="line-number">176</span>                 <span class="character">&quot;</span><span class="character">Nyt forslag til </span><span class="character">&quot;</span> + word.getWord(), 
+<span class="line-number">177</span>                 createMailBody(word, videoFile));
+<span class="line-number">178</span>         }
+<span class="line-number">179</span>     }
+<span class="line-number">180</span>     
+<span class="line-number">181</span>     <span class="keyword-directive">private</span> String createMailBody(Word word, VideoFile videoFile) {
+<span class="line-number">182</span>         String email = <span class="character">&quot;</span><span class="character">&lt;a href=&#39;mailto:jan.sch.hansen@gmail.com?</span><span class="character">&quot;</span>
+<span class="line-number">183</span>                 + <span class="character">&quot;</span><span class="character">Subject=Spørgsmål til Tegn til tiden&#39;&gt;</span><span class="character">&quot;</span>
+<span class="line-number">184</span>                 + <span class="character">&quot;</span><span class="character">jan.sch.hansen@gmail.com&lt;/a&gt;</span><span class="character">&quot;</span>;
+<span class="line-number">185</span>         StringBuilder mailBody = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number">186</span>         mailBody.append(<span class="character">&quot;</span><span class="character">Der er kommet et nyt forslag til ordet: &lt;b&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">187</span>         mailBody.append(word.getWord());
+<span class="line-number">188</span>         mailBody.append(<span class="character">&quot;</span><span class="character">&lt;/b&gt;.&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">189</span>         mailBody.append(<span class="character">&quot;</span><span class="character">Med følgende beskrivelse:&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">190</span>         mailBody.append(<span class="character">&quot;</span><span class="character"> - </span><span class="character">&quot;</span>);
+<span class="line-number">191</span>         mailBody.append(videoFile.getDescription());
+<span class="line-number">192</span>         mailBody.append(<span class="character">&quot;</span><span class="character">.&lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">193</span>         mailBody.append(<span class="character">&quot;</span><span class="character">OBS! - Denne mail kan ikke besvares.&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">194</span>         mailBody.append(<span class="character">&quot;</span><span class="character">Eventuelle spørgsmål kan rettes til Jan Scrhøder Hansen på </span><span class="character">&quot;</span>);
+<span class="line-number">195</span>         mailBody.append(<span class="character">&quot;</span><span class="character">e-mail: </span><span class="character">&quot;</span>);
+<span class="line-number">196</span>         mailBody.append(email);
+<span class="line-number">197</span>         mailBody.append(<span class="character">&quot;</span><span class="character">&lt;br/&gt;&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">198</span>         mailBody.append(<span class="character">&quot;</span><span class="character">Med venlig hilsen&lt;br/&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">199</span>         mailBody.append(<span class="character">&quot;</span><span class="character">Tegn til tiden</span><span class="character">&quot;</span>);
+<span class="line-number">200</span>         <span class="keyword-directive">return</span> mailBody.toString();
+<span class="line-number">201</span>     }
+<span class="line-number">202</span> }
+<span class="line-number">203</span> 
+</pre></body>
+</html>

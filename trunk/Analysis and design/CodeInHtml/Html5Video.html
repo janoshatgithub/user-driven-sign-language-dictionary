@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Html5Video.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.ST1 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\html5\Html5Video.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.html5;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> org.apache.wicket.ResourceReference;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.ComponentTag;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.MarkupStream;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.WebMarkupContainer;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> org.apache.wicket.model.IModel;
+<span class="line-number"> 9</span> <span class="keyword-directive">import</span> org.apache.wicket.util.string.AppendingStringBuffer;
+<span class="line-number">10</span> 
+<span class="line-number">11</span> <span class="comment">/**</span>
+<span class="line-number">12</span> <span class="comment"> * </span><span class="comment">HTML</span><span class="comment"> 5 </span><span class="comment">Video</span> <span class="comment">tag</span><span class="comment">.</span>
+<span class="line-number">13</span> <span class="comment"> * </span>
+<span class="line-number">14</span> <span class="comment"> * </span><span class="comment">This</span> <span class="comment">is</span> <span class="comment">created</span> <span class="comment">with</span><span class="comment"> &quot;</span><span class="comment">Integrating</span> <span class="comment">HTML5</span> <span class="comment">and</span> <span class="comment">Wicket</span><span class="comment">&quot; </span><span class="comment">as</span> <span class="comment">a</span> <span class="comment">insperation</span><span class="comment">.</span> 
+<span class="line-number">15</span> <span class="comment"> * </span><span class="comment">see</span> <span class="comment">http</span><span class="comment">://</span><span class="comment">wicketbyexample</span><span class="comment">.</span><span class="comment">com</span><span class="comment">/</span><span class="comment">integrating</span><span class="comment">-</span><span class="comment">html5</span><span class="comment">-</span><span class="comment">and</span><span class="comment">-</span><span class="comment">wicket</span><span class="comment">/</span>
+<span class="line-number">16</span> <span class="comment"> * </span>
+<span class="line-number">17</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">18</span>  <span class="comment">*/</span>
+<span class="line-number">19</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> Html5Video <span class="keyword-directive">extends</span> WebMarkupContainer {
+<span class="line-number">20</span>     
+<span class="line-number">21</span>     <span class="keyword-directive">private</span> IModel&lt;List&lt;VideoSource&gt;&gt; sources;
+<span class="line-number">22</span>  
+<span class="line-number">23</span>     <span class="keyword-directive">public</span> Html5Video(String id, <span class="keyword-directive">final</span> IModel&lt;List&lt;VideoSource&gt;&gt; model) {
+<span class="line-number">24</span>             <span class="keyword-directive">super</span>(id, model);
+<span class="line-number">25</span>             <span class="keyword-directive">this</span>.sources = wrap(model);
+<span class="line-number">26</span>     }
+<span class="line-number">27</span> 
+<span class="line-number">28</span>     
+<span class="line-number">29</span>     @Override
+<span class="line-number">30</span>     <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onComponentTag(ComponentTag tag) {
+<span class="line-number">31</span>         checkComponentTag(tag, <span class="character">&quot;</span><span class="character">video</span><span class="character">&quot;</span>);
+<span class="line-number">32</span>         tag.put(<span class="character">&quot;</span><span class="character">autobuffer</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>);
+<span class="line-number">33</span>         <span class="comment">//tag.put(&quot;autoplay&quot;, false);</span>
+<span class="line-number">34</span>         <span class="comment">//tag.put(&quot;loop&quot;, false);</span>
+<span class="line-number">35</span>         tag.put(<span class="character">&quot;</span><span class="character">controls</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>);
+<span class="line-number">36</span>         <span class="keyword-directive">super</span>.onComponentTag(tag);
+<span class="line-number">37</span>     }
+<span class="line-number">38</span> 
+<span class="line-number">39</span>     @Override
+<span class="line-number">40</span>     <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onComponentTagBody(MarkupStream markupStream,
+<span class="line-number">41</span>         ComponentTag openTag) {
+<span class="line-number">42</span>  
+<span class="line-number">43</span>         <span class="keyword-directive">if</span> (sources != <span class="keyword-directive">null</span>) {
+<span class="line-number">44</span>             <span class="keyword-directive">final</span> AppendingStringBuffer buffer = <span class="keyword-directive">new</span> AppendingStringBuffer();
+<span class="line-number">45</span>             List&lt;VideoSource&gt; videoSources = sources.getObject();
+<span class="line-number">46</span>             <span class="keyword-directive">for</span> (VideoSource videoSource : videoSources) {
+<span class="line-number">47</span>                 buffer.append(<span class="character">&quot;</span><span class="ST1">\n</span><span class="character">&lt;source </span><span class="character">&quot;</span>);
+<span class="line-number">48</span>                 buffer.append(<span class="character">&quot;</span><span class="character">src=&#39;</span><span class="character">&quot;</span>);
+<span class="line-number">49</span>                 ResourceReference resourceReference = videoSource.getSource();
+<span class="line-number">50</span>                 buffer.append(urlFor(resourceReference));
+<span class="line-number">51</span>                 buffer.append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>);
+<span class="line-number">52</span>                 String videoType = videoSource.getType().getVideoType(); 
+<span class="line-number">53</span>                 <span class="keyword-directive">if</span> (videoType != <span class="keyword-directive">null</span>) {
+<span class="line-number">54</span>                     buffer.append(<span class="character">&quot;</span><span class="character"> type=&#39;</span><span class="character">&quot;</span>);
+<span class="line-number">55</span>                     buffer.append(videoType);
+<span class="line-number">56</span>                     buffer.append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>);
+<span class="line-number">57</span>                 }
+<span class="line-number">58</span>  
+<span class="line-number">59</span>                 buffer.append(<span class="character">&quot;</span><span class="character"> /&gt;</span><span class="character">&quot;</span>);
+<span class="line-number">60</span>             }
+<span class="line-number">61</span>  
+<span class="line-number">62</span>             buffer.append(<span class="character">&quot;</span><span class="ST1">\n</span><span class="character">&quot;</span>);
+<span class="line-number">63</span>  
+<span class="line-number">64</span>             getResponse().write(buffer.toString());
+<span class="line-number">65</span>  
+<span class="line-number">66</span>         }        
+<span class="line-number">67</span>         <span class="keyword-directive">super</span>.onComponentTagBody(markupStream, openTag);
+<span class="line-number">68</span>     }
+<span class="line-number">69</span> }
+<span class="line-number">70</span> 
+</pre></body>
+</html>

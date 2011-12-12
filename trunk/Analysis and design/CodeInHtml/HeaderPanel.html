@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>HeaderPanel.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\HeaderPanel.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket;           
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.ApplicationUser;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.panel.Panel;
+<span class="line-number"> 6</span> 
+<span class="line-number"> 7</span> <span class="comment">/**</span> 
+<span class="line-number"> 8</span> <span class="comment"> * </span><span class="comment">Header</span> <span class="comment">panel</span><span class="comment">.</span>
+<span class="line-number"> 9</span> <span class="comment"> * </span>
+<span class="line-number">10</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">11</span>  <span class="comment">*/</span>
+<span class="line-number">12</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> HeaderPanel <span class="keyword-directive">extends</span> Panel {
+<span class="line-number">13</span> 
+<span class="line-number">14</span>     <span class="comment">/**</span>
+<span class="line-number">15</span> <span class="comment">     * </span><span class="comment">Constructor</span>
+<span class="line-number">16</span> <span class="comment">     * </span>
+<span class="line-number">17</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">appUser</span> <span class="comment">Application</span> <span class="comment">user</span>
+<span class="line-number">18</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">exampleTitle</span> <span class="comment">title</span> <span class="comment">of</span> <span class="comment">the</span> <span class="comment">example</span>
+<span class="line-number">19</span>      <span class="comment">*/</span>
+<span class="line-number">20</span>     <span class="keyword-directive">public</span> HeaderPanel(String componentName, ApplicationUser appUser)
+<span class="line-number">21</span>     {
+<span class="line-number">22</span>         <span class="keyword-directive">super</span>(componentName);
+<span class="line-number">23</span>         StringBuilder text = <span class="keyword-directive">new</span> StringBuilder(<span class="character">&quot;</span><span class="character">Bruger: </span><span class="character">&quot;</span>);
+<span class="line-number">24</span>         <span class="keyword-directive">if</span> (appUser != <span class="keyword-directive">null</span>) {
+<span class="line-number">25</span>             text.append(appUser.getFullname());
+<span class="line-number">26</span>             text.append(<span class="character">&quot;</span><span class="character"> - </span><span class="character">&quot;</span>);
+<span class="line-number">27</span>             text.append(appUser.getEmail());
+<span class="line-number">28</span>         }
+<span class="line-number">29</span>         <span class="keyword-directive">else</span> {
+<span class="line-number">30</span>             text.append(<span class="character">&quot;</span><span class="character">Ikke logget på</span><span class="character">&quot;</span>);
+<span class="line-number">31</span>         }
+<span class="line-number">32</span>         add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">userName</span><span class="character">&quot;</span>, text.toString()));
+<span class="line-number">33</span>     }
+<span class="line-number">34</span> }
+<span class="line-number">35</span> 
+</pre></body>
+</html>

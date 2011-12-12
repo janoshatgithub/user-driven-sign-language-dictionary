@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>HomePage.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\homepage\HomePage.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordBusiness;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.business.WordGroupBusiness;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.Word;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.entity.WordGroup;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.util.Text;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.word.SelectedWord;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.apache.wicket.Page;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> org.apache.wicket.ResourceReference;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Button;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.DropDownChoice;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Form;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.TextField;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.image.Image;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.Link;
+<span class="line-number"> 23</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.list.ListItem;
+<span class="line-number"> 24</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.list.PageableListView;
+<span class="line-number"> 25</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+<span class="line-number"> 26</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.panel.FeedbackPanel;
+<span class="line-number"> 27</span> <span class="keyword-directive">import</span> org.apache.wicket.model.AbstractReadOnlyModel;
+<span class="line-number"> 28</span> <span class="keyword-directive">import</span> org.apache.wicket.model.Model;
+<span class="line-number"> 29</span> <span class="keyword-directive">import</span> org.apache.wicket.model.PropertyModel;
+<span class="line-number"> 30</span> 
+<span class="line-number"> 31</span> <span class="comment">/**</span>
+<span class="line-number"> 32</span> <span class="comment"> * </span><span class="comment">Home</span><span class="comment">/</span><span class="comment">search</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 33</span> <span class="comment"> * </span>
+<span class="line-number"> 34</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 35</span>  <span class="comment">*/</span>
+<span class="line-number"> 36</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> HomePage <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number"> 37</span>     <span class="keyword-directive">private</span> String errorMessage = <span class="character">&quot;&quot;</span>;
+<span class="line-number"> 38</span>     <span class="keyword-directive">private</span> DropDownChoice&lt;String&gt; searchFor;
+<span class="line-number"> 39</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; searchText;
+<span class="line-number"> 40</span>     <span class="keyword-directive">private</span> Image errorIconImage = <span class="keyword-directive">new</span> Image(<span class="character">&quot;</span><span class="character">erroricon</span><span class="character">&quot;</span>, 
+<span class="line-number"> 41</span>             <span class="keyword-directive">new</span> ResourceReference(BasePage.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">icons/attention.png</span><span class="character">&quot;</span>));
+<span class="line-number"> 42</span>     <span class="keyword-directive">private</span> List&lt;Word&gt; wordsFound = <span class="keyword-directive">new</span> ArrayList&lt;Word&gt;(); 
+<span class="line-number"> 43</span>     <span class="keyword-directive">private</span> PageableListView pageableListView;
+<span class="line-number"> 44</span>     <span class="keyword-directive">private</span> FeedbackPanel feedbackPanel;
+<span class="line-number"> 45</span>     
+<span class="line-number"> 46</span>     <span class="keyword-directive">public</span> HomePage() {
+<span class="line-number"> 47</span>         MenuBorder menuBorder = <span class="keyword-directive">new</span> MenuBorder(<span class="character">&quot;</span><span class="character">mainNavigation</span><span class="character">&quot;</span>); 
+<span class="line-number"> 48</span>         add(menuBorder);
+<span class="line-number"> 49</span>         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
+<span class="line-number"> 50</span>         PropertyModel errorMessageModel =
+<span class="line-number"> 51</span>             <span class="keyword-directive">new</span> PropertyModel(<span class="keyword-directive">this</span>, <span class="character">&quot;</span><span class="character">errorMessage</span><span class="character">&quot;</span>);
+<span class="line-number"> 52</span>         borderBodyContainer.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">error</span><span class="character">&quot;</span>, errorMessageModel));
+<span class="line-number"> 53</span>         errorIconImage.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number"> 54</span>         borderBodyContainer.add(errorIconImage);
+<span class="line-number"> 55</span> 
+<span class="line-number"> 56</span>         Form form = <span class="keyword-directive">new</span> Form(<span class="character">&quot;</span><span class="character">form</span><span class="character">&quot;</span>) {
+<span class="line-number"> 57</span>             <span class="comment">//Handles required fields error.</span>
+<span class="line-number"> 58</span>             @Override
+<span class="line-number"> 59</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onError() {
+<span class="line-number"> 60</span>                 <span class="keyword-directive">if</span> (!searchText.checkRequired()) {
+<span class="line-number"> 61</span>                     feedbackPanel.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number"> 62</span>                     setErrorMessage(<span class="character">&quot;</span><span class="character">Søgefeltet skal udfyldes.</span><span class="character">&quot;</span>);
+<span class="line-number"> 63</span>                 }
+<span class="line-number"> 64</span>             }
+<span class="line-number"> 65</span>         };
+<span class="line-number"> 66</span>         borderBodyContainer.add(form);
+<span class="line-number"> 67</span>         
+<span class="line-number"> 68</span>         searchFor = <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">searchFor</span><span class="character">&quot;</span>,
+<span class="line-number"> 69</span>                 <span class="keyword-directive">new</span> Model(SearchType.WORD.getDescription()), 
+<span class="line-number"> 70</span>                 SearchType.getDescriptions());
+<span class="line-number"> 71</span>         form.add(searchFor);
+<span class="line-number"> 72</span>         searchText = <span class="keyword-directive">new</span> TextField(<span class="character">&quot;</span><span class="character">searchText</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number"> 73</span>         searchText.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number"> 74</span>         form.add(searchText);
+<span class="line-number"> 75</span>         
+<span class="line-number"> 76</span>         <span class="comment">//Add button to the form.</span>
+<span class="line-number"> 77</span>         form.add(<span class="keyword-directive">new</span> Button(<span class="character">&quot;</span><span class="character">search</span><span class="character">&quot;</span>) {
+<span class="line-number"> 78</span>             @Override
+<span class="line-number"> 79</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onSubmit() {
+<span class="line-number"> 80</span>                 removeErrorMessage();
+<span class="line-number"> 81</span>                 <span class="keyword-directive">if</span> (SearchType.getSearchType(searchFor.getModelObject()) 
+<span class="line-number"> 82</span>                         == SearchType.WORD) {
+<span class="line-number"> 83</span>                     wordsFound = WordBusiness.search(searchText.getModelObject());
+<span class="line-number"> 84</span>                 }
+<span class="line-number"> 85</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 86</span>                     List&lt;WordGroup&gt; wordGroups = 
+<span class="line-number"> 87</span>                             WordGroupBusiness.search(searchText.getModelObject());
+<span class="line-number"> 88</span>                     <span class="keyword-directive">if</span> (!wordGroups.isEmpty()) {
+<span class="line-number"> 89</span>                         wordsFound = WordBusiness.search(wordGroups);
+<span class="line-number"> 90</span>                     }
+<span class="line-number"> 91</span>                 }
+<span class="line-number"> 92</span>                 <span class="keyword-directive">if</span> (wordsFound.isEmpty()) {
+<span class="line-number"> 93</span>                     feedbackPanel.setVisible(<span class="keyword-directive">true</span>);
+<span class="line-number"> 94</span>                     info(<span class="character">&quot;</span><span class="character">Ingen ord fundet.</span><span class="character">&quot;</span>);
+<span class="line-number"> 95</span>                 }
+<span class="line-number"> 96</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 97</span>                     feedbackPanel.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number"> 98</span>                 }
+<span class="line-number"> 99</span>                 pageableListView.setList(wordsFound);
+<span class="line-number">100</span>                 pageableListView.setCurrentPage(0);
+<span class="line-number">101</span>             }
+<span class="line-number">102</span>         });
+<span class="line-number">103</span>         
+<span class="line-number">104</span>         <span class="comment">//Search results</span>
+<span class="line-number">105</span>         feedbackPanel = <span class="keyword-directive">new</span> FeedbackPanel(<span class="character">&quot;</span><span class="character">feedback</span><span class="character">&quot;</span>);
+<span class="line-number">106</span>         feedbackPanel.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number">107</span>         borderBodyContainer.add(feedbackPanel);
+<span class="line-number">108</span>         pageableListView =
+<span class="line-number">109</span>                 <span class="keyword-directive">new</span> PageableListView(<span class="character">&quot;</span><span class="character">pageable</span><span class="character">&quot;</span>, wordsFound, 4) {
+<span class="line-number">110</span>             @Override
+<span class="line-number">111</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> populateItem(<span class="keyword-directive">final</span> ListItem item) {
+<span class="line-number">112</span>                 <span class="keyword-directive">final</span> Word word = (Word)item.getModelObject();
+<span class="line-number">113</span>                 Label wordLabel = <span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">word</span><span class="character">&quot;</span>, word.getWord());
+<span class="line-number">114</span>                 Link wordLink = <span class="keyword-directive">new</span> Link(<span class="character">&quot;</span><span class="character">wordLink</span><span class="character">&quot;</span>) {
+<span class="line-number">115</span>                     @Override
+<span class="line-number">116</span>                     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onClick() {
+<span class="line-number">117</span>                         Page page = <span class="keyword-directive">new</span> SelectedWord(word);
+<span class="line-number">118</span>                         setResponsePage(page);
+<span class="line-number">119</span>                     }
+<span class="line-number">120</span>                 };
+<span class="line-number">121</span>                 wordLink.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">122</span>                     <span class="keyword-directive">new</span> Model(word.getDescription())));
+<span class="line-number">123</span>                 wordLink.add(wordLabel);
+<span class="line-number">124</span>                 item.add(wordLink);
+<span class="line-number">125</span>                 
+<span class="line-number">126</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">created</span><span class="character">&quot;</span>, 
+<span class="line-number">127</span>                         standardDateTimeFormat.format(word.getCreatedDateTime()))); 
+<span class="line-number">128</span>                 List&lt;String&gt; wordGroupList = word.getSortedWordGroups();
+<span class="line-number">129</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">groups</span><span class="character">&quot;</span>, Text.makeWordGroupString(wordGroupList)));
+<span class="line-number">130</span>                 item.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">class</span><span class="character">&quot;</span>,
+<span class="line-number">131</span>                     <span class="keyword-directive">true</span>, <span class="keyword-directive">new</span> AbstractReadOnlyModel&lt;String&gt;() {
+<span class="line-number">132</span>                     @Override
+<span class="line-number">133</span>                     <span class="keyword-directive">public</span> String getObject()
+<span class="line-number">134</span>                     {
+<span class="line-number">135</span>                         <span class="keyword-directive">return</span> (item.getIndex() % 2 == 1) ? <span class="character">&quot;</span><span class="character">even</span><span class="character">&quot;</span> : <span class="character">&quot;</span><span class="character">odd</span><span class="character">&quot;</span>;
+<span class="line-number">136</span>                     }
+<span class="line-number">137</span>                 }));
+<span class="line-number">138</span>             }
+<span class="line-number">139</span>         };
+<span class="line-number">140</span>         
+<span class="line-number">141</span>         borderBodyContainer.add(pageableListView);
+<span class="line-number">142</span>         borderBodyContainer.add(<span class="keyword-directive">new</span> PagingNavigator(<span class="character">&quot;</span><span class="character">navigator</span><span class="character">&quot;</span>, pageableListView));
+<span class="line-number">143</span>     }
+<span class="line-number">144</span>     
+<span class="line-number">145</span>     <span class="comment">/**</span>
+<span class="line-number">146</span> <span class="comment">     * </span><span class="comment">Set</span> <span class="comment">error</span> <span class="comment">message</span><span class="comment">.</span>
+<span class="line-number">147</span>      <span class="comment">*/</span>
+<span class="line-number">148</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setErrorMessage(String errorMessage) {
+<span class="line-number">149</span>         <span class="keyword-directive">this</span>.errorMessage = errorMessage;
+<span class="line-number">150</span>         errorIconImage.setVisible(<span class="keyword-directive">true</span>);
+<span class="line-number">151</span>     }
+<span class="line-number">152</span>     
+<span class="line-number">153</span>     <span class="comment">/**</span>
+<span class="line-number">154</span> <span class="comment">     * </span><span class="comment">Remove</span> <span class="comment">error</span> <span class="comment">message</span><span class="comment">.</span>
+<span class="line-number">155</span>      <span class="comment">*/</span>
+<span class="line-number">156</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> removeErrorMessage() {
+<span class="line-number">157</span>         <span class="keyword-directive">this</span>.errorMessage = <span class="character">&quot;&quot;</span>;
+<span class="line-number">158</span>         errorIconImage.setVisible(<span class="keyword-directive">false</span>);
+<span class="line-number">159</span>     }
+<span class="line-number">160</span>     
+<span class="line-number">161</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">enum</span> SearchType {
+<span class="line-number">162</span>         WORD(<span class="character">&quot;</span><span class="character">Ord</span><span class="character">&quot;</span>),
+<span class="line-number">163</span>         GROUP(<span class="character">&quot;</span><span class="character">Gruppe</span><span class="character">&quot;</span>);
+<span class="line-number">164</span> 
+<span class="line-number">165</span>         <span class="keyword-directive">private</span> String description;
+<span class="line-number">166</span> 
+<span class="line-number">167</span>         SearchType(String description) {
+<span class="line-number">168</span>             <span class="keyword-directive">this</span>.description = description;
+<span class="line-number">169</span>         }
+<span class="line-number">170</span> 
+<span class="line-number">171</span>         <span class="keyword-directive">public</span> String getDescription() {
+<span class="line-number">172</span>             <span class="keyword-directive">return</span> description;
+<span class="line-number">173</span>         }
+<span class="line-number">174</span> 
+<span class="line-number">175</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;String&gt; getDescriptions() {
+<span class="line-number">176</span>             List&lt;String&gt; descriptions = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number">177</span>             descriptions.add(WORD.description);
+<span class="line-number">178</span>             descriptions.add(GROUP.description);
+<span class="line-number">179</span>             <span class="keyword-directive">return</span> descriptions;
+<span class="line-number">180</span>         }
+<span class="line-number">181</span> 
+<span class="line-number">182</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> SearchType getSearchType(String description) {
+<span class="line-number">183</span>             <span class="keyword-directive">if</span> (WORD.description.equals(description)) <span class="keyword-directive">return</span> WORD;
+<span class="line-number">184</span>             <span class="keyword-directive">return</span> GROUP;
+<span class="line-number">185</span>         }
+<span class="line-number">186</span>      }
+<span class="line-number">187</span> }
+<span class="line-number">188</span> 
+</pre></body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>About.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\about\About.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.BasePage;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage.MenuBorder;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.html5.Html5Video;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.html5.VideoSource;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 9</span> <span class="keyword-directive">import</span> org.apache.wicket.ResourceReference;
+<span class="line-number">10</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.Border.BorderBodyContainer;
+<span class="line-number">11</span> <span class="keyword-directive">import</span> org.apache.wicket.model.AbstractReadOnlyModel;
+<span class="line-number">12</span> <span class="keyword-directive">import</span> org.apache.wicket.model.IModel;
+<span class="line-number">13</span> 
+<span class="line-number">14</span> <span class="comment">/**</span>
+<span class="line-number">15</span> <span class="comment"> * </span><span class="comment">About</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number">16</span> <span class="comment"> *</span>
+<span class="line-number">17</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">18</span>  <span class="comment">*/</span>
+<span class="line-number">19</span> <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">class</span> About <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number">20</span>     
+<span class="line-number">21</span>     <span class="keyword-directive">public</span> About() {
+<span class="line-number">22</span>         MenuBorder menuBorder = <span class="keyword-directive">new</span> MenuBorder(<span class="character">&quot;</span><span class="character">mainNavigation</span><span class="character">&quot;</span>);
+<span class="line-number">23</span>         add(menuBorder);
+<span class="line-number">24</span>         BorderBodyContainer borderBodyContainer = menuBorder.getBodyContainer();
+<span class="line-number">25</span>         
+<span class="line-number">26</span>         <span class="keyword-directive">final</span> List&lt;VideoSource&gt; videoSources = <span class="keyword-directive">new</span> ArrayList&lt;VideoSource&gt;();
+<span class="line-number">27</span>         videoSources.add(<span class="keyword-directive">new</span> VideoSource(<span class="keyword-directive">new</span> ResourceReference(About.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">About.ogv</span><span class="character">&quot;</span>), 
+<span class="line-number">28</span>                  VideoSource.VideoType.OGG));
+<span class="line-number">29</span>         
+<span class="line-number">30</span>         IModel&lt;List&lt;VideoSource&gt;&gt; videoSourceList = 
+<span class="line-number">31</span>                 <span class="keyword-directive">new</span> AbstractReadOnlyModel&lt;List&lt;VideoSource&gt;&gt;() {
+<span class="line-number">32</span>             @Override
+<span class="line-number">33</span>             <span class="keyword-directive">public</span> List&lt;VideoSource&gt; getObject() {
+<span class="line-number">34</span>                 <span class="keyword-directive">return</span> videoSources;
+<span class="line-number">35</span>             }
+<span class="line-number">36</span>         };
+<span class="line-number">37</span>         Html5Video html5Video = <span class="keyword-directive">new</span> Html5Video(<span class="character">&quot;</span><span class="character">aboutVideo</span><span class="character">&quot;</span>, videoSourceList);
+<span class="line-number">38</span>         
+<span class="line-number">39</span>         borderBodyContainer.add(html5Video);
+<span class="line-number">40</span>     }
+<span class="line-number">41</span> }
+<span class="line-number">42</span> 
+</pre></body>
+</html>

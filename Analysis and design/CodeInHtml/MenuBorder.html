@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>MenuBorder.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\user-driven-sign-language-dictionary\Code\UserDrivenSignLanguageDictionary\src\java\dk\jsh\itdiplom\userdrivensignlanguagedictionary\wicket\homepage\MenuBorder.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.homepage;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.WicketSession;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.about.About;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.user.CreateUser;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.group.AllGroups;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.group.Groups;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.login.Login;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.AllRequest;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.request.Request;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.upload.Uploads;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.userdrivensignlanguagedictionary.wicket.user.ChangeUser;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.WebMarkupContainer;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.Border;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.border.BoxBorder;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.BookmarkablePageLink;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.Link;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.repeater.RepeatingView;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.model.Model;
+<span class="line-number"> 22</span> 
+<span class="line-number"> 23</span> <span class="comment">/**</span>
+<span class="line-number"> 24</span> <span class="comment"> * </span><span class="comment">Menu</span> <span class="comment">border</span> <span class="comment">component</span><span class="comment">.</span>
+<span class="line-number"> 25</span> <span class="comment"> * </span>
+<span class="line-number"> 26</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 27</span>  <span class="comment">*/</span>
+<span class="line-number"> 28</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> MenuBorder <span class="keyword-directive">extends</span> Border
+<span class="line-number"> 29</span> {
+<span class="line-number"> 30</span>     <span class="comment">/**</span>
+<span class="line-number"> 31</span> <span class="comment">     * </span><span class="comment">Constructor</span>
+<span class="line-number"> 32</span> <span class="comment">     * </span>
+<span class="line-number"> 33</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">id</span>
+<span class="line-number"> 34</span> <span class="comment">     *            </span><span class="comment">The</span> <span class="comment">id</span> <span class="comment">of</span> <span class="comment">this</span> <span class="comment">component</span>
+<span class="line-number"> 35</span>      <span class="comment">*/</span>
+<span class="line-number"> 36</span>     <span class="keyword-directive">public</span> MenuBorder(<span class="keyword-directive">final</span> String id)
+<span class="line-number"> 37</span>     {
+<span class="line-number"> 38</span>         <span class="keyword-directive">super</span>(id);
+<span class="line-number"> 39</span>         <span class="keyword-directive">final</span> WicketSession session = WicketSession.get();
+<span class="line-number"> 40</span>         
+<span class="line-number"> 41</span>         BoxBorder navigationBorder = <span class="keyword-directive">new</span> BoxBorder(<span class="character">&quot;</span><span class="character">navigationBorder</span><span class="character">&quot;</span>);
+<span class="line-number"> 42</span>         
+<span class="line-number"> 43</span>         RepeatingView repeatingView = <span class="keyword-directive">new</span> RepeatingView(<span class="character">&quot;</span><span class="character">menuItems</span><span class="character">&quot;</span>);
+<span class="line-number"> 44</span>         navigationBorder.add(repeatingView);
+<span class="line-number"> 45</span>         
+<span class="line-number"> 46</span>         addMenuLink(repeatingView, HomePage.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Søg</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">Søg efter ord</span><span class="character">&quot;</span>);
+<span class="line-number"> 47</span>         addMenuLink(repeatingView, About.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Om denne side</span><span class="character">&quot;</span>, 
+<span class="line-number"> 48</span>                 <span class="character">&quot;</span><span class="character">Information om denne side</span><span class="character">&quot;</span>);
+<span class="line-number"> 49</span>         <span class="keyword-directive">if</span> (session.isAuthenticated()) {
+<span class="line-number"> 50</span>             addMenuLink(repeatingView, AllRequest.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Alle forespørgsler</span><span class="character">&quot;</span>, 
+<span class="line-number"> 51</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over alle forespørgsler, som mangler forslag.</span><span class="character">&quot;</span>);
+<span class="line-number"> 52</span>             addMenuLink(repeatingView, AllGroups.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Alle grupper</span><span class="character">&quot;</span>, 
+<span class="line-number"> 53</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over alle grupper</span><span class="character">&quot;</span>);
+<span class="line-number"> 54</span>             addMenuLink(repeatingView, Request.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Mine forespørgsler</span><span class="character">&quot;</span>, 
+<span class="line-number"> 55</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over egne forespørgsler</span><span class="character">&quot;</span>);
+<span class="line-number"> 56</span>             addMenuLink(repeatingView, Groups.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Mine grupper</span><span class="character">&quot;</span>, 
+<span class="line-number"> 57</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over egne grupper</span><span class="character">&quot;</span>);
+<span class="line-number"> 58</span>             addMenuLink(repeatingView, Uploads.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Mine uploads</span><span class="character">&quot;</span>, 
+<span class="line-number"> 59</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over egne uploads</span><span class="character">&quot;</span>);
+<span class="line-number"> 60</span>             addMenuLink(repeatingView, ChangeUser.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Ret brugeroplysninger</span><span class="character">&quot;</span>,
+<span class="line-number"> 61</span>                     <span class="character">&quot;</span><span class="character">Vis/ret egne brugeroplysninger</span><span class="character">&quot;</span>);
+<span class="line-number"> 62</span>             addLogoffMenuLink(navigationBorder, session);
+<span class="line-number"> 63</span>         }
+<span class="line-number"> 64</span>         <span class="keyword-directive">else</span> {
+<span class="line-number"> 65</span>             addMenuLink(repeatingView, AllRequest.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Alle forespørgsler</span><span class="character">&quot;</span>, 
+<span class="line-number"> 66</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over alle forespørgsler, som mangler forslag.</span><span class="character">&quot;</span>);
+<span class="line-number"> 67</span>             addMenuLink(repeatingView, AllGroups.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Alle grupper</span><span class="character">&quot;</span>, 
+<span class="line-number"> 68</span>                     <span class="character">&quot;</span><span class="character">Vis oversigt over alle grupper</span><span class="character">&quot;</span>);
+<span class="line-number"> 69</span>             addMenuLink(repeatingView, CreateUser.<span class="keyword-directive">class</span>, <span class="character">&quot;</span><span class="character">Ny bruger</span><span class="character">&quot;</span>, 
+<span class="line-number"> 70</span>                     <span class="character">&quot;</span><span class="character">Opret ny bruger</span><span class="character">&quot;</span>);
+<span class="line-number"> 71</span>             addLoginMenuLink(navigationBorder);
+<span class="line-number"> 72</span>         }
+<span class="line-number"> 73</span>         
+<span class="line-number"> 74</span>         add(navigationBorder);
+<span class="line-number"> 75</span>         add(<span class="keyword-directive">new</span> BoxBorder(<span class="character">&quot;</span><span class="character">bodyBorder</span><span class="character">&quot;</span>));
+<span class="line-number"> 76</span>     }
+<span class="line-number"> 77</span> 
+<span class="line-number"> 78</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> addMenuLink(RepeatingView repeatingView, Class pageClass,
+<span class="line-number"> 79</span>             String text, String title) {
+<span class="line-number"> 80</span>         WebMarkupContainer parent =
+<span class="line-number"> 81</span>                 <span class="keyword-directive">new</span> WebMarkupContainer(repeatingView.newChildId());
+<span class="line-number"> 82</span>         repeatingView.add(parent);
+<span class="line-number"> 83</span>         BookmarkablePageLink link = <span class="keyword-directive">new</span> BookmarkablePageLink(<span class="character">&quot;</span><span class="character">menuItemLink</span><span class="character">&quot;</span>, 
+<span class="line-number"> 84</span>                 pageClass); 
+<span class="line-number"> 85</span>         link.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 86</span>                     <span class="keyword-directive">new</span> Model(title)));
+<span class="line-number"> 87</span>         parent.add(link);
+<span class="line-number"> 88</span>         link.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">menuItemText</span><span class="character">&quot;</span>, text));
+<span class="line-number"> 89</span>     }
+<span class="line-number"> 90</span>     
+<span class="line-number"> 91</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> addLoginMenuLink(BoxBorder navigationBorder) {
+<span class="line-number"> 92</span>         BookmarkablePageLink loginLink = 
+<span class="line-number"> 93</span>                 <span class="keyword-directive">new</span> BookmarkablePageLink(<span class="character">&quot;</span><span class="character">loginLogOffMenuItemLink</span><span class="character">&quot;</span>, 
+<span class="line-number"> 94</span>                         Login.<span class="keyword-directive">class</span>); 
+<span class="line-number"> 95</span>         navigationBorder.add(loginLink);
+<span class="line-number"> 96</span>         loginLink.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 97</span>             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">Log på systemet.</span><span class="character">&quot;</span>)));
+<span class="line-number"> 98</span>         loginLink.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">loginLogoffText</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">Log på</span><span class="character">&quot;</span>));
+<span class="line-number"> 99</span>     }
+<span class="line-number">100</span> 
+<span class="line-number">101</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> addLogoffMenuLink(BoxBorder navigationBorder,
+<span class="line-number">102</span>             <span class="keyword-directive">final</span> WicketSession session) {
+<span class="line-number">103</span>         Link logoffLink = <span class="keyword-directive">new</span> Link(<span class="character">&quot;</span><span class="character">loginLogOffMenuItemLink</span><span class="character">&quot;</span>) {
+<span class="line-number">104</span>             @Override
+<span class="line-number">105</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onClick() {
+<span class="line-number">106</span>                 session.setApplicationUser(<span class="keyword-directive">null</span>);
+<span class="line-number">107</span>                 setResponsePage(HomePage.<span class="keyword-directive">class</span>);
+<span class="line-number">108</span>             }
+<span class="line-number">109</span>         };
+<span class="line-number">110</span>         navigationBorder.add(logoffLink);
+<span class="line-number">111</span>         logoffLink.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">112</span>             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">Log af systemet.</span><span class="character">&quot;</span>)));
+<span class="line-number">113</span>         logoffLink.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">loginLogoffText</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">Log af</span><span class="character">&quot;</span>));
+<span class="line-number">114</span>     }
+<span class="line-number">115</span> }
+<span class="line-number">116</span> 
+</pre></body>
+</html>
